@@ -1,0 +1,45 @@
+name: Build Windows Installer
+
+# 触发条件：当有新的 tag (如 v1.0.0) 被推送到仓库时触发
+on:
+  push:
+    tags:
+      - 'v*' # 匹配 v1.0, v1.2.3 等格式的 tag
+
+jobs:
+  build-windows:
+    # 在最新的 Windows 服务器上运行
+    runs-on: windows-latest
+
+    steps:
+      # 1. 检出你的代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # 使用一个稳定的 Node 版本
+          cache: 'npm'       # 缓存 npm 依赖，加快后续构建速度
+
+      # 3. 安装 Rust 环境 (Tauri 核心依赖)
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      # 4. 安装前端依赖
+      - name: Install frontend dependencies
+        run: npm install
+
+      # 5. 使用 Tauri Action 来安装系统依赖并构建应用
+      # 这个 Action 会自动处理 Windows 上的 WebView2 等复杂依赖
+      - name: Build Tauri App for Windows
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }} # 使用 tag 名称作为发布版本号
+          releaseName: 'App v${{ github.ref_name }}' # 发布标题
+          releaseBody: 'Windows installer for this version.'
+          releaseDraft: false
+          prerelease: false

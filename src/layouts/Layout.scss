@@ -1,0 +1,105 @@
+.layout-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    z-index: 1;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+
+      .logo-icon {
+        margin-right: 10px;
+        font-size: 24px;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+
+      .el-dropdown-link {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .username {
+          margin: 0 10px;
+          font-size: 14px;
+        }
+
+        .user-status {
+          font-size: 12px;
+          color: #67c23a;
+        }
+      }
+    }
+  }
+
+  .el-aside {
+    background-color: #f5f7fa;
+    border-right: 1px solid #e6e6e6;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+
+    .menu {
+      border-right: none;
+      flex: 1;
+
+      .menu-icon {
+        margin-right: 8px;
+      }
+
+      .menu-badge {
+        margin-left: 8px;
+        background-color: #f56c6c;
+        border-radius: 10px;
+        color: white;
+        font-size: 12px;
+        padding: 0 6px;
+        height: 18px;
+        line-height: 18px;
+        display: inline-block;
+      }
+    }
+
+    .system-status {
+      padding: 15px;
+      border-top: 1px solid #e6e6e6;
+      background-color: #fff;
+
+      .status-item {
+        margin-bottom: 8px;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+
+        .status-label {
+          color: #909399;
+        }
+
+        .status-value {
+          &.running {
+            color: #67c23a;
+          }
+        }
+      }
+    }
+  }
+
+  .el-main {
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+}

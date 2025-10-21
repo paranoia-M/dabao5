@@ -1,0 +1,138 @@
+.dashboard-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: calc(100vh - 60px);
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    h2 {
+      margin: 0;
+      color: #303133;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+
+      .status-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #f56c6c;
+        margin-right: 8px;
+
+        &.active {
+          background-color: #67c23a;
+        }
+      }
+    }
+  }
+
+  .form-card {
+    margin-bottom: 20px;
+
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .stat-card {
+      .stat-item {
+        padding: 15px;
+
+        .stat-title {
+          font-size: 14px;
+          color: #909399;
+          margin-bottom: 10px;
+        }
+
+        .stat-value {
+          font-size: 24px;
+          font-weight: bold;
+
+          &.warning {
+            color: #e6a23c;
+          }
+
+          &.processing {
+            color: #409eff;
+          }
+
+          &.success {
+            color: #67c23a;
+          }
+
+          &.primary {
+            color: #409eff;
+          }
+        }
+      }
+    }
+  }
+
+  .chart-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .chart-card {
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+
+        h3 {
+          margin: 0;
+          font-size: 16px;
+        }
+      }
+
+      .pie-chart-container,
+      .line-chart-container {
+        height: 300px;
+      }
+    }
+  }
+
+  .table-card {
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+      }
+    }
+
+    .pagination-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .detail-content {
+    padding: 10px;
+  }
+}

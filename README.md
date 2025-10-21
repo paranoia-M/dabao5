@@ -7,7 +7,7 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 vue < js < html < css
 
 ·.·vue -> html -> js -> css
-
+11
 html -> css
 
 js -> css

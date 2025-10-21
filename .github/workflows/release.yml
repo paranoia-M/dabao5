@@ -1,45 +1,70 @@
+# 工作流名称，会显示在 GitHub Actions 页面
 name: Build Windows Installer
 
-# 触发条件：当有新的 tag (如 v1.0.0) 被推送到仓库时触发
+# 触发工作流的事件
 on:
+  # 当一个以 'v' 开头的 tag (例如 v1.0.0, v1.2.3) 被推送到仓库时
   push:
     tags:
-      - 'v*' # 匹配 v1.0, v1.2.3 等格式的 tag
+      - 'v*'
 
+# 定义工作流中的任务
 jobs:
+  # 定义一个名为 build-windows 的任务
   build-windows:
-    # 在最新的 Windows 服务器上运行
+    # 指定任务运行在最新的 Windows 虚拟环境上
     runs-on: windows-latest
 
+    # 任务执行的步骤
     steps:
-      # 1. 检出你的代码
+      # 第 1 步：检出你的代码
+      # 使用官方的 checkout action 来获取你的仓库代码
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. 设置 Node.js 环境
+      # 第 2 步：设置 Node.js 环境
+      # 使用官方的 setup-node action 来安装 Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 使用一个稳定的 Node 版本
-          cache: 'npm'       # 缓存 npm 依赖，加快后续构建速度
+          # 指定 Node.js 的版本
+          node-version: '20'
+          # 指定使用 pnpm 的缓存，可以加快后续构建速度
+          cache: 'pnpm'
 
-      # 3. 安装 Rust 环境 (Tauri 核心依赖)
+      # 第 3 步：安装 pnpm
+      # 这是解决你问题的关键步骤，确保 pnpm 命令可用
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          # 你可以指定 pnpm 的版本，例如 '8' 或 'latest'
+          version: 8
+
+      # 第 4 步：安装 Rust 编译环境
+      # Tauri 的后端是基于 Rust 的，所以需要 Rust 工具链
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
 
-      # 4. 安装前端依赖
+      # 第 5 步：安装前端项目依赖
+      # 使用 pnpm install 来安装 package.json 中的所有依赖
       - name: Install frontend dependencies
-        run: npm install
+        run: pnpm install
 
-      # 5. 使用 Tauri Action 来安装系统依赖并构建应用
-      # 这个 Action 会自动处理 Windows 上的 WebView2 等复杂依赖
+      # 第 6 步：构建 Tauri 应用
+      # 这是核心步骤，使用 tauri-apps 官方提供的 action 来打包
       - name: Build Tauri App for Windows
         uses: tauri-apps/tauri-action@v0
         env:
+          # GITHUB_TOKEN 是 GitHub 自动提供的密钥，用于创建 Release 和上传文件
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name }} # 使用 tag 名称作为发布版本号
-          releaseName: 'App v${{ github.ref_name }}' # 发布标题
+          # 使用推送的 tag 名称作为 Release 的版本号
+          tagName: ${{ github.ref_name }}
+          # 设置 Release 的标题
+          releaseName: 'App v${{ github.ref_name }}'
+          # 设置 Release 的描述内容
           releaseBody: 'Windows installer for this version.'
+          # false 表示这不是一个草稿 Release，直接发布
           releaseDraft: false
+          # false 表示这不是一个预发布版本
           prerelease: false

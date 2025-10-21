@@ -7,30 +7,26 @@ on:
 
 jobs:
   build-windows:
+    # 为此任务授予写入仓库内容的权限，以便创建 GitHub Release
+    permissions:
+      contents: write
+
     runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- ↓↓↓ 顺序调整的关键 ↓↓↓ ---
-
-      # 第 2 步：安装 pnpm
-      # 我们将这一步移到 setup-node 之前，确保 pnpm 命令首先可用
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 8
 
-      # 第 3 步：设置 Node.js 环境
-      # 现在当 setup-node 运行时，pnpm 已经存在，所以 cache: 'pnpm' 不会报错
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-
-      # --- ↑↑↑ 顺序调整结束 ↑↑↑ ---
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable

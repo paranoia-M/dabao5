@@ -3,7 +3,7 @@
           <el-container class="layout-container">
             <el-header class="header">
               <div class="header-left">
-                <h1 class="title">网络通信网关调节配置管理系统</h1>
+                <h1 class="title">网络通信网关调节配置管理系统 </h1>
                 <div class="subtitle">全面监控 · 智能分析 · 安全防护</div>
               </div>
               <div class="header-right">

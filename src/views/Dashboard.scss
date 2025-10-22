@@ -1,0 +1,343 @@
+.dashboard-container {
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ed 100%);
+  min-height: 100vh;
+
+  .stats-cards {
+    margin-bottom: 24px;
+
+    .stat-card {
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-content {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+
+        .stat-icon {
+          width: 60px;
+          height: 60px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 16px;
+
+          &.primary {
+            background: linear-gradient(135deg, #409EFF, #79BBFF);
+          }
+
+          &.success {
+            background: linear-gradient(135deg, #67C23A, #95D475);
+          }
+
+          &.warning {
+            background: linear-gradient(135deg, #E6A23C, #EEBE77);
+          }
+
+          &.info {
+            background: linear-gradient(135deg, #909399, #B1B3B8);
+          }
+
+          .icon-font {
+            font-size: 24px;
+            color: white;
+          }
+        }
+
+        .stat-info {
+          flex: 1;
+
+          .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #303133;
+            line-height: 1.2;
+          }
+
+          .stat-label {
+            font-size: 14px;
+            color: #606266;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  .charts-section {
+    margin-bottom: 24px;
+
+    .chart-card {
+      border-radius: 12px;
+      border: 1px solid #e4e7ed;
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+
+        .chart-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: #303133;
+        }
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+
+      .chart-container {
+        padding: 20px;
+
+        .frequency-chart {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-around;
+          height: 200px;
+          padding: 20px 0;
+
+          .frequency-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            width: 40px;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+
+            &.high-frequency {
+              background: linear-gradient(to top, #F56C6C, #F78989);
+            }
+
+            &.medium-frequency {
+              background: linear-gradient(to top, #E6A23C, #EEBE77);
+            }
+
+            &.low-frequency {
+              background: linear-gradient(to top, #67C23A, #95D475);
+            }
+
+            &:hover {
+              transform: scale(1.05);
+            }
+
+            .frequency-label {
+              position: absolute;
+              top: -25px;
+              font-size: 12px;
+              color: #606266;
+            }
+
+            .frequency-value {
+              margin-bottom: 8px;
+              font-size: 12px;
+              color: white;
+              font-weight: bold;
+            }
+          }
+        }
+
+        .device-status-chart {
+          .status-item {
+            margin-bottom: 20px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            .status-info {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+
+              .status-name {
+                font-size: 14px;
+                color: #606266;
+              }
+
+              .status-count {
+                font-size: 16px;
+                font-weight: bold;
+                color: #303133;
+              }
+            }
+
+            :deep(.el-progress-bar) {
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .recent-records {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+
+      .chart-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+
+        .search-icon {
+          font-size: 14px;
+          color: #909399;
+        }
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      padding: 16px 20px;
+    }
+  }
+
+  .record-detail {
+    .detail-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+
+      .btn-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .report-success {
+    text-align: center;
+    padding: 20px;
+
+    .success-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .success-message {
+      font-size: 18px;
+      font-weight: bold;
+      color: #67C23A;
+      margin-bottom: 16px;
+    }
+
+    .report-info {
+      text-align: left;
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+
+      p {
+        margin: 8px 0;
+        color: #606266;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 12px;
+
+    .stats-cards {
+      .stat-card {
+        .stat-content {
+          padding: 12px;
+
+          .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+
+            .icon-font {
+              font-size: 20px;
+            }
+          }
+
+          .stat-info {
+            .stat-value {
+              font-size: 24px;
+            }
+
+            .stat-label {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    .charts-section {
+      .chart-card {
+        .chart-container {
+          padding: 12px;
+
+          .frequency-chart {
+            height: 150px;
+
+            .frequency-bar {
+              width: 30px;
+
+              .frequency-label {
+                font-size: 10px;
+              }
+
+              .frequency-value {
+                font-size: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .recent-records {
+      .header-actions {
+        flex-direction: column;
+        gap: 8px;
+
+        .el-input {
+          width: 100% !important;
+          margin-right: 0 !important;
+        }
+      }
+    }
+  }
+}

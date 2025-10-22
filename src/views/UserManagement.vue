@@ -1,678 +1,593 @@
 <template>
-  <div class="network-behavior-audit-container">
-    <el-card class="dashboard-card">
-      <div class="card-header">
-        <h2 class="system-title">网络通信网关调节配置管理系统</h2>
-        <div class="header-actions">
-          <el-date-picker
-            v-model="dateRange"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            @change="handleDateChange"
-            class="date-picker"
-          />
-          <el-button type="primary" @click="refreshData" class="refresh-btn">数据刷新</el-button>
-        </div>
-      </div>
+  <div class="home-container">
+    <!-- 顶部统计卡片区域 -->
+    <div class="stats-section">
+      <el-row :gutter="20">
+        <el-col :xs="12" :sm="6" v-for="stat in statsData" :key="stat.title">
+          <el-card class="stat-card" shadow="hover">
+            <div class="stat-content">
+              <div class="stat-icon" :style="{ backgroundColor: stat.color }">
+                <span class="icon-text">{{ stat.icon }}</span>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value">{{ stat.value }}</div>
+                <div class="stat-title">{{ stat.title }}</div>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
 
-      <div class="statistics-grid">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12" :md="6" :lg="6">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon bg-blue">
-                  <span class="iconfont icon-user-group"></span>
-                </div>
-                <div class="stat-info">
-                  <h3>活跃用户</h3>
-                  <p class="stat-value">{{ statistics.activeUsers }}</p>
-                  <p class="stat-desc">较上周 <span class="text-success">↑12%</span></p>
-                </div>
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+      <el-row :gutter="20">
+        <!-- 通信数据分析图表 -->
+        <el-col :xs="24" :lg="16">
+          <el-card class="chart-card" shadow="never">
+            <template #header>
+              <div class="card-header">
+                <span>通信数据趋势分析</span>
+                <el-select v-model="chartTimeRange" size="small" style="width: 120px" @change="handleChartTimeChange">
+                  <el-option label="今日" value="today" />
+                  <el-option label="本周" value="week" />
+                  <el-option label="本月" value="month" />
+                </el-select>
               </div>
-            </el-card>
-          </el-col>
-          
-          <el-col :xs="24" :sm="12" :md="6" :lg="6">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon bg-green">
-                  <span class="iconfont icon-traffic"></span>
+            </template>
+            <div class="chart-container">
+              <div class="chart-placeholder">
+                <div class="chart-visualization">
+                  <div class="signal-bars">
+                    <div 
+                      v-for="(bar, index) in signalBars" 
+                      :key="index"
+                      class="signal-bar"
+                      :style="{ height: bar.height + '%', backgroundColor: bar.color }"
+                    ></div>
+                  </div>
+                  <div class="chart-labels">
+                    <span v-for="label in chartLabels" :key="label" class="chart-label">{{ label }}</span>
+                  </div>
                 </div>
-                <div class="stat-info">
-                  <h3>网络流量</h3>
-                  <p class="stat-value">{{ statistics.traffic }} GB</p>
-                  <p class="stat-desc">较上周 <span class="text-danger">↓5%</span></p>
-                </div>
+                <p>应急通信数据趋势监控</p>
               </div>
-            </el-card>
-          </el-col>
-          
-          <el-col :xs="24" :sm="12" :md="6" :lg="6">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon bg-orange">
-                  <span class="iconfont icon-security"></span>
-                </div>
-                <div class="stat-info">
-                  <h3>安全事件</h3>
-                  <p class="stat-value">{{ statistics.securityEvents }}</p>
-                  <p class="stat-desc">较上周 <span class="text-success">↓18%</span></p>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-          
-          <el-col :xs="24" :sm="12" :md="6" :lg="6">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon bg-purple">
-                  <span class="iconfont icon-audit"></span>
-                </div>
-                <div class="stat-info">
-                  <h3>审计日志</h3>
-                  <p class="stat-value">{{ statistics.auditLogs }}</p>
-                  <p class="stat-desc">较上周 <span class="text-success">↑8%</span></p>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </div>
+            </div>
+          </el-card>
+        </el-col>
 
-      <div class="chart-section">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card class="chart-card">
-              <div class="chart-header">
-                <h3>上网行为趋势分析</h3>
-                <el-tooltip content="展示近7天网络使用情况" placement="top">
-                  <span class="iconfont icon-help"></span>
-                </el-tooltip>
+        <!-- 实时通信状态 -->
+        <el-col :xs="24" :lg="8">
+          <el-card class="status-card" shadow="never">
+            <template #header>
+              <div class="card-header">
+                <span>实时通信状态</span>
+                <el-tag :type="realTimeStatus.type" size="small">
+                  {{ realTimeStatus.text }}
+                </el-tag>
               </div>
-              <div class="chart-container">
-                <div ref="behaviorChart" class="chart"></div>
-              </div>
-            </el-card>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card class="chart-card">
-              <div class="chart-header">
-                <h3>安全事件分类统计</h3>
-                <el-tooltip content="各类安全事件占比情况" placement="top">
-                  <span class="iconfont icon-help"></span>
-                </el-tooltip>
-              </div>
-              <div class="chart-container">
-                <div ref="securityChart" class="chart"></div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </div>
-
-      <div class="recent-events">
-        <el-card>
-          <div class="table-header">
-            <h3>实时安全事件监控</h3>
-            <div class="search-box">
-              <el-input
-                v-model="searchQuery"
-                placeholder="请输入事件类型/来源IP/描述关键词"
-                class="search-input"
-                clearable
-                @clear="handleSearchClear"
-                @keyup.enter="handleSearch"
+            </template>
+            <div class="status-list">
+              <div 
+                v-for="status in communicationStatus" 
+                :key="status.id"
+                class="status-item"
+                @click="handleStatusClick(status)"
               >
-                <template #append>
-                  <el-button @click="handleSearch">
-                    <span class="iconfont icon-search"></span>
-                  </el-button>
+                <div class="status-info">
+                  <div class="status-name">{{ status.name }}</div>
+                  <div class="status-desc">{{ status.description }}</div>
+                </div>
+                <el-tag 
+                  :type="status.online ? 'success' : 'danger'" 
+                  size="small"
+                >
+                  {{ status.online ? '在线' : '离线' }}
+                </el-tag>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+
+      <!-- 最近通信记录 -->
+      <el-card class="records-card" shadow="never">
+        <template #header>
+          <div class="card-header">
+            <span>最近通信记录</span>
+            <div class="header-actions">
+              <el-input
+                v-model="searchKeyword"
+                placeholder="搜索通信记录..."
+                size="small"
+                style="width: 200px; margin-right: 10px;"
+                clearable
+              >
+                <template #prefix>
+                  <span class="search-icon">🔍</span>
                 </template>
               </el-input>
+              <el-button type="primary" size="small" @click="handleRefresh">
+                刷新
+              </el-button>
+              <el-button type="success" size="small" @click="handleExportData">
+                导出数据
+              </el-button>
             </div>
           </div>
-          
-          <el-table
-            :data="filteredEvents"
-            style="width: 100%"
-            border
-            stripe
-            v-loading="loading"
-            class="event-table"
-          >
-            <el-table-column prop="time" label="发生时间" width="180" sortable />
-            <el-table-column prop="type" label="事件类型" width="120" />
-            <el-table-column prop="level" label="威胁等级" width="100">
-              <template #default="{ row }">
-                <el-tag :type="getLevelTagType(row.level)" effect="light">
-                  {{ row.level }}
-                </el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column prop="source" label="来源IP" width="150" />
-            <el-table-column prop="description" label="事件描述" />
-            <el-table-column label="操作" width="120" fixed="right">
-              <template #default="{ row }">
-                <el-button size="small" type="primary" plain @click="handleDetail(row)">查看详情</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          
-          <div class="pagination-container">
-            <el-pagination
-              v-model:current-page="currentPage"
-              v-model:page-size="pageSize"
-              :page-sizes="[5, 10, 20, 50]"
-              :total="totalEvents"
-              layout="total, sizes, prev, pager, next, jumper"
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
+        </template>
+
+        <el-table
+          :data="filteredRecords"
+          style="width: 100%"
+          v-loading="loading"
+          @row-click="handleRecordClick"
+        >
+          <el-table-column prop="id" label="记录ID" width="100" />
+          <el-table-column prop="frequency" label="频率" width="120" />
+          <el-table-column prop="callSign" label="呼号" width="120" />
+          <el-table-column prop="location" label="位置" />
+          <el-table-column prop="signalStrength" label="信号强度" width="120">
+            <template #default="{ row }">
+              <el-progress 
+                :percentage="row.signalStrength" 
+                :show-text="false"
+                :color="getSignalColor(row.signalStrength)"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column prop="timestamp" label="时间" width="180">
+            <template #default="{ row }">
+              {{ formatTime(row.timestamp) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="状态" width="100">
+            <template #default="{ row }">
+              <el-tag :type="row.status === 'success' ? 'success' : 'warning'" size="small">
+                {{ row.status === 'success' ? '成功' : '失败' }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="120">
+            <template #default="{ row }">
+              <el-button link type="primary" size="small" @click="handleDetailClick(row)">
+                详情
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <div class="pagination-container">
+          <el-pagination
+            v-model:current-page="currentPage"
+            v-model:page-size="pageSize"
+            :page-sizes="[10, 20, 50, 100]"
+            :total="totalRecords"
+            layout="total, sizes, prev, pager, next, jumper"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </el-card>
+    </div>
+
+    <!-- 通信记录详情弹窗 -->
+    <el-dialog
+      v-model="detailDialogVisible"
+      title="通信记录详情"
+      width="600px"
+      center
+    >
+      <div v-if="selectedRecord" class="record-detail">
+        <el-descriptions :column="2" border>
+          <el-descriptions-item label="记录ID">{{ selectedRecord.id }}</el-descriptions-item>
+          <el-descriptions-item label="呼号">{{ selectedRecord.callSign }}</el-descriptions-item>
+          <el-descriptions-item label="频率">{{ selectedRecord.frequency }}</el-descriptions-item>
+          <el-descriptions-item label="位置">{{ selectedRecord.location }}</el-descriptions-item>
+          <el-descriptions-item label="信号强度">
+            <el-progress 
+              :percentage="selectedRecord.signalStrength" 
+              :color="getSignalColor(selectedRecord.signalStrength)"
             />
-          </div>
-        </el-card>
-      </div>
-    </el-card>
-    
-    <el-dialog v-model="detailVisible" title="安全事件详情" width="50%" class="event-detail-dialog">
-      <div v-if="currentEvent" class="event-detail-content">
-        <el-descriptions :column="1" border>
-          <el-descriptions-item label="事件时间">
-            <span class="detail-value">{{ currentEvent.time }}</span>
           </el-descriptions-item>
-          <el-descriptions-item label="事件类型">
-            <span class="detail-value">{{ currentEvent.type }}</span>
-          </el-descriptions-item>
-          <el-descriptions-item label="威胁等级">
-            <el-tag :type="getLevelTagType(currentEvent.level)" effect="light">
-              {{ currentEvent.level }}
+          <el-descriptions-item label="通信状态">
+            <el-tag :type="selectedRecord.status === 'success' ? 'success' : 'warning'">
+              {{ selectedRecord.status === 'success' ? '通信成功' : '通信失败' }}
             </el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="来源IP">
-            <span class="detail-value">{{ currentEvent.source }}</span>
-            <el-button size="small" type="text" @click="handleIpAnalysis(currentEvent.source)">IP分析</el-button>
+          <el-descriptions-item label="时间戳" :span="2">
+            {{ formatTime(selectedRecord.timestamp) }}
           </el-descriptions-item>
-          <el-descriptions-item label="目标IP" v-if="currentEvent.target">
-            <span class="detail-value">{{ currentEvent.target }}</span>
-          </el-descriptions-item>
-          <el-descriptions-item label="详细描述">
-            <div class="detail-text">{{ currentEvent.description }}</div>
-          </el-descriptions-item>
-          <el-descriptions-item label="处理建议">
-            <div class="detail-text">{{ currentEvent.suggestion || '暂无建议' }}</div>
+          <el-descriptions-item label="通信质量" :span="2">
+            <el-rate
+              v-model="selectedRecord.quality"
+              disabled
+              show-score
+              text-color="#ff9900"
+              score-template="{value} 分"
+            />
           </el-descriptions-item>
         </el-descriptions>
       </div>
       <template #footer>
-        <el-button @click="detailVisible = false">关闭</el-button>
-        <el-button type="primary" @click="handleMarkAsRead">标记为已处理</el-button>
+        <span class="dialog-footer">
+          <el-button @click="detailDialogVisible = false">关闭</el-button>
+          <el-button type="primary" @click="handleAnalyzeSignal(selectedRecord)">
+            信号分析
+          </el-button>
+        </span>
       </template>
     </el-dialog>
 
-    <!-- IP分析弹窗 -->
-    <el-dialog v-model="ipAnalysisVisible" title="IP地址分析" width="40%" class="ip-analysis-dialog">
-      <div v-if="currentIp" class="ip-analysis-content">
+    <!-- 设备状态详情弹窗 -->
+    <el-dialog
+      v-model="statusDialogVisible"
+      :title="`设备状态 - ${selectedStatus?.name}`"
+      width="500px"
+    >
+      <div v-if="selectedStatus" class="status-detail">
         <el-descriptions :column="1" border>
-          <el-descriptions-item label="IP地址">
-            <span class="detail-value">{{ currentIp }}</span>
-          </el-descriptions-item>
-          <el-descriptions-item label="地理位置">
-            <span class="detail-value">{{ ipInfo.location || '未知' }}</span>
-          </el-descriptions-item>
-          <el-descriptions-item label="归属组织">
-            <span class="detail-value">{{ ipInfo.organization || '未知' }}</span>
-          </el-descriptions-item>
-          <el-descriptions-item label="威胁情报">
-            <el-tag :type="ipInfo.threatLevel ? 'danger' : 'success'">
-              {{ ipInfo.threatLevel ? '已知威胁' : '未发现威胁' }}
+          <el-descriptions-item label="设备名称">{{ selectedStatus.name }}</el-descriptions-item>
+          <el-descriptions-item label="设备描述">{{ selectedStatus.description }}</el-descriptions-item>
+          <el-descriptions-item label="运行状态">
+            <el-tag :type="selectedStatus.online ? 'success' : 'danger'">
+              {{ selectedStatus.online ? '在线运行' : '离线维护' }}
             </el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="历史事件">
-            <div class="event-list">
-              <div v-for="(event, index) in ipInfo.historyEvents" :key="index" class="event-item">
-                {{ event.time }} - {{ event.type }} ({{ event.level }})
-              </div>
-              <div v-if="!ipInfo.historyEvents.length">无历史事件记录</div>
-            </div>
+          <el-descriptions-item label="最后心跳">
+            {{ formatTime(new Date()) }}
+          </el-descriptions-item>
+          <el-descriptions-item label="设备负载">
+            <el-progress :percentage="selectedStatus.load || 45" />
           </el-descriptions-item>
         </el-descriptions>
       </div>
       <template #footer>
-        <el-button @click="ipAnalysisVisible = false">关闭</el-button>
-        <el-button type="danger" v-if="ipInfo.threatLevel" @click="handleBlockIp">加入黑名单</el-button>
+        <span class="dialog-footer">
+          <el-button @click="statusDialogVisible = false">关闭</el-button>
+          <el-button 
+            v-if="!selectedStatus?.online" 
+            type="warning" 
+            @click="handleRestartDevice(selectedStatus)"
+          >
+            重启设备
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+
+    <!-- 信号分析弹窗 -->
+    <el-dialog
+      v-model="analyzeDialogVisible"
+      title="信号质量分析"
+      width="700px"
+    >
+      <div v-if="analyzingRecord" class="signal-analysis">
+        <el-alert
+          title="信号质量分析报告"
+          :description="getSignalAnalysisDesc(analyzingRecord)"
+          type="info"
+          show-icon
+          :closable="false"
+        />
+        
+        <div class="analysis-chart">
+          <div class="frequency-spectrum">
+            <div class="spectrum-title">频率频谱分布</div>
+            <div class="spectrum-bars">
+              <div 
+                v-for="(bar, index) in spectrumBars" 
+                :key="index"
+                class="spectrum-bar"
+                :style="{ height: bar.height + '%', backgroundColor: bar.color }"
+                :title="`频率: ${bar.freq}MHz`"
+              ></div>
+            </div>
+          </div>
+        </div>
+        
+        <el-divider />
+        
+        <div class="analysis-suggestions">
+          <h4>优化建议：</h4>
+          <ul>
+            <li v-for="suggestion in getSignalSuggestions(analyzingRecord)" :key="suggestion">
+              {{ suggestion }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="analyzeDialogVisible = false">关闭</el-button>
+          <el-button type="primary" @click="handleGenerateReport(analyzingRecord)">
+            生成报告
+          </el-button>
+        </span>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
-import * as echarts from 'echarts'
-import { ElMessage } from 'element-plus'
+import { ref, computed, onMounted } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
-// 假数据
-const statistics = ref({
-  activeUsers: 342,
-  traffic: 1245.6,
-  securityEvents: 28,
-  auditLogs: 1563
-})
-
-const dateRange = ref([new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date()])
-
-const securityEvents = ref([
-  { 
-    id: 1, 
-    time: '2023-05-15 08:23:45', 
-    type: '暴力破解', 
-    level: '高危', 
-    source: '192.168.1.105', 
-    target: '192.168.1.1', 
-    description: '检测到多次SSH登录失败尝试，疑似暴力破解攻击', 
-    suggestion: '1. 检查SSH配置\n2. 考虑启用双因素认证\n3. 临时封锁该IP' 
-  },
-  { 
-    id: 2, 
-    time: '2023-05-15 10:12:33', 
-    type: '恶意软件', 
-    level: '中危', 
-    source: '192.168.1.78', 
-    description: '检测到可疑文件下载行为，文件hash匹配已知恶意软件特征', 
-    suggestion: '1. 扫描该终端设备\n2. 检查下载文件\n3. 更新防病毒特征库' 
-  },
-  { 
-    id: 3, 
-    time: '2023-05-14 15:45:21', 
-    type: '数据泄露', 
-    level: '高危', 
-    source: '192.168.1.42', 
-    description: '检测到大量数据外传行为，传输量异常(超过1GB)', 
-    suggestion: '1. 立即阻断该连接\n2. 检查数据敏感性\n3. 审计用户权限' 
-  },
-  { 
-    id: 4, 
-    time: '2023-05-14 09:30:15', 
-    type: '违规访问', 
-    level: '低危', 
-    source: '192.168.1.56', 
-    description: '用户访问了受限网站(赌博类)', 
-    suggestion: '1. 提醒用户注意上网行为规范\n2. 记录到用户行为档案' 
-  },
-  { 
-    id: 5, 
-    time: '2023-05-13 14:22:10', 
-    type: '异常登录', 
-    level: '中危', 
-    source: '192.168.1.89', 
-    description: '非工作时间登录系统(凌晨2点)', 
-    suggestion: '1. 确认是否为正常业务需要\n2. 检查登录行为是否合规' 
-  },
-  { 
-    id: 6, 
-    time: '2023-05-13 11:05:37', 
-    type: '端口扫描', 
-    level: '中危', 
-    source: '203.156.34.78', 
-    description: '检测到外部IP对多个端口进行扫描(1小时内尝试连接50+端口)', 
-    suggestion: '1. 考虑将该IP加入黑名单\n2. 检查防火墙规则\n3. 监控后续行为' 
-  },
-  { 
-    id: 7, 
-    time: '2023-05-12 16:33:48', 
-    type: '权限提升', 
-    level: '高危', 
-    source: '192.168.1.23', 
-    description: '检测到非常规权限变更操作(普通用户获取管理员权限)', 
-    suggestion: '1. 立即核查权限变更日志\n2. 回滚异常权限\n3. 调查操作来源' 
-  },
-  { 
-    id: 8, 
-    time: '2023-05-12 08:55:12', 
-    type: 'DDoS攻击', 
-    level: '高危', 
-    source: '多个IP', 
-    description: '检测到针对Web服务的异常流量(峰值达到5Gbps)', 
-    suggestion: '1. 启用DDoS防护措施\n2. 联系ISP进行流量清洗\n3. 准备应急响应预案' 
-  },
-  { 
-    id: 9, 
-    time: '2023-05-11 13:47:29', 
-    type: 'SQL注入', 
-    level: '高危', 
-    source: '192.168.1.67', 
-    description: '检测到SQL注入尝试(针对/user/login接口)', 
-    suggestion: '1. 检查应用代码\n2. 修补漏洞\n3. 过滤输入参数' 
-  },
-  { 
-    id: 10, 
-    time: '2023-05-11 09:12:56', 
-    type: '钓鱼邮件', 
-    level: '中危', 
-    source: '外部邮件', 
-    description: '检测到可疑邮件发送给多名员工(伪装成IT部门)', 
-    suggestion: '1. 提醒员工注意邮件安全\n2. 标记类似邮件为垃圾邮件\n3. 开展安全意识培训' 
-  }
+// 响应式数据
+const statsData = ref([
+  { title: '总通信次数', value: '1,234', icon: '📞', color: '#409EFF' },
+  { title: '在线设备', value: '28', icon: '🖥️', color: '#67C23A' },
+  { title: '信号覆盖率', value: '98.5%', icon: '📶', color: '#E6A23C' },
+  { title: '异常事件', value: '3', icon: '⚠️', color: '#F56C6C' }
 ])
 
-const behaviorChartData = {
-  days: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-  traffic: [120, 200, 150, 80, 70, 110, 130],
-  activeUsers: [80, 120, 100, 70, 60, 90, 110],
-  securityEvents: [5, 3, 7, 2, 4, 1, 6]
-}
-
-const securityChartData = {
-  types: ['暴力破解', '恶意软件', '数据泄露', '违规访问', '其他'],
-  counts: [12, 8, 5, 10, 3]
-}
-
-// IP分析相关数据
-const ipAnalysisVisible = ref(false)
-const currentIp = ref('')
-const ipInfo = ref({
-  location: '',
-  organization: '',
-  threatLevel: false,
-  historyEvents: []
+const chartTimeRange = ref('today')
+const realTimeStatus = ref({
+  type: 'success',
+  text: '正常'
 })
 
-// 表格相关
-const searchQuery = ref('')
+const communicationStatus = ref([
+  { id: 1, name: '主控制台', description: '系统核心控制单元', online: true, load: 35 },
+  { id: 2, name: '基站A', description: '城市中心区域覆盖', online: true, load: 60 },
+  { id: 3, name: '基站B', description: '郊区信号覆盖', online: true, load: 45 },
+  { id: 4, name: '移动终端1', description: '应急车辆终端', online: false, load: 0 },
+  { id: 5, name: '移动终端2', description: '巡逻人员终端', online: true, load: 25 }
+])
+
+const communicationRecords = ref([])
+const searchKeyword = ref('')
+const loading = ref(false)
 const currentPage = ref(1)
 const pageSize = ref(10)
-const loading = ref(false)
-const detailVisible = ref(false)
-const currentEvent = ref(null)
+const totalRecords = ref(0)
 
-const filteredEvents = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
+// 弹窗相关数据
+const detailDialogVisible = ref(false)
+const statusDialogVisible = ref(false)
+const analyzeDialogVisible = ref(false)
+const selectedRecord = ref(null)
+const selectedStatus = ref(null)
+const analyzingRecord = ref(null)
+
+// 图表数据
+const signalBars = ref([])
+const chartLabels = ref(['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'])
+const spectrumBars = ref([])
+
+// 计算属性
+const filteredRecords = computed(() => {
+  let records = communicationRecords.value
   
-  let result = securityEvents.value
-  
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    result = result.filter(item => 
-      item.type.toLowerCase().includes(query) || 
-      item.description.toLowerCase().includes(query) ||
-      item.source.toLowerCase().includes(query)
+  if (searchKeyword.value) {
+    const keyword = searchKeyword.value.toLowerCase()
+    records = records.filter(record => 
+      record.callSign.toLowerCase().includes(keyword) ||
+      record.location.toLowerCase().includes(keyword) ||
+      record.frequency.includes(keyword)
     )
   }
   
-  return result.slice(start, end)
+  totalRecords.value = records.length
+  
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  return records.slice(start, end)
 })
-
-const totalEvents = computed(() => {
-  if (searchQuery.value) {
-    return filteredEvents.value.length
-  }
-  return securityEvents.value.length
-})
-
-// 图表实例
-const behaviorChart = ref(null)
-const securityChart = ref(null)
-let behaviorChartInstance = null
-let securityChartInstance = null
 
 // 方法
-const handleDateChange = () => {
+const generateMockData = () => {
+  const mockRecords = []
+  const callSigns = ['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA', 'ECHO']
+  const locations = ['北京控制中心', '上海基站', '广州应急点', '深圳指挥所', '成都分站']
+  
+  for (let i = 1; i <= 50; i++) {
+    mockRecords.push({
+      id: i,
+      frequency: `${146 + (i % 10)}.${i % 100} MHz`,
+      callSign: `${callSigns[i % 5]}-${String(i).padStart(3, '0')}`,
+      location: locations[i % 5],
+      signalStrength: 30 + Math.floor(Math.random() * 70),
+      timestamp: new Date(Date.now() - Math.random() * 24 * 60 * 60 * 1000),
+      status: Math.random() > 0.2 ? 'success' : 'failed',
+      quality: Math.floor(Math.random() * 3) + 3
+    })
+  }
+  
+  communicationRecords.value = mockRecords
+  totalRecords.value = mockRecords.length
+}
+
+const generateChartData = () => {
+  const bars = []
+  for (let i = 0; i < 12; i++) {
+    const height = 20 + Math.floor(Math.random() * 60)
+    let color = '#F56C6C'
+    if (height >= 70) color = '#67C23A'
+    else if (height >= 40) color = '#E6A23C'
+    
+    bars.push({ height, color })
+  }
+  signalBars.value = bars
+}
+
+const generateSpectrumData = () => {
+  const bars = []
+  for (let i = 0; i < 20; i++) {
+    const height = 10 + Math.floor(Math.random() * 80)
+    const color = `hsl(${200 + i * 5}, 70%, 50%)`
+    const freq = (140 + i * 2).toFixed(1)
+    bars.push({ height, color, freq })
+  }
+  spectrumBars.value = bars
+}
+
+const getSignalColor = (strength) => {
+  if (strength >= 80) return '#67C23A'
+  if (strength >= 60) return '#E6A23C'
+  return '#F56C6C'
+}
+
+const formatTime = (timestamp) => {
+  return timestamp.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
+}
+
+const handleRefresh = () => {
   loading.value = true
   setTimeout(() => {
-    statistics.value = {
-      activeUsers: Math.floor(Math.random() * 100) + 300,
-      traffic: (Math.random() * 1000 + 500).toFixed(1),
-      securityEvents: Math.floor(Math.random() * 20) + 10,
-      auditLogs: Math.floor(Math.random() * 1000) + 1000
-    }
+    generateMockData()
+    generateChartData()
     loading.value = false
-    ElMessage.success('数据已更新')
-  }, 800)
+    ElMessage.success('数据刷新成功')
+  }, 500)
 }
 
-const refreshData = () => {
-  handleDateChange()
-  initCharts()
-}
-
-const handleSearch = () => {
+const handleSizeChange = (newSize) => {
+  pageSize.value = newSize
   currentPage.value = 1
 }
 
-const handleSearchClear = () => {
-  searchQuery.value = ''
-  currentPage.value = 1
+const handleCurrentChange = (newPage) => {
+  currentPage.value = newPage
 }
 
-const handleSizeChange = (val) => {
-  pageSize.value = val
+const handleChartTimeChange = (value) => {
+  generateChartData()
+  ElMessage.info(`已切换到${value === 'today' ? '今日' : value === 'week' ? '本周' : '本月'}数据`)
 }
 
-const handleCurrentChange = (val) => {
-  currentPage.value = val
+const handleStatusClick = (status) => {
+  selectedStatus.value = status
+  statusDialogVisible.value = true
 }
 
-const handleDetail = (row) => {
-  currentEvent.value = row
-  detailVisible.value = true
+const handleRecordClick = (record) => {
+  selectedRecord.value = record
+  detailDialogVisible.value = true
 }
 
-const handleMarkAsRead = () => {
-  const index = securityEvents.value.findIndex(item => item.id === currentEvent.value.id)
-  if (index !== -1) {
-    securityEvents.value.splice(index, 1)
+const handleDetailClick = (record) => {
+  selectedRecord.value = record
+  detailDialogVisible.value = true
+}
+
+const handleAnalyzeSignal = (record) => {
+  analyzingRecord.value = record
+  generateSpectrumData()
+  detailDialogVisible.value = false
+  analyzeDialogVisible.value = true
+}
+
+const handleExportData = async () => {
+  try {
+    loading.value = true
+    // 模拟导出数据
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    ElMessage.success('数据导出成功，开始下载...')
+    
+    // 模拟下载
+    const dataStr = JSON.stringify(communicationRecords.value, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `emergency_radio_data_${new Date().toISOString().split('T')[0]}.json`
+    link.click()
+    URL.revokeObjectURL(url)
+    
+  } catch (error) {
+    ElMessage.error('数据导出失败')
+  } finally {
+    loading.value = false
   }
-  detailVisible.value = false
-  ElMessage.success('事件已标记为已处理')
 }
 
-const handleIpAnalysis = (ip) => {
-  currentIp.value = ip
-  // 模拟IP信息查询
-  ipInfo.value = {
-    location: ip.startsWith('192.168') ? '内网IP' : '中国 北京',
-    organization: ip.startsWith('192.168') ? '内部网络' : '某云计算公司',
-    threatLevel: Math.random() > 0.7,
-    historyEvents: securityEvents.value
-      .filter(e => e.source === ip)
-      .map(e => ({ time: e.time, type: e.type, level: e.level }))
-      .slice(0, 3)
+const handleRestartDevice = async (device) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要重启设备"${device.name}"吗？重启过程可能需要几分钟。`,
+      '重启设备',
+      {
+        confirmButtonText: '确定重启',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+    
+    // 模拟重启过程
+    ElMessage.info(`设备"${device.name}"正在重启...`)
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    
+    // 更新设备状态
+    const deviceIndex = communicationStatus.value.findIndex(d => d.id === device.id)
+    if (deviceIndex !== -1) {
+      communicationStatus.value[deviceIndex].online = true
+      communicationStatus.value[deviceIndex].load = 10
+    }
+    
+    ElMessage.success(`设备"${device.name}"重启成功`)
+    statusDialogVisible.value = false
+    
+  } catch (error) {
+    // 用户取消操作
   }
-  ipAnalysisVisible.value = true
 }
 
-const handleBlockIp = () => {
-  ElMessage.success(`IP ${currentIp.value} 已加入黑名单`)
-  ipAnalysisVisible.value = false
+const handleGenerateReport = (record) => {
+  ElMessage.success('分析报告生成成功，已保存到报告中心')
+  analyzeDialogVisible.value = false
 }
 
-const getLevelTagType = (level) => {
-  switch (level) {
-    case '高危': return 'danger'
-    case '中危': return 'warning'
-    case '低危': return 'info'
-    default: return ''
+const getSignalAnalysisDesc = (record) => {
+  if (record.signalStrength >= 80) {
+    return '信号质量优秀，通信稳定可靠，适合应急指挥通信。'
+  } else if (record.signalStrength >= 60) {
+    return '信号质量良好，通信基本稳定，建议持续监控。'
+  } else {
+    return '信号质量一般，存在通信中断风险，建议优化信号覆盖。'
   }
 }
 
-// 初始化图表
-const initCharts = () => {
-  if (behaviorChartInstance) {
-    behaviorChartInstance.dispose()
-  }
-  if (securityChartInstance) {
-    securityChartInstance.dispose()
+const getSignalSuggestions = (record) => {
+  const suggestions = []
+  
+  if (record.signalStrength < 60) {
+    suggestions.push('检查天线连接和方向调整')
+    suggestions.push('考虑增加信号中继设备')
+    suggestions.push('优化设备位置和高度')
+  } else if (record.signalStrength < 80) {
+    suggestions.push('定期检查设备运行状态')
+    suggestions.push('监控信号波动情况')
+  } else {
+    suggestions.push('继续保持当前配置')
+    suggestions.push('定期进行设备维护')
   }
   
-  behaviorChartInstance = echarts.init(behaviorChart.value)
-  securityChartInstance = echarts.init(securityChart.value)
+  suggestions.push('记录通信质量变化趋势')
+  suggestions.push('建立应急备用通信方案')
   
-  // 上网行为趋势图
-  behaviorChartInstance.setOption({
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-    legend: {
-      data: ['网络流量(GB)', '活跃用户', '安全事件'],
-      textStyle: {
-        color: '#606266'
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      data: behaviorChartData.days,
-      axisLine: {
-        lineStyle: {
-          color: '#DCDFE6'
-        }
-      },
-      axisLabel: {
-        color: '#606266'
-      }
-    },
-    yAxis: {
-      type: 'value',
-      axisLine: {
-        lineStyle: {
-          color: '#DCDFE6'
-        }
-      },
-      axisLabel: {
-        color: '#606266'
-      },
-      splitLine: {
-        lineStyle: {
-          color: '#EBEEF5'
-        }
-      }
-    },
-    series: [
-      {
-        name: '网络流量(GB)',
-        type: 'line',
-        smooth: true,
-        data: behaviorChartData.traffic,
-        itemStyle: {
-          color: '#409EFF'
-        },
-        lineStyle: {
-          width: 3
-        },
-        symbolSize: 8
-      },
-      {
-        name: '活跃用户',
-        type: 'line',
-        smooth: true,
-        data: behaviorChartData.activeUsers,
-        itemStyle: {
-          color: '#67C23A'
-        },
-        lineStyle: {
-          width: 3
-        },
-        symbolSize: 8
-      },
-      {
-        name: '安全事件',
-        type: 'bar',
-        data: behaviorChartData.securityEvents,
-        itemStyle: {
-          color: '#E6A23C'
-        },
-        barWidth: '40%'
-      }
-    ]
-  })
-  
-  // 安全事件分类图
-  securityChartInstance.setOption({
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b}: {c} ({d}%)'
-    },
-    legend: {
-      orient: 'vertical',
-      right: 10,
-      top: 'center',
-      data: securityChartData.types,
-      textStyle: {
-        color: '#606266'
-      }
-    },
-    series: [
-      {
-        name: '事件分类',
-        type: 'pie',
-        radius: ['50%', '70%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2
-        },
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: '18',
-            fontWeight: 'bold',
-            color: '#303133'
-          }
-        },
-        labelLine: {
-          show: false
-        },
-        data: securityChartData.types.map((type, index) => ({
-          value: securityChartData.counts[index],
-          name: type,
-          itemStyle: {
-            color: ['#F56C6C', '#E6A23C', '#67C23A', '#409EFF', '#909399'][index]
-          }
-        }))
-      }
-    ]
-  })
-}
-
-// 响应式调整图表大小
-const resizeCharts = () => {
-  if (behaviorChartInstance) {
-    behaviorChartInstance.resize()
-  }
-  if (securityChartInstance) {
-    securityChartInstance.resize()
-  }
+  return suggestions
 }
 
 // 生命周期
 onMounted(() => {
-  initCharts()
-  window.addEventListener('resize', resizeCharts)
+  generateMockData()
+  generateChartData()
+  generateSpectrumData()
 })
-
-watch(
-  () => dateRange.value,
-  () => {
-    refreshData()
-  },
-  { deep: true }
-)
 </script>
 
 <style lang="scss" scoped>
+
+
 @use './UserManagement.scss';
+
+
 </style>

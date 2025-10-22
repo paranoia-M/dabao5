@@ -1,7 +1,7 @@
 .emergency-radio-container {
   height: 100vh;
-  overflow: auto;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: auto;
 }
 
 // 登录页面样式
@@ -63,12 +63,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    transform: translateY(-20px) translateX(10px);
-  }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
 }
 
 .login-form-wrapper {
@@ -81,7 +77,6 @@
   width: 400px;
   max-width: 90%;
   z-index: 2;
-  position: relative;
 }
 
 .login-header {
@@ -106,7 +101,7 @@
   .el-form-item {
     margin-bottom: 20px;
   }
-
+  
   .el-input {
     .el-input__wrapper {
       border-radius: 8px;
@@ -128,7 +123,7 @@
   border: none;
   
   &:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   }
 }
@@ -169,6 +164,7 @@
   }
 }
 
+// 数据概览卡片
 .overview-cards {
   margin-bottom: 30px;
 }
@@ -185,7 +181,7 @@
 .stat-content {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
 }
 
 .stat-icon {
@@ -232,6 +228,7 @@
   }
 }
 
+// 主要内容区域
 .main-content {
   .el-row {
     margin-bottom: 20px;
@@ -246,7 +243,7 @@
   
   .el-card__header {
     border-bottom: 1px solid #e6e8eb;
-    padding: 20px;
+    padding: 16px 20px;
     background: #fafbfc;
   }
 }
@@ -274,13 +271,14 @@
   text-align: center;
 }
 
+// 设备列表
 .device-list {
   .device-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f2f5;
     
     &:last-child {
       border-bottom: none;
@@ -306,7 +304,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 2px;
+    gap: 4px;
   }
   
   .device-location {
@@ -315,11 +313,12 @@
   }
   
   .device-time {
-    font-size: 11px;
+    font-size: 12px;
     color: #bdc3c7;
   }
 }
 
+// 表格样式
 .table-actions {
   display: flex;
   align-items: center;
@@ -356,9 +355,10 @@
   margin-top: 20px;
 }
 
+// 详情对话框
 .detail-content {
   .el-descriptions {
-    margin-top: 10px;
+    margin-top: 16px;
   }
 }
 
@@ -369,17 +369,17 @@
   }
   
   .page-title {
-    font-size: 20px !important;
+    font-size: 20px;
   }
   
   .page-subtitle {
-    font-size: 14px !important;
+    font-size: 14px;
   }
   
-  .overview-cards {
-    .el-col {
-      margin-bottom: 15px;
-    }
+  .stat-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
   }
   
   .table-actions {
@@ -395,31 +395,7 @@
   
   .card-header {
     flex-direction: column;
-    align-items: flex-start;
     gap: 10px;
+    align-items: flex-start;
   }
-}
-
-// 加载动画
-.el-loading-mask {
-  border-radius: 12px;
-}
-
-// 滚动条样式
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
 }

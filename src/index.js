@@ -18,29 +18,39 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: 'behavior-management',
-            name: 'BehaviorManagement',
-            component: () => import('@/views/BehaviorManagement.vue')
+            path: 'dashboard',
+            name: 'Dashboard',
+            component: () => import('@/views/Dashboard.vue')
           },
           {
-            path: 'security-audit',
-            name: 'SecurityAudit',
-            component: () => import('@/views/SecurityAudit.vue')
+            path: 'communication-data',
+            name: 'CommunicationData',
+            component: () => import('@/views/CommunicationData.vue')
           },
           {
-            path: 'system-settings',
-            name: 'SystemSettings',
-            component: () => import('@/views/SystemSettings.vue')
+            path: 'signal-analysis',
+            name: 'SignalAnalysis',
+            component: () => import('@/views/SignalAnalysis.vue')
           },
           {
-            path: 'report-center',
-            name: 'ReportCenter',
-            component: () => import('@/views/ReportCenter.vue')
+            path: 'equipment-management',
+            name: 'EquipmentManagement',
+            component: () => import('@/views/EquipmentManagement.vue')
           },
           {
             path: 'user-management',
             name: 'UserManagement',
             component: () => import('@/views/UserManagement.vue')
+          },
+          {
+            path: 'system-logs',
+            name: 'SystemLogs',
+            component: () => import('@/views/SystemLogs.vue')
+          },
+          {
+            path: 'settings',
+            name: 'Settings',
+            component: () => import('@/views/Settings.vue')
           }
         ]
   }

@@ -1,0 +1,319 @@
+.emergency-radio-container {
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ed 100%);
+  min-height: 100vh;
+
+  .page-header {
+    margin-bottom: 24px;
+
+    .page-title {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stats-overview {
+      .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e1e8ed;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        height: 100px;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-icon {
+          width: 60px;
+          height: 60px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 16px;
+          font-size: 24px;
+
+          &.total-signals {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          }
+
+          &.active-devices {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+          }
+
+          &.emergency-calls {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+          }
+
+          &.signal-quality {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+          }
+
+          .icon-text {
+            color: white;
+            font-size: 24px;
+          }
+        }
+
+        .stat-content {
+          flex: 1;
+
+          .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            line-height: 1.2;
+          }
+
+          .stat-label {
+            font-size: 14px;
+            color: #5a6c7d;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  .filter-section {
+    margin-bottom: 24px;
+
+    .filter-card {
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e1e8ed;
+
+      .filter-form {
+        .el-form-item {
+          margin-bottom: 0;
+        }
+
+        .button-icon {
+          margin-right: 4px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .table-section {
+    .el-card {
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e1e8ed;
+
+      .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #2c3e50;
+
+        .button-icon {
+          margin-right: 4px;
+          font-size: 12px;
+        }
+      }
+
+      .el-table {
+        .el-table__header {
+          th {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+          }
+        }
+
+        .el-table__row {
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #f8f9fa;
+          }
+        }
+      }
+
+      .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .detail-content,
+  .analyze-content {
+    .el-descriptions {
+      margin-bottom: 16px;
+    }
+
+    .analyze-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      h3 {
+        margin: 0;
+        color: #2c3e50;
+      }
+    }
+
+    .analyze-stats {
+      margin: 20px 0;
+
+      .analyze-stat-item {
+        text-align: center;
+        padding: 16px;
+        background: #f8f9fa;
+        border-radius: 8px;
+
+        .analyze-stat-value {
+          font-size: 32px;
+          font-weight: 700;
+          margin-bottom: 8px;
+
+          &.quality-excellent {
+            color: #67c23a;
+          }
+
+          &.quality-good {
+            color: #e6a23c;
+          }
+
+          &.quality-fair {
+            color: #f56c6c;
+          }
+
+          &.quality-poor {
+            color: #909399;
+          }
+        }
+
+        .analyze-stat-label {
+          color: #5a6c7d;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .analyze-details {
+      margin: 20px 0;
+
+      h4 {
+        color: #2c3e50;
+        margin-bottom: 16px;
+      }
+
+      .analyze-detail-item {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+
+        strong {
+          color: #2c3e50;
+          margin-right: 8px;
+          min-width: 120px;
+        }
+      }
+    }
+
+    .analyze-timeline {
+      h4 {
+        color: #2c3e50;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .el-dialog {
+    border-radius: 12px;
+
+    .el-dialog__header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 16px 20px;
+      border-radius: 12px 12px 0 0;
+
+      .el-dialog__title {
+        color: white;
+        font-weight: 600;
+      }
+
+      .el-dialog__headerbtn {
+        top: 16px;
+
+        .el-dialog__close {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .emergency-radio-container {
+    padding: 12px;
+
+    .page-header {
+      .page-title {
+        font-size: 22px;
+      }
+
+      .stats-overview {
+        .stat-card {
+          height: auto;
+          flex-direction: column;
+          text-align: center;
+          padding: 16px;
+
+          .stat-icon {
+            margin-right: 0;
+            margin-bottom: 12px;
+          }
+        }
+      }
+    }
+
+    .filter-section {
+      .filter-card {
+        .filter-form {
+          .el-form-item {
+            display: block;
+            margin-bottom: 12px;
+
+            .el-form-item__label {
+              display: block;
+              text-align: left;
+              margin-bottom: 4px;
+            }
+          }
+        }
+      }
+    }
+
+    .table-section {
+      .el-card {
+        .table-header {
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+}

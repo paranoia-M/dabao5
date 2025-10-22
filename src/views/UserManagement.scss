@@ -1,220 +1,257 @@
-.network-behavior-audit-container {
+.home-container {
   padding: 20px;
-  height: 100%;
-  box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ed 100%);
+  min-height: 100vh;
 
-  .dashboard-card {
-    min-height: calc(100vh - 40px);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #ebeef5;
-
-      .system-title {
-        margin: 0;
-        font-size: 24px;
-        color: #303133;
-      }
-
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-
-        .date-picker {
-          width: 280px;
-        }
-
-        .refresh-btn {
-          margin-left: 10px;
-        }
-      }
-    }
-  }
-
-  .statistics-grid {
-    margin-bottom: 20px;
+  .stats-section {
+    margin-bottom: 24px;
 
     .stat-card {
-      margin-bottom: 20px;
-      border-radius: 8px;
-      transition: all 0.3s;
+      border-radius: 12px;
+      border: 1px solid #e6e8f0;
+      transition: all 0.3s ease;
 
       &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
       }
 
       .stat-content {
         display: flex;
         align-items: center;
+        padding: 8px 0;
 
         .stat-icon {
           width: 60px;
           height: 60px;
-          border-radius: 50%;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-right: 15px;
+          margin-right: 16px;
+          transition: all 0.3s ease;
 
-          .iconfont {
-            font-size: 28px;
-            color: #fff;
+          .icon-text {
+            font-size: 24px;
+            color: white;
           }
 
-          &.bg-blue {
-            background: linear-gradient(135deg, #409EFF, #79bbff);
-          }
-
-          &.bg-green {
-            background: linear-gradient(135deg, #67C23A, #95d475);
-          }
-
-          &.bg-orange {
-            background: linear-gradient(135deg, #E6A23C, #eebe77);
-          }
-
-          &.bg-purple {
-            background: linear-gradient(135deg, #909399, #b1b3b8);
+          &:hover {
+            transform: scale(1.1);
           }
         }
 
         .stat-info {
           flex: 1;
 
-          h3 {
-            margin: 0 0 5px 0;
-            font-size: 16px;
-            color: #909399;
-          }
-
           .stat-value {
-            margin: 0;
             font-size: 24px;
             font-weight: bold;
             color: #303133;
+            margin-bottom: 4px;
           }
 
-          .stat-desc {
-            margin: 5px 0 0 0;
+          .stat-title {
+            font-size: 14px;
+            color: #606266;
+          }
+        }
+      }
+    }
+  }
+
+  .main-content {
+    .chart-card,
+    .status-card,
+    .records-card {
+      border-radius: 12px;
+      border: 1px solid #e6e8f0;
+      margin-bottom: 20px;
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #303133;
+        padding: 0;
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+
+          .search-icon {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .chart-container {
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .chart-placeholder {
+        text-align: center;
+        color: #909399;
+
+        .chart-visualization {
+          margin-bottom: 20px;
+
+          .signal-bars {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 200px;
+            padding: 20px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+
+            .signal-bar {
+              width: 30px;
+              border-radius: 4px 4px 0 0;
+              transition: all 0.3s ease;
+              cursor: pointer;
+
+              &:hover {
+                opacity: 0.8;
+                transform: scale(1.05);
+              }
+            }
+          }
+
+          .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+
+            .chart-label {
+              font-size: 12px;
+              color: #606266;
+            }
+          }
+        }
+
+        p {
+          margin-top: 10px;
+          font-size: 14px;
+          color: #409EFF;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .status-list {
+      .status-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: #f8f9fa;
+          border-radius: 6px;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+
+        .status-info {
+          .status-name {
+            font-weight: 500;
+            color: #303133;
+            margin-bottom: 4px;
+          }
+
+          .status-desc {
             font-size: 12px;
             color: #909399;
-
-            .text-success {
-              color: #67C23A;
-            }
-
-            .text-danger {
-              color: #F56C6C;
-            }
           }
         }
       }
-    }
-  }
-
-  .chart-section {
-    margin-bottom: 20px;
-
-    .chart-card {
-      margin-bottom: 20px;
-      border-radius: 8px;
-
-      .chart-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-
-        h3 {
-          margin: 0;
-          font-size: 18px;
-          color: #303133;
-        }
-
-        .icon-help {
-          margin-left: 8px;
-          color: #909399;
-          cursor: pointer;
-          font-size: 16px;
-        }
-      }
-
-      .chart-container {
-        height: 300px;
-
-        .chart {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-  }
-
-  .recent-events {
-    .table-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-
-      h3 {
-        margin: 0;
-        font-size: 18px;
-        color: #303133;
-      }
-
-      .search-box {
-        width: 350px;
-
-        .search-input {
-          .icon-search {
-            font-size: 16px;
-          }
-        }
-      }
-    }
-
-    .event-table {
-      margin-bottom: 20px;
     }
 
     .pagination-container {
       display: flex;
       justify-content: flex-end;
-      margin-top: 15px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
     }
   }
 
-  .event-detail-dialog {
-    .event-detail-content {
-      .detail-value {
-        font-weight: bold;
-      }
+  // 弹窗样式
+  .record-detail,
+  .status-detail,
+  .signal-analysis {
+    .analysis-chart {
+      margin: 20px 0;
 
-      .detail-text {
-        white-space: pre-line;
-        line-height: 1.6;
+      .frequency-spectrum {
+        .spectrum-title {
+          font-weight: 600;
+          margin-bottom: 15px;
+          color: #303133;
+          text-align: center;
+        }
+
+        .spectrum-bars {
+          display: flex;
+          align-items: end;
+          justify-content: space-between;
+          height: 150px;
+          padding: 15px;
+          background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+          border-radius: 8px;
+          border: 1px solid #dee2e6;
+
+          .spectrum-bar {
+            flex: 1;
+            margin: 0 2px;
+            border-radius: 2px 2px 0 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+        }
       }
     }
-  }
 
-  .ip-analysis-dialog {
-    .ip-analysis-content {
-      .event-list {
-        max-height: 200px;
-        overflow-y: auto;
+    .analysis-suggestions {
+      h4 {
+        color: #303133;
+        margin-bottom: 10px;
+      }
 
-        .event-item {
-          padding: 5px 0;
-          border-bottom: 1px dashed #ebeef5;
-          font-size: 13px;
+      ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+          padding: 8px 0;
+          border-bottom: 1px solid #f0f0f0;
+          color: #606266;
+          position: relative;
+          padding-left: 20px;
+
+          &:before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+            top: 8px;
+          }
 
           &:last-child {
             border-bottom: none;
@@ -222,5 +259,99 @@
         }
       }
     }
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+
+    .stats-section {
+      .stat-card {
+        .stat-content {
+          .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+
+            .icon-text {
+              font-size: 20px;
+            }
+          }
+
+          .stat-info {
+            .stat-value {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    .main-content {
+      .chart-container {
+        height: 250px;
+
+        .chart-placeholder {
+          .chart-visualization {
+            .signal-bars {
+              height: 150px;
+
+              .signal-bar {
+                width: 20px;
+              }
+            }
+          }
+        }
+      }
+
+      .header-actions {
+        flex-direction: column;
+        gap: 10px;
+
+        .el-input {
+          width: 100% !important;
+          margin-right: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+// 动画效果
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+// 紧急状态样式
+.emergency-status {
+  background: linear-gradient(45deg, #fff3cd, #ffeaa7) !important;
+  border-color: #ffecb5 !important;
+  
+  .stat-value {
+    color: #856404 !important;
+  }
+  
+  .stat-title {
+    color: #856404 !important;
   }
 }

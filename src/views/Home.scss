@@ -2,130 +2,189 @@
   padding: 20px;
   background-color: #f5f7fa;
   min-height: 100vh;
-  
-  .summary-cards {
+
+  .stats-section {
     margin-bottom: 20px;
-    
+
     .stat-card {
-      margin-bottom: 20px;
-      
-      .card-content {
+      border-radius: 8px;
+      border: none;
+
+      .stat-content {
         display: flex;
         align-items: center;
-        
-        .icon-wrapper {
-          width: 50px;
-          height: 50px;
+        padding: 10px 0;
+
+        .stat-icon {
+          width: 60px;
+          height: 60px;
           border-radius: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin-right: 15px;
-          
-          .icon {
-            font-size: 24px;
-            color: white;
+          font-size: 24px;
+          color: white;
+
+          &.total-signals {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          }
+
+          &.active-devices {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+          }
+
+          &.warning-signals {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+          }
+
+          &.success-rate {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
           }
         }
-        
-        .text-wrapper {
+
+        .stat-info {
           flex: 1;
-          
-          h3 {
-            margin: 0;
-            font-size: 14px;
-            color: #909399;
-            font-weight: normal;
-          }
-          
-          .value {
-            margin: 5px 0;
-            font-size: 22px;
+
+          .stat-value {
+            font-size: 24px;
             font-weight: bold;
             color: #303133;
+            margin-bottom: 4px;
           }
-          
-          .trend {
-            margin: 0;
-            font-size: 12px;
-            
-            &.up {
-              color: #67C23A;
-            }
-            
-            &.down {
-              color: #F56C6C;
-            }
+
+          .stat-label {
+            font-size: 14px;
+            color: #909399;
           }
         }
       }
     }
   }
-  
-  .chart-row {
+
+  .charts-section {
     margin-bottom: 20px;
-    
+
     .chart-card {
-      margin-bottom: 20px;
-      
+      border-radius: 8px;
+      border: 1px solid #ebeef5;
+
       .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
-        .card-title {
-          font-size: 16px;
-          font-weight: bold;
-        }
+        font-weight: 600;
+        color: #303133;
       }
-      
+
       .chart-container {
-        width: 100%;
+        height: 300px;
+
+        .mock-chart {
+          height: 100%;
+          background: #f8f9fa;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px dashed #dcdfe6;
+
+          .chart-placeholder {
+            text-align: center;
+            color: #909399;
+
+            i {
+              font-size: 48px;
+              margin-bottom: 10px;
+              display: block;
+            }
+
+            p {
+              margin: 0;
+              font-size: 14px;
+            }
+          }
+        }
       }
     }
   }
-  
-  .table-row {
+
+  .table-section {
     .table-card {
+      border-radius: 8px;
+      border: 1px solid #ebeef5;
+
       .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
-        .card-title {
-          font-size: 16px;
-          font-weight: bold;
+        font-weight: 600;
+        color: #303133;
+
+        .header-actions {
+          display: flex;
+          align-items: center;
         }
       }
-      
-      .level-container {
-        display: flex;
-        align-items: center;
-        
-        .el-progress {
-          flex: 1;
-          margin-right: 10px;
-        }
-        
-        .level-text {
-          width: 40px;
-          font-size: 12px;
-        }
+
+      .location-text {
+        color: #606266;
+        font-size: 14px;
       }
-      
-      .pagination-wrapper {
-        margin-top: 15px;
+
+      .pagination-container {
+        margin-top: 20px;
         display: flex;
         justify-content: flex-end;
       }
     }
   }
-  
-  .event-detail {
-    .warning-text {
-      color: #F56C6C;
-      font-weight: bold;
-      margin-top: 5px;
+
+  .signal-details {
+    .el-progress {
+      display: inline-block;
+      width: 100px;
+      margin-right: 10px;
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+
+    .stats-section {
+      .stat-card {
+        .stat-content {
+          .stat-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+          }
+
+          .stat-info {
+            .stat-value {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    .table-section {
+      .table-card {
+        .card-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+
+          .header-actions {
+            width: 100%;
+            justify-content: flex-start;
+          }
+        }
+      }
     }
   }
 }

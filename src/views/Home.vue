@@ -1,428 +1,277 @@
 <template>
   <div class="home-container">
-    <!-- 顶部统计卡片 -->
-    <div class="stats-section">
-      <el-row :gutter="20">
-        <el-col :xs="12" :sm="6" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon total-signals">
-                <i class="el-icon-monitor"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.totalSignals }}</div>
-                <div class="stat-label">总信号数量</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :xs="12" :sm="6" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon active-devices">
-                <i class="el-icon-cpu"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.activeDevices }}</div>
-                <div class="stat-label">活跃设备</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :xs="12" :sm="6" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon warning-signals">
-                <i class="el-icon-warning"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.warningSignals }}</div>
-                <div class="stat-label">预警信号</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :xs="12" :sm="6" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon success-rate">
-                <i class="el-icon-success"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.successRate }}%</div>
-                <div class="stat-label">通信成功率</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
-    <!-- 图表区域 -->
-    <div class="charts-section">
-      <el-row :gutter="20">
-        <el-col :xs="24" :sm="12" :md="12" :lg="12">
-          <el-card class="chart-card" shadow="never">
-            <template #header>
-              <div class="card-header">
-                <span>信号强度趋势</span>
-                <el-select v-model="signalTimeRange" size="small" style="width: 120px">
-                  <el-option label="24小时" value="24h"></el-option>
-                  <el-option label="7天" value="7d"></el-option>
-                  <el-option label="30天" value="30d"></el-option>
-                </el-select>
-              </div>
-            </template>
-            <div class="chart-container">
-              <div class="mock-chart signal-chart">
-                <div class="chart-placeholder">
-                  <i class="el-icon-data-analysis"></i>
-                  <p>信号强度趋势图表</p>
+    <!-- 欢迎卡片 -->
+    <el-card class="welcome-card">
+      <div class="welcome-content">
+        <h1 class="title">人工智能数据采集分析系统</h1>
+        <p class="subtitle">基于AI技术实现企业知识的智能分类与整合</p>
+        <el-divider />
+        
+        <!-- 统计卡片 -->
+        <div class="stats-container">
+          <el-row :gutter="20">
+            <el-col :xs="24" :sm="12" :md="8" :lg="6" v-for="(stat, index) in stats" :key="index">
+              <el-card shadow="hover" class="stat-card">
+                <div class="stat-content">
+                  <div class="stat-icon" :style="{ backgroundColor: stat.color }">
+                    <span class="stat-icon-text">{{ stat.iconText }}</span>
+                  </div>
+                  <div class="stat-info">
+                    <div class="stat-value">{{ stat.value }}</div>
+                    <div class="stat-label">{{ stat.label }}</div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12">
-          <el-card class="chart-card" shadow="never">
-            <template #header>
-              <div class="card-header">
-                <span>信号类型分布</span>
-                <el-button size="small" type="text">查看详情</el-button>
-              </div>
-            </template>
-            <div class="chart-container">
-              <div class="mock-chart type-chart">
-                <div class="chart-placeholder">
-                  <i class="el-icon-pie-chart"></i>
-                  <p>信号类型分布图表</p>
-                </div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
-    <!-- 最近信号列表 -->
-    <div class="table-section">
-      <el-card class="table-card" shadow="never">
+              </el-card>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+    </el-card>
+    
+    <!-- 最近文档表格 -->
+    <div class="recent-container">
+      <el-card>
         <template #header>
-          <div class="card-header">
-            <span>最近通信记录</span>
-            <div class="header-actions">
-              <el-input
-                v-model="searchKeyword"
-                placeholder="搜索设备或频率"
-                size="small"
-                style="width: 200px; margin-right: 10px;"
-                clearable
-              >
-                <template #prefix>
-                  <i class="el-icon-search"></i>
-                </template>
-              </el-input>
-              <el-select v-model="statusFilter" size="small" placeholder="状态筛选" style="width: 120px; margin-right: 10px;">
-                <el-option label="全部" value=""></el-option>
-                <el-option label="成功" value="success"></el-option>
-                <el-option label="失败" value="failed"></el-option>
-                <el-option label="警告" value="warning"></el-option>
-              </el-select>
-              <el-button size="small" type="primary" @click="refreshData">
-                <i class="el-icon-refresh"></i>
-                刷新
-              </el-button>
-            </div>
+          <div class="recent-header">
+            <span>最近处理的知识文档</span>
+            <el-button type="primary" size="small" @click="handleViewAll">查看全部</el-button>
           </div>
         </template>
         
-        <el-table
-          :data="filteredSignals"
-          v-loading="loading"
-          style="width: 100%"
-          :default-sort="{ prop: 'timestamp', order: 'descending' }"
-        >
-          <el-table-column prop="deviceId" label="设备ID" width="120">
+        <el-table :data="recentDocuments" style="width: 100%" height="300">
+          <el-table-column prop="name" label="文档名称" width="180" />
+          <el-table-column prop="type" label="类型" width="120">
             <template #default="{ row }">
-              <el-tag size="small">{{ row.deviceId }}</el-tag>
+              <el-tag :type="getTagType(row.type)">{{ row.type }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="frequency" label="频率(MHz)" width="120">
+          <el-table-column prop="category" label="分类" />
+          <el-table-column prop="date" label="处理时间" width="180" />
+          <el-table-column label="操作" width="120">
             <template #default="{ row }">
-              {{ row.frequency.toFixed(2) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="signalStrength" label="信号强度" width="120">
-            <template #default="{ row }">
-              <el-progress 
-                :percentage="row.signalStrength" 
-                :show-text="false"
-                :color="getSignalColor(row.signalStrength)"
-              />
-              <span style="font-size: 12px; margin-left: 8px;">{{ row.signalStrength }}%</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="type" label="信号类型" width="120">
-            <template #default="{ row }">
-              <el-tag 
-                :type="getTypeTagType(row.type)"
-                size="small"
-              >
-                {{ row.type }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" label="状态" width="100">
-            <template #default="{ row }">
-              <el-tag
-                :type="getStatusTagType(row.status)"
-                effect="light"
-                size="small"
-              >
-                {{ getStatusText(row.status) }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="timestamp" label="时间" sortable width="180">
-            <template #default="{ row }">
-              {{ formatTime(row.timestamp) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="location" label="位置">
-            <template #default="{ row }">
-              <span class="location-text">{{ row.location }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="80" fixed="right">
-            <template #default="{ row }">
-              <el-button 
-                type="text" 
-                size="small"
-                @click="viewDetails(row)"
-              >
-                详情
-              </el-button>
+              <el-button type="text" size="small" @click="handlePreview(row)">预览</el-button>
             </template>
           </el-table-column>
         </el-table>
-
+        
         <div class="pagination-container">
           <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"
-            :page-sizes="[10, 20, 50, 100]"
-            :total="totalSignals"
-            layout="total, sizes, prev, pager, next, jumper"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+            small
+            layout="prev, pager, next"
+            :total="50"
+            :page-size="5"
+            @current-change="handlePageChange"
           />
         </div>
       </el-card>
     </div>
+    
+    <!-- 快速操作 -->
+    <div class="quick-actions">
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="8" :lg="6" v-for="(action, index) in quickActions" :key="index">
+          <el-card shadow="hover" class="action-card" @click="handleQuickAction(action)">
+            <div class="action-content">
+              <span class="action-icon" :style="{ color: action.color }">{{ action.iconText }}</span>
+              <div class="action-title">{{ action.title }}</div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
 
-    <!-- 详情对话框 -->
-    <el-dialog
-      v-model="detailDialogVisible"
-      title="通信详情"
-      width="600px"
-      destroy-on-close
-    >
-      <div v-if="selectedSignal" class="signal-details">
-        <el-descriptions :column="2" border>
-          <el-descriptions-item label="设备ID">{{ selectedSignal.deviceId }}</el-descriptions-item>
-          <el-descriptions-item label="频率">{{ selectedSignal.frequency.toFixed(2) }} MHz</el-descriptions-item>
-          <el-descriptions-item label="信号强度">
-            <el-progress 
-              :percentage="selectedSignal.signalStrength" 
-              :show-text="false"
-              :color="getSignalColor(selectedSignal.signalStrength)"
-            />
-            {{ selectedSignal.signalStrength }}%
-          </el-descriptions-item>
-          <el-descriptions-item label="信号类型">
-            <el-tag :type="getTypeTagType(selectedSignal.type)">
-              {{ selectedSignal.type }}
-            </el-tag>
-          </el-descriptions-item>
-          <el-descriptions-item label="状态">
-            <el-tag :type="getStatusTagType(selectedSignal.status)">
-              {{ getStatusText(selectedSignal.status) }}
-            </el-tag>
-          </el-descriptions-item>
-          <el-descriptions-item label="时间">{{ formatTime(selectedSignal.timestamp) }}</el-descriptions-item>
-          <el-descriptions-item label="位置" :span="2">{{ selectedSignal.location }}</el-descriptions-item>
-          <el-descriptions-item label="备注" :span="2">
-            {{ selectedSignal.remarks || '无备注信息' }}
-          </el-descriptions-item>
-        </el-descriptions>
+    <!-- 预览弹窗 -->
+    <el-dialog v-model="previewVisible" title="文档预览" width="70%">
+      <div class="preview-content">
+        <h3>{{ previewDocument.name }}</h3>
+        <p>类型: <el-tag :type="getTagType(previewDocument.type)">{{ previewDocument.type }}</el-tag></p>
+        <p>分类: {{ previewDocument.category }}</p>
+        <p>处理时间: {{ previewDocument.date }}</p>
+        <div class="preview-placeholder">
+          <p>这里是文档的AI智能分析结果预览区域</p>
+          <p>平台已自动识别文档关键内容并生成摘要</p>
+        </div>
       </div>
-      <template #footer>
-        <el-button @click="detailDialogVisible = false">关闭</el-button>
-      </template>
+    </el-dialog>
+
+    <!-- 上传文档弹窗 -->
+    <el-dialog v-model="uploadVisible" title="上传文档" width="50%">
+      <el-upload
+        class="upload-demo"
+        drag
+        action="#"
+        multiple
+        :on-success="handleUploadSuccess"
+        :on-error="handleUploadError"
+      >
+        <el-icon class="el-icon--upload"><upload /></el-icon>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <template #tip>
+          <div class="el-upload__tip">
+            支持上传PDF、DOCX、XLSX、PPTX格式文件，系统将自动分类
+          </div>
+        </template>
+      </el-upload>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref } from 'vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { Upload } from '@element-plus/icons-vue';
 
-// 响应式数据
-const stats = ref({
-  totalSignals: 0,
-  activeDevices: 0,
-  warningSignals: 0,
-  successRate: 0
-})
+// 统计数据
+const stats = ref([
+  { iconText: '📄', value: '1,245', label: '知识文档', color: '#409EFF' },
+  { iconText: '🏷️', value: '328', label: '分类标签', color: '#67C23A' },
+  { iconText: '📊', value: '98.7%', label: '分类准确率', color: '#E6A23C' },
+  { iconText: '📁', value: '56', label: '知识库', color: '#F56C6C' }
+]);
 
-const signalTimeRange = ref('24h')
-const searchKeyword = ref('')
-const statusFilter = ref('')
-const loading = ref(false)
-const currentPage = ref(1)
-const pageSize = ref(10)
-const totalSignals = ref(0)
-const detailDialogVisible = ref(false)
-const selectedSignal = ref(null)
+// 最近文档数据
+const recentDocuments = ref([
+  { id: 1, name: '2023年度产品规划', type: 'PDF', category: '产品文档', date: '2023-05-15 14:30' },
+  { id: 2, name: '市场调研报告', type: 'DOCX', category: '市场分析', date: '2023-05-14 10:15' },
+  { id: 3, name: '技术白皮书', type: 'PDF', category: '技术文档', date: '2023-05-13 16:45' },
+  { id: 4, name: '用户反馈汇总', type: 'XLSX', category: '用户研究', date: '2023-05-12 09:20' },
+  { id: 5, name: '项目进度报告', type: 'PPTX', category: '项目管理', date: '2023-05-11 11:30' }
+]);
 
-// 模拟数据
-const signalsData = ref([])
+// 快速操作
+const quickActions = ref([
+  { iconText: '⬆️', title: '上传文档', color: '#409EFF', action: 'upload' },
+  { iconText: '⬇️', title: '导出知识', color: '#67C23A', action: 'export' },
+  { iconText: '🔍', title: '智能搜索', color: '#E6A23C', action: 'search' },
+  { iconText: '⚙️', title: '分类设置', color: '#F56C6C', action: 'settings' }
+]);
 
-// 计算属性
-const filteredSignals = computed(() => {
-  let filtered = signalsData.value
-  
-  // 搜索筛选
-  if (searchKeyword.value) {
-    const keyword = searchKeyword.value.toLowerCase()
-    filtered = filtered.filter(signal => 
-      signal.deviceId.toLowerCase().includes(keyword) ||
-      signal.frequency.toString().includes(keyword) ||
-      signal.location.toLowerCase().includes(keyword)
-    )
-  }
-  
-  // 状态筛选
-  if (statusFilter.value) {
-    filtered = filtered.filter(signal => signal.status === statusFilter.value)
-  }
-  
-  // 分页
-  totalSignals.value = filtered.length
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  
-  return filtered.slice(start, end)
-})
+// 预览相关
+const previewVisible = ref(false);
+const previewDocument = ref({});
 
-// 方法
-const generateMockData = () => {
-  const types = ['语音', '数据', '紧急', '测试', '控制']
-  const statuses = ['success', 'failed', 'warning']
-  const locations = ['北京控制中心', '上海监测站', '广州基站', '成都中继站', '武汉终端']
-  
-  const mockData = []
-  for (let i = 1; i <= 150; i++) {
-    mockData.push({
-      id: i,
-      deviceId: `DEV${String(i).padStart(4, '0')}`,
-      frequency: 400 + Math.random() * 200,
-      signalStrength: Math.floor(Math.random() * 100),
-      type: types[Math.floor(Math.random() * types.length)],
-      status: statuses[Math.floor(Math.random() * statuses.length)],
-      timestamp: Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000,
-      location: locations[Math.floor(Math.random() * locations.length)],
-      remarks: Math.random() > 0.7 ? '信号质量良好，通信稳定' : ''
-    })
-  }
-  
-  return mockData
-}
+// 上传相关
+const uploadVisible = ref(false);
 
-const refreshData = async () => {
-  loading.value = true
-  
-  // 模拟异步加载
-  await new Promise(resolve => setTimeout(resolve, 800))
-  
-  signalsData.value = generateMockData()
-  
-  // 更新统计数据
-  stats.value = {
-    totalSignals: signalsData.value.length,
-    activeDevices: new Set(signalsData.value.map(s => s.deviceId)).size,
-    warningSignals: signalsData.value.filter(s => s.status === 'warning').length,
-    successRate: Math.round((signalsData.value.filter(s => s.status === 'success').length / signalsData.value.length) * 100)
-  }
-  
-  loading.value = false
-  ElMessage.success('数据刷新成功')
-}
-
-const getSignalColor = (strength) => {
-  if (strength >= 80) return '#67C23A'
-  if (strength >= 60) return '#E6A23C'
-  if (strength >= 40) return '#F56C6C'
-  return '#909399'
-}
-
-const getTypeTagType = (type) => {
+// 获取标签类型
+const getTagType = (type) => {
   const typeMap = {
-    '语音': '',
-    '数据': 'success',
-    '紧急': 'danger',
-    '测试': 'info',
-    '控制': 'warning'
+    'PDF': 'primary',
+    'DOCX': 'success',
+    'XLSX': 'warning',
+    'PPTX': 'danger'
+  };
+  return typeMap[type] || '';
+};
+
+// 处理分页变化
+const handlePageChange = (currentPage) => {
+  // 模拟分页数据加载
+  const mockData = [
+    { id: 1, name: '文档' + currentPage + '-1', type: 'PDF', category: '分类1', date: '2023-05-15' },
+    { id: 2, name: '文档' + currentPage + '-2', type: 'DOCX', category: '分类2', date: '2023-05-14' },
+    { id: 3, name: '文档' + currentPage + '-3', type: 'XLSX', category: '分类3', date: '2023-05-13' },
+    { id: 4, name: '文档' + currentPage + '-4', type: 'PPTX', category: '分类4', date: '2023-05-12' },
+    { id: 5, name: '文档' + currentPage + '-5', type: 'PDF', category: '分类5', date: '2023-05-11' }
+  ];
+  recentDocuments.value = mockData;
+  ElMessage.success(`已加载第${currentPage}页数据`);
+};
+
+// 预览文档
+const handlePreview = (document) => {
+  previewDocument.value = document;
+  previewVisible.value = true;
+};
+
+// 查看全部
+const handleViewAll = () => {
+  ElMessageBox.confirm(
+    '将展示所有知识文档，确认继续吗？',
+    '查看全部文档',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'info'
+    }
+  ).then(() => {
+    // 模拟加载全部数据
+    const mockAllData = [];
+    for (let i = 1; i <= 10; i++) {
+      mockAllData.push({
+        id: i,
+        name: '全部文档-' + i,
+        type: ['PDF', 'DOCX', 'XLSX', 'PPTX'][Math.floor(Math.random() * 4)],
+        category: ['产品文档', '市场分析', '技术文档', '用户研究', '项目管理'][Math.floor(Math.random() * 5)],
+        date: '2023-05-' + (10 + i) + ' ' + Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60)
+      });
+    }
+    recentDocuments.value = mockAllData;
+    ElMessage.success('已加载全部文档数据');
+  }).catch(() => {
+    ElMessage.info('已取消操作');
+  });
+};
+
+// 快速操作
+const handleQuickAction = (action) => {
+  switch (action.action) {
+    case 'upload':
+      uploadVisible.value = true;
+      break;
+    case 'export':
+      ElMessageBox.prompt('请输入导出文件名', '导出知识', {
+        confirmButtonText: '导出',
+        cancelButtonText: '取消',
+        inputPlaceholder: '例如: 企业知识库_2023'
+      }).then(({ value }) => {
+        ElMessage.success(`正在导出知识库: ${value}.zip`);
+      }).catch(() => {
+        ElMessage.info('取消导出');
+      });
+      break;
+    case 'search':
+      ElMessageBox.prompt('请输入搜索关键词', '智能搜索', {
+        confirmButtonText: '搜索',
+        cancelButtonText: '取消',
+        inputPlaceholder: '输入关键词进行智能搜索'
+      }).then(({ value }) => {
+        ElMessage.success(`正在搜索: ${value}，AI正在分析相关文档...`);
+      }).catch(() => {
+        ElMessage.info('取消搜索');
+      });
+      break;
+    case 'settings':
+      ElMessageBox.alert('分类设置功能正在开发中', '分类设置', {
+        confirmButtonText: '确定'
+      });
+      break;
   }
-  return typeMap[type] || ''
-}
+};
 
-const getStatusTagType = (status) => {
-  const statusMap = {
-    'success': 'success',
-    'failed': 'danger',
-    'warning': 'warning'
-  }
-  return statusMap[status] || ''
-}
+// 上传成功处理
+const handleUploadSuccess = (response, file, fileList) => {
+  uploadVisible.value = false;
+  ElMessage.success(`文件 ${file.name} 上传成功，AI正在分析内容...`);
+  // 模拟添加到最近文档
+  const newDoc = {
+    id: recentDocuments.value.length + 1,
+    name: file.name,
+    type: file.name.split('.').pop().toUpperCase(),
+    category: '待分类',
+    date: new Date().toLocaleString()
+  };
+  recentDocuments.value.unshift(newDoc);
+};
 
-const getStatusText = (status) => {
-  const statusMap = {
-    'success': '成功',
-    'failed': '失败',
-    'warning': '警告'
-  }
-  return statusMap[status] || status
-}
-
-const formatTime = (timestamp) => {
-  return new Date(timestamp).toLocaleString('zh-CN')
-}
-
-const viewDetails = (signal) => {
-  selectedSignal.value = signal
-  detailDialogVisible.value = true
-}
-
-const handleSizeChange = (newSize) => {
-  pageSize.value = newSize
-  currentPage.value = 1
-}
-
-const handleCurrentChange = (newPage) => {
-  currentPage.value = newPage
-}
-
-// 生命周期
-onMounted(() => {
-  refreshData()
-})
+// 上传错误处理
+const handleUploadError = (error, file, fileList) => {
+  ElMessage.error(`文件 ${file.name} 上传失败: ${error}`);
+};
 </script>
 
 <style lang="scss" scoped>
 
-
 @use './Home.scss';
-
 
 </style>

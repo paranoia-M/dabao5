@@ -1,190 +1,152 @@
 .home-container {
   padding: 20px;
-  background-color: #f5f7fa;
-  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
 
-  .stats-section {
+  .welcome-card {
     margin-bottom: 20px;
 
-    .stat-card {
-      border-radius: 8px;
-      border: none;
-
-      .stat-content {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-
-        .stat-icon {
-          width: 60px;
-          height: 60px;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-right: 15px;
-          font-size: 24px;
-          color: white;
-
-          &.total-signals {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          }
-
-          &.active-devices {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-          }
-
-          &.warning-signals {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-          }
-
-          &.success-rate {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-          }
-        }
-
-        .stat-info {
-          flex: 1;
-
-          .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #303133;
-            margin-bottom: 4px;
-          }
-
-          .stat-label {
-            font-size: 14px;
-            color: #909399;
-          }
-        }
-      }
-    }
-  }
-
-  .charts-section {
-    margin-bottom: 20px;
-
-    .chart-card {
-      border-radius: 8px;
-      border: 1px solid #ebeef5;
-
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: 600;
+    .welcome-content {
+      .title {
+        font-size: 24px;
         color: #303133;
+        margin-bottom: 10px;
+        text-align: center;
       }
 
-      .chart-container {
-        height: 300px;
-
-        .mock-chart {
-          height: 100%;
-          background: #f8f9fa;
-          border-radius: 4px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px dashed #dcdfe6;
-
-          .chart-placeholder {
-            text-align: center;
-            color: #909399;
-
-            i {
-              font-size: 48px;
-              margin-bottom: 10px;
-              display: block;
-            }
-
-            p {
-              margin: 0;
-              font-size: 14px;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .table-section {
-    .table-card {
-      border-radius: 8px;
-      border: 1px solid #ebeef5;
-
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: 600;
-        color: #303133;
-
-        .header-actions {
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      .location-text {
+      .subtitle {
+        font-size: 16px;
         color: #606266;
-        font-size: 14px;
+        text-align: center;
+        margin-bottom: 20px;
       }
 
-      .pagination-container {
+      .stats-container {
         margin-top: 20px;
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-  }
 
-  .signal-details {
-    .el-progress {
-      display: inline-block;
-      width: 100px;
-      margin-right: 10px;
-    }
-  }
-}
+        .stat-card {
+          margin-bottom: 20px;
 
-// 响应式设计
-@media (max-width: 768px) {
-  .home-container {
-    padding: 10px;
+          .stat-content {
+            display: flex;
+            align-items: center;
+            padding: 10px;
 
-    .stats-section {
-      .stat-card {
-        .stat-content {
-          .stat-icon {
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-          }
+            .stat-icon {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-right: 15px;
 
-          .stat-info {
-            .stat-value {
-              font-size: 20px;
+              .stat-icon-text {
+                font-size: 24px;
+              }
+            }
+
+            .stat-info {
+              .stat-value {
+                font-size: 20px;
+                font-weight: bold;
+                color: #303133;
+                margin-bottom: 5px;
+              }
+
+              .stat-label {
+                font-size: 14px;
+                color: #909399;
+              }
             }
           }
         }
       }
     }
+  }
 
-    .table-section {
-      .table-card {
-        .card-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
+  .recent-container {
+    margin-bottom: 20px;
 
-          .header-actions {
-            width: 100%;
-            justify-content: flex-start;
-          }
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pagination-container {
+      margin-top: 15px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .quick-actions {
+    .action-card {
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .action-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+
+        .action-icon {
+          font-size: 36px;
+          margin-bottom: 15px;
+        }
+
+        .action-title {
+          font-size: 16px;
+          font-weight: 500;
+          color: #303133;
         }
       }
+    }
+  }
+
+  .preview-content {
+    h3 {
+      margin-bottom: 15px;
+      color: #303133;
+    }
+
+    p {
+      margin-bottom: 10px;
+      color: #606266;
+    }
+
+    .preview-placeholder {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f5f7fa;
+      border-radius: 4px;
+      text-align: center;
+
+      p {
+        margin-bottom: 10px;
+        color: #909399;
+      }
+    }
+  }
+
+  .upload-demo {
+    text-align: center;
+
+    .el-upload__text {
+      margin: 15px 0;
+    }
+
+    .el-upload__tip {
+      color: #909399;
+      font-size: 14px;
     }
   }
 }

@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-
+  
   .header {
     display: flex;
     justify-content: space-between;
@@ -11,52 +11,53 @@
     padding: 0 20px;
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    height: 60px;
-    line-height: 60px;
-
-    .logo {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bold;
-
-      .logo-icon {
-        margin-right: 10px;
-        font-size: 24px;
+    
+    .header-left {
+      .title {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+      }
+      
+      .subtitle {
+        font-size: 12px;
+        color: #666;
       }
     }
-
-    .user-info {
-      .user-dropdown {
+    
+    .header-right {
+      .el-dropdown-link {
         display: flex;
         align-items: center;
         cursor: pointer;
-
+        
         .username {
           margin: 0 8px;
+          font-size: 14px;
         }
-
+        
         .dropdown-arrow {
           font-size: 12px;
+          color: #999;
         }
       }
     }
   }
-
+  
   .aside {
     background-color: #f8fafc;
     border-right: 1px solid #e6e6e6;
-
+    
     .menu {
       border-right: none;
       height: 100%;
-
+      
       .menu-icon {
         margin-right: 8px;
       }
     }
   }
-
+  
   .main {
     padding: 20px;
     background-color: #f5f7fa;

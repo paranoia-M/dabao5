@@ -1,0 +1,80 @@
+.audit-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  
+  .audit-card {
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    
+    .header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      
+      .title {
+        color: #409eff;
+        text-align: center;
+        margin: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ebeef5;
+      }
+      
+      .search-filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .search-text {
+          font-weight: 500;
+        }
+      }
+    }
+    
+    .el-table {
+      margin-top: 15px;
+      
+      :deep(.el-table__cell) {
+        padding: 12px 0;
+      }
+      
+      .detail-text {
+        white-space: pre-wrap;
+        line-height: 1.5;
+      }
+    }
+    
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .audit-detail-dialog {
+    border-radius: 8px;
+    
+    .detail-content {
+      padding: 10px;
+      
+      .detail-value {
+        font-weight: 500;
+        color: #606266;
+      }
+      
+      .detail-text {
+        padding: 10px;
+        background-color: #f5f7fa;
+        border-radius: 4px;
+        line-height: 1.6;
+      }
+    }
+    
+    .dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  }
+}

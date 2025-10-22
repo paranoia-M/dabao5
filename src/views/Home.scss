@@ -1,152 +1,131 @@
 .home-container {
   padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-
-  .welcome-card {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  
+  .summary-cards {
     margin-bottom: 20px;
-
-    .welcome-content {
-      .title {
-        font-size: 24px;
-        color: #303133;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-
-      .subtitle {
-        font-size: 16px;
-        color: #606266;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      .stats-container {
-        margin-top: 20px;
-
-        .stat-card {
-          margin-bottom: 20px;
-
-          .stat-content {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-
-            .stat-icon {
-              width: 50px;
-              height: 50px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-right: 15px;
-
-              .stat-icon-text {
-                font-size: 24px;
-              }
+    
+    .stat-card {
+      margin-bottom: 20px;
+      
+      .card-content {
+        display: flex;
+        align-items: center;
+        
+        .icon-wrapper {
+          width: 50px;
+          height: 50px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 15px;
+          
+          .icon {
+            font-size: 24px;
+            color: white;
+          }
+        }
+        
+        .text-wrapper {
+          flex: 1;
+          
+          h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #909399;
+            font-weight: normal;
+          }
+          
+          .value {
+            margin: 5px 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: #303133;
+          }
+          
+          .trend {
+            margin: 0;
+            font-size: 12px;
+            
+            &.up {
+              color: #67C23A;
             }
-
-            .stat-info {
-              .stat-value {
-                font-size: 20px;
-                font-weight: bold;
-                color: #303133;
-                margin-bottom: 5px;
-              }
-
-              .stat-label {
-                font-size: 14px;
-                color: #909399;
-              }
+            
+            &.down {
+              color: #F56C6C;
             }
           }
         }
       }
     }
   }
-
-  .recent-container {
+  
+  .chart-row {
     margin-bottom: 20px;
-
-    .recent-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .pagination-container {
-      margin-top: 15px;
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-
-  .quick-actions {
-    .action-card {
-      cursor: pointer;
-      transition: all 0.3s;
+    
+    .chart-card {
       margin-bottom: 20px;
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .action-content {
+      
+      .card-header {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
-        padding: 20px;
-
-        .action-icon {
-          font-size: 36px;
-          margin-bottom: 15px;
-        }
-
-        .action-title {
+        
+        .card-title {
           font-size: 16px;
-          font-weight: 500;
-          color: #303133;
+          font-weight: bold;
         }
       }
-    }
-  }
-
-  .preview-content {
-    h3 {
-      margin-bottom: 15px;
-      color: #303133;
-    }
-
-    p {
-      margin-bottom: 10px;
-      color: #606266;
-    }
-
-    .preview-placeholder {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #f5f7fa;
-      border-radius: 4px;
-      text-align: center;
-
-      p {
-        margin-bottom: 10px;
-        color: #909399;
+      
+      .chart-container {
+        width: 100%;
       }
     }
   }
-
-  .upload-demo {
-    text-align: center;
-
-    .el-upload__text {
-      margin: 15px 0;
+  
+  .table-row {
+    .table-card {
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .card-title {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+      
+      .level-container {
+        display: flex;
+        align-items: center;
+        
+        .el-progress {
+          flex: 1;
+          margin-right: 10px;
+        }
+        
+        .level-text {
+          width: 40px;
+          font-size: 12px;
+        }
+      }
+      
+      .pagination-wrapper {
+        margin-top: 15px;
+        display: flex;
+        justify-content: flex-end;
+      }
     }
-
-    .el-upload__tip {
-      color: #909399;
-      font-size: 14px;
+  }
+  
+  .event-detail {
+    .warning-text {
+      color: #F56C6C;
+      font-weight: bold;
+      margin-top: 5px;
     }
   }
 }

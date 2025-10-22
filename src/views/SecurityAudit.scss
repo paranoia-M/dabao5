@@ -1,0 +1,128 @@
+
+.security-audit-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  
+  .dashboard-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      
+      h2 {
+        color: #303133;
+        font-size: 20px;
+        margin: 0;
+      }
+      
+      .time-range {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  
+  .statistics-grid {
+    margin-bottom: 20px;
+    
+    .stat-card {
+      padding: 20px;
+      border-radius: 8px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      &.danger {
+        background: linear-gradient(135deg, #f78989, #f56c6c);
+      }
+      
+      &.warning {
+        background: linear-gradient(135deg, #f7c46c, #e6a23c);
+      }
+      
+      &.primary {
+        background: linear-gradient(135deg, #79bbff, #409eff);
+      }
+      
+      &.success {
+        background: linear-gradient(135deg, #95d475, #67c23a);
+      }
+      
+      .stat-value {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      
+      .stat-label {
+        font-size: 14px;
+      }
+      
+      .stat-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 40px;
+        opacity: 0.3;
+      }
+    }
+  }
+  
+  .chart-section {
+    margin-bottom: 20px;
+    
+    .chart-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      height: 100%;
+      
+      h3 {
+        color: #303133;
+        font-size: 16px;
+        margin: 0 0 15px 0;
+      }
+      
+      .chart-container {
+        width: 100%;
+      }
+    }
+  }
+  
+  .recent-audit {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    h3 {
+      color: #303133;
+      font-size: 16px;
+      margin: 0 0 15px 0;
+    }
+    
+    .pagination-wrapper {
+      margin-top: 15px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .detail-content {
+    p {
+      margin: 5px 0;
+      color: #606266;
+    }
+  }
+}

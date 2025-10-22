@@ -18,29 +18,34 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: 'risk-assessment',
-            name: 'RiskAssessment',
-            component: () => import('@/views/RiskAssessment.vue')
+            path: 'dashboard',
+            name: 'Dashboard',
+            component: () => import('@/views/Dashboard.vue')
           },
           {
-            path: 'risk-control',
-            name: 'RiskControl',
-            component: () => import('@/views/RiskControl.vue')
+            path: 'security-monitor',
+            name: 'SecurityMonitor',
+            component: () => import('@/views/SecurityMonitor.vue')
           },
           {
-            path: 'early-warning',
-            name: 'EarlyWarning',
-            component: () => import('@/views/EarlyWarning.vue')
+            path: 'log-management',
+            name: 'LogManagement',
+            component: () => import('@/views/LogManagement.vue')
           },
           {
-            path: 'statistics-analysis',
-            name: 'StatisticsAnalysis',
-            component: () => import('@/views/StatisticsAnalysis.vue')
+            path: 'alarm-management',
+            name: 'AlarmManagement',
+            component: () => import('@/views/AlarmManagement.vue')
           },
           {
-            path: 'system-management',
-            name: 'SystemManagement',
-            component: () => import('@/views/SystemManagement.vue')
+            path: 'system-config',
+            name: 'SystemConfig',
+            component: () => import('@/views/SystemConfig.vue')
+          },
+          {
+            path: 'user-management',
+            name: 'UserManagement',
+            component: () => import('@/views/UserManagement.vue')
           }
         ]
   }

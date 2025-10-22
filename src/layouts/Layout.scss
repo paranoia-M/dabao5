@@ -1,56 +1,62 @@
+
 .layout-container {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #304156;
-    color: white;
-    padding: 0 20px;
-    height: 60px;
-    line-height: 60px;
+  .security-aside {
+    background-color: #001529;
+    height: 100vh;
+    transition: width 0.3s;
+    overflow: hidden;
 
     .logo {
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      color: #fff;
       font-size: 18px;
       font-weight: bold;
+      background-color: #002140;
+      border-bottom: 1px solid #001529;
     }
 
-    .user-dropdown {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
+    .security-menu {
+      border-right: none;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
 
-      .el-dropdown-link {
-        display: flex;
-        align-items: center;
-
-        .username {
-          margin-left: 10px;
-          color: white;
+      .el-menu-item {
+        &:hover {
+          background-color: #1890ff !important;
+        }
+        &.is-active {
+          background-color: #1890ff !important;
+          color: #ffd04b !important;
         }
       }
     }
   }
 
-  .aside {
-    background-color: #304156;
-    height: calc(100vh - 60px);
+  .security-header {
+    height: 60px;
+    line-height: 60px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
 
-    .el-menu-vertical {
-      border-right: none;
-
-      .menu-icon {
-        margin-right: 8px;
+    .header-right {
+      .logout-btn {
+        margin-left: 10px;
       }
     }
   }
 
-  .main {
-    padding: 20px;
+  .security-main {
     background-color: #f0f2f5;
+    padding: 20px;
     height: calc(100vh - 60px);
     overflow: auto;
   }

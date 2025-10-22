@@ -1,67 +1,50 @@
 
 <template>
-  <el-container class="layout-container">
-    <el-header class="header">
-      <div class="logo">浩泽金郡智慧终端设备调度管理平台</div>
-      <el-dropdown @command="handleCommand" class="user-dropdown" trigger="click">
-        <span class="el-dropdown-link">
-          <el-avatar :size="40" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
-          <span class="username">管理员</span>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </el-header>
+  <div class="layout-container">
     <el-container>
-      <el-aside width="200px" class="aside">
+      <el-aside width="260px" class="security-aside">
+        <div class="logo">信息传输安全技术支撑服务软件</div>
         <el-menu
           :default-active="activeMenu"
-          class="el-menu-vertical"
-          background-color="#304156"
-          text-color="#bfcbd9"
-          active-text-color="#409EFF"
+          background-color="#001529"
+          text-color="#fff"
+          active-text-color="#ffd04b"
           router
+          @select="handleMenuSelect"
+          class="security-menu"
         >
-          <el-menu-item index="/" route="/">
-            <template #title>
-              <span class="menu-icon">🏠</span>
-              <span>首页</span>
-            </template>
+          <el-menu-item index="Home" route="/">
+            <span class="menu-item-text">首页</span>
           </el-menu-item>
-          <el-menu-item index="/risk-assessment" route="/risk-assessment">
-            <template #title>
-              <span class="menu-icon">📊</span>
-              <span>风险评估</span>
-            </template>
+          <el-menu-item index="SecurityMonitor" route="/security-monitor">
+            <span class="menu-item-text">安全态势监控</span>
           </el-menu-item>
-          <el-menu-item index="/risk-control" route="/risk-control">
-            <template #title>
-              <span class="menu-icon">🛡️</span>
-              <span>风险管控</span>
-            </template>
+          <el-menu-item index="LogManagement" route="/log-management">
+            <span class="menu-item-text">安全日志审计</span>
           </el-menu-item>
-          <el-menu-item index="/early-warning" route="/early-warning">
-            <template #title>
-              <span class="menu-icon">⚠️</span>
-              <span>动态预警</span>
-            </template>
+          <el-menu-item index="AlarmManagement" route="/alarm-management">
+            <span class="menu-item-text">威胁告警中心</span>
           </el-menu-item>
-          <el-menu-item index="/statistics-analysis" route="/statistics-analysis">
-            <template #title>
-              <span class="menu-icon">📈</span>
-              <span>统计分析</span>
-            </template>
+          <el-menu-item index="SystemConfig" route="/system-config">
+            <span class="menu-item-text">系统安全配置</span>
+          </el-menu-item>
+          <el-menu-item index="UserManagement" route="/user-management">
+            <span class="menu-item-text">权限管理系统</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
-      <el-main class="main">
-        <router-view />
-      </el-main>
+      <el-container>
+        <el-header class="security-header">
+          <div class="header-right">
+            <el-button type="primary" plain class="logout-btn" @click="handleLogout">安全退出</el-button>
+          </div>
+        </el-header>
+        <el-main class="security-main">
+          <RouterView />
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
+  </div>
 </template>
 
 <script setup>
@@ -72,16 +55,15 @@ const route = useRoute()
 const router = useRouter()
 
 const activeMenu = computed(() => {
-  return route.path
+  return route.name
 })
 
-const handleCommand = async (command) => {
-  if (command === 'logout') {
-    await handleLogout()
-  }
+const handleMenuSelect = (index) => {
+  console.log(`[安全日志] 菜单切换至: ${index}`)
 }
 
 const handleLogout = async () => {
+  console.log('[安全日志] 用户执行登出操作')
   localStorage.clear()
   await router.push('/login')
 }
@@ -92,4 +74,4 @@ const handleLogout = async () => {
 @use './Layout.scss';
 
 </style>
-        
+    

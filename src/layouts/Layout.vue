@@ -55,12 +55,6 @@
               <span>统计分析</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/system-management" route="/system-management">
-            <template #title>
-              <span class="menu-icon">⚙️</span>
-              <span>系统管理</span>
-            </template>
-          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main class="main">

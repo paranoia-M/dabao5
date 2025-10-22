@@ -1,0 +1,150 @@
+.log-management-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100%;
+  box-sizing: border-box;
+
+  .search-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    background-color: #ffffff;
+
+    .search-form {
+      padding: 15px 20px;
+
+      .form-item-enhanced {
+        margin-right: 20px;
+        margin-bottom: 15px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        .el-form-item__label {
+          font-weight: 600;
+          color: #606266;
+        }
+      }
+    }
+  }
+
+  .table-card {
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    background-color: #ffffff;
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #ebeef5;
+
+      .table-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #303133;
+        display: flex;
+        align-items: center;
+
+        .title-icon {
+          margin-right: 10px;
+          font-size: 20px;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        gap: 10px;
+      }
+    }
+
+    .log-table {
+      margin-top: 10px;
+
+      .log-tag {
+        font-weight: 500;
+        padding: 0 10px;
+        height: 24px;
+        line-height: 24px;
+      }
+
+      .detail-button {
+        background-color: #f0f7ff;
+        border-color: #c6e2ff;
+        color: #409eff;
+
+        &:hover {
+          background-color: #d9ecff;
+        }
+      }
+    }
+
+
+    .pagination-container {
+      padding: 20px 0;
+      display: flex;
+      justify-content: flex-end;
+
+      .log-pagination {
+        .el-pagination__total,
+        .el-pagination__jump {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .log-detail-dialog {
+    .detail-descriptions {
+      .el-descriptions__label {
+        width: 100px;
+        font-weight: 600;
+        color: #606266;
+      }
+
+      .log-content {
+        padding: 10px;
+        background-color: #f5f7fa;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  .export-dialog {
+    .export-options {
+      padding: 0 20px;
+
+      .el-form-item {
+        margin-bottom: 20px;
+
+        .el-form-item__label {
+          font-weight: 600;
+          color: #606266;
+          padding-bottom: 8px;
+        }
+      }
+    }
+  }
+
+  .action-button {
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: all 0.3s;
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+  }
+
+  .delete-confirm-dialog {
+    .el-message-box__content {
+      color: #f56c6c;
+    }
+  }
+}

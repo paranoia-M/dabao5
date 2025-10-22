@@ -1,109 +1,74 @@
+
 <template>
-  <el-container class="layout-container">
-    <el-header class="header">
-      <div class="logo">
-        <span class="logo-icon">🖥️</span>
-        <span class="logo-text">泰捷欣监控设备数据压缩上传应用系统</span>
-      </div>
-      <div class="user-info">
-        <el-dropdown @command="handleCommand">
-          <span class="el-dropdown-link">
-            <el-avatar :size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
-            <span class="username">管理员</span>
-            <span class="user-status">● 在线</span>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item command="profile">个人中心</el-dropdown-item>
-              <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
-    </el-header>
+  <div class="layout-container">
     <el-container>
-      <el-aside width="220px">
+      <el-aside width="240px" class="security-aside">
+        <div class="logo">网络安全防御智能化应用软件</div>
         <el-menu
           :default-active="activeMenu"
-          class="menu"
-          background-color="#f5f7fa"
-          text-color="#333"
-          active-text-color="#000"
-          :active-background-color="activeBgColor"
+          background-color="#001529"
+          text-color="#fff"
+          active-text-color="#ffd04b"
           router
+          @select="handleMenuSelect"
+          class="security-menu"
         >
-          <el-menu-item index="/">
-            <span class="menu-icon">🏠</span>
-            <span>首页</span>
-            <span class="menu-badge"></span>
+          <el-menu-item index="Home" route="/">
+            <span class="menu-item-text">首页</span>
           </el-menu-item>
-          <el-menu-item index="/alarm">
-            <span class="menu-icon">⚠️</span>
-            <span>告警管理</span>
+          <el-menu-item index="Dashboard" route="/dashboard">
+            <span class="menu-item-text">实时仪表盘</span>
           </el-menu-item>
-          <el-menu-item index="/report">
-            <span class="menu-icon">📊</span>
-            <span>报表统计</span>
+          <el-menu-item index="SecurityMonitor" route="/security-monitor">
+            <span class="menu-item-text">安全态势监控</span>
           </el-menu-item>
-          <el-menu-item index="/system">
-            <span class="menu-icon">⚙️</span>
-            <span>系统设置</span>
+          <el-menu-item index="LogManagement" route="/log-management">
+            <span class="menu-item-text">安全日志审计</span>
+          </el-menu-item>
+          <el-menu-item index="AlarmManagement" route="/alarm-management">
+            <span class="menu-item-text">威胁告警中心</span>
+          </el-menu-item>
+          <el-menu-item index="SystemConfig" route="/system-config">
+            <span class="menu-item-text">系统安全配置</span>
+          </el-menu-item>
+          <el-menu-item index="UserManagement" route="/user-management">
+            <span class="menu-item-text">权限管理系统</span>
           </el-menu-item>
         </el-menu>
-        <div class="system-status">
-          <div class="status-item">
-            <span class="status-label">系统状态：</span>
-            <span class="status-value running">运行中</span>
-          </div>
-          <div class="status-item">
-            <span class="status-label">最后检测：</span>
-            <span class="status-value">{{ new Date().toLocaleTimeString() }}</span>
-          </div>
-        </div>
       </el-aside>
-      <el-main>
-        <router-view />
-      </el-main>
+      <el-container>
+        <el-header class="security-header">
+          <div class="header-right">
+            <el-button type="primary" plain class="logout-btn" @click="handleLogout">安全退出</el-button>
+          </div>
+        </el-header>
+        <el-main class="security-main">
+          <RouterView />
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 
-const activeBgColor = ref('#e6f7ff')
-
 const activeMenu = computed(() => {
-  return route.path
+  return route.name
 })
 
-const handleCommand = async (command) => {
-  if (command === 'logout') {
-    await handleLogout()
-  } else if (command === 'profile') {
-    // 个人中心直接跳转，不显示弹窗
-    console.log('个人中心功能')
-  }
+const handleMenuSelect = (index) => {
+  console.log(`[安全日志] 菜单切换至: ${index}`)
 }
 
 const handleLogout = async () => {
+  console.log('[安全日志] 用户执行登出操作')
   localStorage.clear()
   await router.push('/login')
-}
-
-// 模拟实时监控数据
-const mockMonitorData = () => {
-  return {
-    cpuUsage: Math.floor(Math.random() * 100),
-    memoryUsage: Math.floor(Math.random() * 100),
-    diskUsage: Math.floor(Math.random() * 100),
-    networkStatus: ['正常', '拥堵', '断开'][Math.floor(Math.random() * 3)],
-    lastUpdate: new Date().toLocaleTimeString()
-  }
 }
 </script>
 
@@ -112,3 +77,4 @@ const mockMonitorData = () => {
 @use './Layout.scss';
 
 </style>
+    

@@ -1,105 +1,63 @@
+
 .layout-container {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    z-index: 1;
+  .security-aside {
+    background-color: #001529;
+    height: 100vh;
+    transition: width 0.3s;
+    overflow: hidden;
 
     .logo {
-      display: flex;
-      align-items: center;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      color: #fff;
       font-size: 18px;
       font-weight: bold;
-
-      .logo-icon {
-        margin-right: 10px;
-        font-size: 24px;
-      }
+      background-color: #002140;
+      border-bottom: 1px solid #001529;
     }
 
-    .user-info {
-      display: flex;
-      align-items: center;
-
-      .el-dropdown-link {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-
-        .username {
-          margin: 0 10px;
-          font-size: 14px;
-        }
-
-        .user-status {
-          font-size: 12px;
-          color: #67c23a;
-        }
-      }
-    }
-  }
-
-  .el-aside {
-    background-color: #f5f7fa;
-    border-right: 1px solid #e6e6e6;
-    height: calc(100vh - 60px);
-    display: flex;
-    flex-direction: column;
-
-    .menu {
+    .security-menu {
       border-right: none;
-      flex: 1;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
 
-      .menu-icon {
-        margin-right: 8px;
-      }
-
-      .menu-badge {
-        margin-left: 8px;
-        background-color: #f56c6c;
-        border-radius: 10px;
-        color: white;
-        font-size: 12px;
-        padding: 0 6px;
-        height: 18px;
-        line-height: 18px;
-        display: inline-block;
-      }
-    }
-
-    .system-status {
-      padding: 15px;
-      border-top: 1px solid #e6e6e6;
-      background-color: #fff;
-
-      .status-item {
-        margin-bottom: 8px;
-        font-size: 12px;
-        display: flex;
-        justify-content: space-between;
-
-        .status-label {
-          color: #909399;
+      .el-menu-item {
+        &:hover {
+          background-color: #1890ff !important;
         }
-
-        .status-value {
-          &.running {
-            color: #67c23a;
-          }
+        &.is-active {
+          background-color: #1890ff !important;
+          color: #ffd04b !important;
         }
       }
     }
   }
 
-  .el-main {
-    padding: 20px;
+  .security-header {
+    height: 60px;
+    line-height: 60px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+
+    .header-right {
+      .logout-btn {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .security-main {
     background-color: #f0f2f5;
+    padding: 20px;
+    height: calc(100vh - 60px);
+    overflow: auto;
   }
 }

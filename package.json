@@ -13,7 +13,7 @@
 "build": {
   "beforeBuildCommand": "npm run build",
   "beforeDevCommand": "npm run dev:vue",
-  "devPath": "http://localhost:5173",
+  "devPath": "http://localhost:8080",
   "distDir": "../dist"
 },
   "dependencies": {

@@ -1,11 +1,3 @@
-/*
- * @Author: FirstsnowLucky firstsnow1119@163.com
- * @Date: 2025-07-24 09:11:05
- * @LastEditors: FirstsnowLucky firstsnow1119@163.com
- * @LastEditTime: 2025-07-24 09:46:44
- * @FilePath: \新版测试\泰捷欣监控设备数据压缩上传应用系统\vue\src\index.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 import { createWebHistory, createRouter } from 'vue-router'
 
 
@@ -26,19 +18,34 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: 'alarm',
-            name: 'Alarm',
-            component: () => import('@/views/Alarm.vue')
+            path: 'dashboard',
+            name: 'Dashboard',
+            component: () => import('@/views/Dashboard.vue')
           },
           {
-            path: 'report',
-            name: 'Report',
-            component: () => import('@/views/Report.vue')
+            path: 'security-monitor',
+            name: 'SecurityMonitor',
+            component: () => import('@/views/SecurityMonitor.vue')
           },
           {
-            path: 'system',
-            name: 'System',
-            component: () => import('@/views/System.vue')
+            path: 'log-management',
+            name: 'LogManagement',
+            component: () => import('@/views/LogManagement.vue')
+          },
+          {
+            path: 'alarm-management',
+            name: 'AlarmManagement',
+            component: () => import('@/views/AlarmManagement.vue')
+          },
+          {
+            path: 'system-config',
+            name: 'SystemConfig',
+            component: () => import('@/views/SystemConfig.vue')
+          },
+          {
+            path: 'user-management',
+            name: 'UserManagement',
+            component: () => import('@/views/UserManagement.vue')
           }
         ]
   }

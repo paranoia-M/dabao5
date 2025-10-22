@@ -1,0 +1,134 @@
+.alarm-management {
+  padding: 20px;
+  
+  .filter-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      
+      .search-input {
+        width: 300px;
+        
+        .search-icon {
+          font-size: 16px;
+        }
+      }
+      
+      .level-select, .status-select {
+        width: 150px;
+      }
+      
+      .date-picker {
+        width: 280px;
+      }
+    }
+  }
+  
+  .table-card {
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      
+      h3 {
+        margin: 0;
+        color: #333;
+        font-size: 18px;
+        font-weight: 500;
+      }
+      
+      .export-btn {
+        margin-left: auto;
+      }
+    }
+    
+    .el-table {
+      .level-tag {
+        font-weight: bold;
+        
+        &.el-tag--danger {
+          background-color: #fef0f0;
+          color: #f56c6c;
+        }
+        
+        &.el-tag--warning {
+          background-color: #fdf6ec;
+          color: #e6a23c;
+        }
+        
+        &.el-tag--info {
+          background-color: #f4f4f5;
+          color: #909399;
+        }
+      }
+      
+      .status-tag {
+        font-weight: bold;
+        
+        &.el-tag--danger {
+          background-color: #fef0f0;
+          color: #f56c6c;
+        }
+        
+        &.el-tag--success {
+          background-color: #f0f9eb;
+          color: #67c23a;
+        }
+      }
+    }
+    
+    .pagination-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .alarm-detail-dialog {
+    .alarm-detail {
+      .detail-value {
+        font-weight: 500;
+      }
+      
+      .description-content {
+        white-space: pre-line;
+        line-height: 1.6;
+      }
+      
+      .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        
+        .process-btn {
+          background-color: #f0f9eb;
+          border-color: #e1f3d8;
+          color: #67c23a;
+        }
+        
+        .ignore-btn {
+          background-color: #fdf6ec;
+          border-color: #faecd8;
+          color: #e6a23c;
+        }
+      }
+    }
+  }
+  
+  .export-dialog {
+    .el-form-item {
+      margin-bottom: 20px;
+    }
+  }
+}

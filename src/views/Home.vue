@@ -1,620 +1,396 @@
 <template>
-  <div class="home-container">
-    <!-- 统计卡片区域 -->
-    <el-row :gutter="20" class="dashboard-row">
-      <el-col :xs="24" :sm="12" :lg="6" class="mb-20">
-        <el-card class="stat-card" shadow="hover">
-          <div class="stat-content">
-            <div class="stat-icon bg-primary">
-              <svg-icon name="network" />
-            </div>
-            <div class="stat-info">
-              <h3>网络设备</h3>
-              <p class="stat-value">{{ networkDevices.total }}</p>
-              <p class="stat-desc">在线: {{ networkDevices.online }}</p>
-            </div>
+  <div class="risk-control-container">
+    <!-- 移除多余的头部和菜单导航 -->
+    <el-card class="header-card">
+      <div class="header-title">
+        <h2>安全生产风险分级管控与动态预警平台</h2>
+      </div>
+      <el-divider />
+      <div class="header-stats">
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-statistic title="风险总数" :value="riskStats.total" />
+          </el-col>
+          <el-col :span="6">
+            <el-statistic title="高风险" :value="riskStats.high" class="high-risk" />
+          </el-col>
+          <el-col :span="6">
+            <el-statistic title="中风险" :value="riskStats.medium" class="medium-risk" />
+          </el-col>
+          <el-col :span="6">
+            <el-statistic title="低风险" :value="riskStats.low" class="low-risk" />
+          </el-col>
+        </el-row>
+      </div>
+    </el-card>
+
+    <!-- 添加可视化图表 -->
+    <el-card class="chart-card">
+      <div class="chart-container">
+        <div class="chart-item">
+          <h3>风险等级分布</h3>
+          <el-empty v-if="!chartData.riskLevel" description="暂无数据" />
+          <PieChart v-else :data="chartData.riskLevel" />
+        </div>
+        <div class="chart-item">
+          <h3>风险趋势分析</h3>
+          <el-empty v-if="!chartData.riskTrend" description="暂无数据" />
+          <LineChart v-else :data="chartData.riskTrend" />
+        </div>
+      </div>
+    </el-card>
+
+    <el-card class="main-card">
+      <el-tabs v-model="activeTab">
+        <el-tab-pane label="风险管控" name="control">
+          <div class="table-toolbar">
+            <el-button type="primary" @click="handleAddRisk">新增风险</el-button>
+            <el-button @click="handleExport">导出数据</el-button>
+            <el-input
+              v-model="searchQuery"
+              placeholder="请输入搜索内容"
+              style="width: 300px; margin-left: auto;"
+              clearable
+              @clear="handleSearchClear"
+              @keyup.enter="handleSearch"
+            >
+              <template #append>
+                <el-button icon="el-icon-search" @click="handleSearch" />
+              </template>
+            </el-input>
           </div>
-        </el-card>
-      </el-col>
-      
-      <el-col :xs="24" :sm="12" :lg="6" class="mb-20">
-        <el-card class="stat-card" shadow="hover">
-          <div class="stat-content">
-            <div class="stat-icon bg-success">
-              <svg-icon name="alert" />
-            </div>
-            <div class="stat-info">
-              <h3>安全告警</h3>
-              <p class="stat-value">{{ securityAlerts.total }}</p>
-              <p class="stat-desc">今日新增: {{ securityAlerts.today }}</p>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      
-      <el-col :xs="24" :sm="12" :lg="6" class="mb-20">
-        <el-card class="stat-card" shadow="hover">
-          <div class="stat-content">
-            <div class="stat-icon bg-warning">
-              <svg-icon name="traffic" />
-            </div>
-            <div class="stat-info">
-              <h3>网络流量</h3>
-              <p class="stat-value">{{ networkTraffic.current }}</p>
-              <p class="stat-desc">峰值: {{ networkTraffic.peak }}</p>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      
-      <el-col :xs="24" :sm="12" :lg="6" class="mb-20">
-        <el-card class="stat-card" shadow="hover">
-          <div class="stat-content">
-            <div class="stat-icon bg-danger">
-              <svg-icon name="vulnerability" />
-            </div>
-            <div class="stat-info">
-              <h3>漏洞数量</h3>
-              <p class="stat-value">{{ vulnerabilities.total }}</p>
-              <p class="stat-desc">高危: {{ vulnerabilities.critical }}</p>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    
-    <!-- 图表区域 -->
-    <el-row :gutter="20" class="dashboard-row">
-      <el-col :xs="24" :lg="16" class="mb-20">
-        <el-card class="chart-card" shadow="hover">
-          <div class="card-header">
-            <h3>网络流量趋势</h3>
-            <el-radio-group v-model="trafficRange" size="small" @change="fetchTrafficData">
-              <el-radio-button label="day">日</el-radio-button>
-              <el-radio-button label="week">周</el-radio-button>
-              <el-radio-button label="month">月</el-radio-button>
-            </el-radio-group>
-          </div>
-          <div class="chart-container">
-            <div ref="trafficChartRef" style="height: 300px;"></div>
-          </div>
-        </el-card>
-      </el-col>
-      
-      <el-col :xs="24" :lg="8" class="mb-20">
-        <el-card class="chart-card" shadow="hover">
-          <div class="card-header">
-            <h3>安全告警分布</h3>
-          </div>
-          <div class="chart-container">
-            <div ref="alertChartRef" style="height: 300px;"></div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    
-    <!-- 表单和表格区域 -->
-    <el-row :gutter="20" class="dashboard-row">
-      <el-col :xs="24" class="mb-20">
-        <el-card shadow="hover">
-          <div class="card-header">
-            <h3>最近安全事件</h3>
-            <div class="search-form">
-              <el-input 
-                v-model="eventSearch" 
-                placeholder="搜索事件" 
-                style="width: 200px" 
-                clearable
-              >
-                <template #suffix>
-                  <svg-icon name="search" />
-                </template>
-              </el-input>
-              <el-button type="primary" @click="showAddForm = true">添加事件</el-button>
-            </div>
-          </div>
-          
-          <!-- 添加事件表单 -->
-          <el-form 
-            v-if="showAddForm" 
-            :model="newEvent" 
-            :rules="eventRules" 
-            ref="eventForm" 
-            label-width="80px" 
-            class="event-form"
-          >
-            <el-form-item label="事件类型" prop="type">
-              <el-select v-model="newEvent.type" placeholder="请选择类型">
-                <el-option label="高危" value="高危"></el-option>
-                <el-option label="中危" value="中危"></el-option>
-                <el-option label="低危" value="低危"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="来源" prop="source">
-              <el-input v-model="newEvent.source"></el-input>
-            </el-form-item>
-            <el-form-item label="描述" prop="description">
-              <el-input type="textarea" v-model="newEvent.description"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="addEvent">提交</el-button>
-              <el-button @click="showAddForm = false">取消</el-button>
-            </el-form-item>
-          </el-form>
-          
-          <!-- 事件表格 -->
-          <el-table 
-            :data="filteredEvents" 
-            style="width: 100%" 
-            border
-            stripe
-          >
-            <el-table-column prop="time" label="时间" width="180" sortable />
-            <el-table-column prop="type" label="类型" width="120">
+          <el-table :data="filteredRiskList" border style="width: 100%" height="500">
+            <el-table-column prop="id" label="风险ID" width="120" fixed />
+            <el-table-column prop="name" label="风险名称" width="180" />
+            <el-table-column prop="level" label="风险等级" width="120">
               <template #default="{ row }">
-                <el-tag :type="getEventTagType(row.type)">{{ row.type }}</el-tag>
+                <el-tag :type="getRiskTagType(row.level)">
+                  {{ row.level }}
+                </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="source" label="来源" width="150" />
-            <el-table-column prop="description" label="描述" />
-            <el-table-column label="操作" width="120">
+            <el-table-column prop="department" label="责任部门" width="150" />
+            <el-table-column prop="person" label="责任人" width="120" />
+            <el-table-column prop="status" label="管控状态" width="120" />
+            <el-table-column prop="lastCheck" label="最近检查" width="180" />
+            <el-table-column label="操作" width="180" fixed="right">
               <template #default="{ row }">
-                <el-button type="text" size="small" @click="showDetail(row)">详情</el-button>
-                <el-button type="text" size="small" @click="confirmDelete(row.id)">删除</el-button>
+                <el-button type="primary" size="small" @click="showDetail(row)">详情</el-button>
+                <el-button type="warning" size="small" @click="showWarning(row)">预警</el-button>
               </template>
             </el-table-column>
           </el-table>
-          
-          <!-- 分页 -->
-          <div class="pagination-container">
-            <el-pagination
-              :current-page="currentPage"
-              :page-size="pageSize"
-              :total="securityEvents.length"
-              layout="prev, pager, next, jumper"
-              @current-change="handlePageChange"
-            />
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    
-    <!-- 事件详情对话框 -->
-    <el-dialog title="事件详情" v-model="detailDialogVisible" width="50%">
-      <div v-if="currentEvent">
-        <el-descriptions :column="1" border>
-          <el-descriptions-item label="时间">{{ currentEvent.time }}</el-descriptions-item>
-          <el-descriptions-item label="类型">
-            <el-tag :type="getEventTagType(currentEvent.type)">{{ currentEvent.type }}</el-tag>
+          <el-pagination
+            class="pagination"
+            :current-page="currentPage"
+            :page-sizes="[10, 20, 50, 100]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="riskList.length"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </el-tab-pane>
+        <el-tab-pane label="动态预警" name="warning">
+          <el-timeline>
+            <el-timeline-item
+              v-for="(warning, index) in warningList"
+              :key="index"
+              :timestamp="warning.time"
+              placement="top"
+            >
+              <el-card>
+                <h4>{{ warning.title }}</h4>
+                <p>{{ warning.content }}</p>
+                <el-button type="text" @click="handleWarning(warning)">处理</el-button>
+              </el-card>
+            </el-timeline-item>
+          </el-timeline>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
+
+    <!-- 详情弹窗 -->
+    <el-dialog v-model="detailVisible" title="风险详情" width="50%">
+      <div v-if="currentRisk">
+        <el-descriptions :column="2" border>
+          <el-descriptions-item label="风险ID">{{ currentRisk.id }}</el-descriptions-item>
+          <el-descriptions-item label="风险名称">{{ currentRisk.name }}</el-descriptions-item>
+          <el-descriptions-item label="风险等级">
+            <el-tag :type="getRiskTagType(currentRisk.level)">
+              {{ currentRisk.level }}
+            </el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="来源">{{ currentEvent.source }}</el-descriptions-item>
-          <el-descriptions-item label="描述">{{ currentEvent.description }}</el-descriptions-item>
+          <el-descriptions-item label="责任部门">{{ currentRisk.department }}</el-descriptions-item>
+          <el-descriptions-item label="责任人">{{ currentRisk.person }}</el-descriptions-item>
+          <el-descriptions-item label="管控状态">{{ currentRisk.status }}</el-descriptions-item>
+          <el-descriptions-item label="最近检查">{{ currentRisk.lastCheck }}</el-descriptions-item>
+          <el-descriptions-item label="风险描述" :span="2">{{ currentRisk.desc }}</el-descriptions-item>
+          <el-descriptions-item label="管控措施" :span="2">{{ currentRisk.measure }}</el-descriptions-item>
         </el-descriptions>
-        
-        <div class="event-analysis" v-if="currentEvent.analysis">
-          <h4>安全分析</h4>
-          <p>{{ currentEvent.analysis }}</p>
-        </div>
-        
-        <div class="event-solution" v-if="currentEvent.solution">
-          <h4>解决方案</h4>
-          <p>{{ currentEvent.solution }}</p>
-        </div>
       </div>
       <template #footer>
-        <el-button @click="detailDialogVisible = false">关闭</el-button>
-        <el-button type="primary" @click="handleEventAction(currentEvent)">处理事件</el-button>
+        <el-button @click="detailVisible = false">关闭</el-button>
       </template>
     </el-dialog>
-    
-    <!-- 确认删除对话框 -->
-    <el-dialog title="确认删除" v-model="deleteDialogVisible" width="30%">
-      <span>确定要删除此安全事件记录吗？</span>
+
+    <!-- 预警弹窗 -->
+    <el-dialog v-model="warningVisible" title="风险预警" width="40%">
+      <el-form :model="warningForm" label-width="100px">
+        <el-form-item label="预警类型">
+          <el-select v-model="warningForm.type" placeholder="请选择预警类型">
+            <el-option label="立即整改" value="urgent" />
+            <el-option label="限期整改" value="timeLimit" />
+            <el-option label="警示提醒" value="reminder" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="预警内容">
+          <el-input
+            v-model="warningForm.content"
+            type="textarea"
+            :rows="4"
+            placeholder="请输入预警内容"
+          />
+        </el-form-item>
+        <el-form-item label="处理期限">
+          <el-date-picker
+            v-model="warningForm.deadline"
+            type="date"
+            placeholder="选择日期"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+      </el-form>
       <template #footer>
-        <el-button @click="deleteDialogVisible = false">取消</el-button>
-        <el-button type="danger" @click="deleteEvent">确认</el-button>
+        <el-button @click="warningVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitWarning">发送预警</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue';
-import * as echarts from 'echarts';
-import { ElMessage } from 'element-plus';
+import { ref, reactive, onMounted, computed } from 'vue'
+import { ElMessage } from 'element-plus'
+import PieChart from '@/components/PieChart.vue'
+import LineChart from '@/components/LineChart.vue'
 
-// 统计数据
-const networkDevices = ref({ total: 128, online: 124 });
-const securityAlerts = ref({ total: 12, today: 3 });
-const networkTraffic = ref({ current: '1.2Gbps', peak: '1.8Gbps' });
-const vulnerabilities = ref({ total: 24, critical: 8 });
-const trafficRange = ref('day');
+const activeTab = ref('control')
+const detailVisible = ref(false)
+const warningVisible = ref(false)
+const currentRisk = ref(null)
+const searchQuery = ref('')
+const currentPage = ref(1)
+const pageSize = ref(10)
 
-// 图表实例
-const trafficChartRef = ref(null);
-const alertChartRef = ref(null);
-let trafficChart = null;
-let alertChart = null;
+const riskStats = reactive({
+  total: 0,
+  high: 0,
+  medium: 0,
+  low: 0
+})
 
-// 安全事件数据
-const securityEvents = ref([
-  { 
-    id: 1, 
-    time: '2023-05-15 08:23:45', 
-    type: '高危', 
-    source: '防火墙', 
-    description: '检测到SQL注入攻击',
-    analysis: '攻击者尝试通过注入恶意SQL代码来获取数据库敏感信息',
-    solution: '已自动阻断攻击IP，建议检查应用层防护规则并更新WAF策略'
-  },
-  { 
-    id: 2, 
-    time: '2023-05-15 10:12:33', 
-    type: '中危', 
-    source: 'IDS', 
-    description: '端口扫描活动',
-    analysis: '检测到来自外部IP的端口扫描行为，可能是攻击者在进行网络探测',
-    solution: '已记录攻击IP，建议加强边界防火墙规则并监控该IP活动'
-  },
-  { 
-    id: 3, 
-    time: '2023-05-14 15:45:21', 
-    type: '低危', 
-    source: '服务器', 
-    description: '弱密码尝试',
-    analysis: '检测到多次使用常见弱密码的登录尝试',
-    solution: '已临时锁定账户，建议用户修改为强密码并启用双因素认证'
-  },
-  { 
-    id: 4, 
-    time: '2023-05-14 09:30:15', 
-    type: '高危', 
-    source: 'WAF', 
-    description: 'XSS攻击拦截',
-    analysis: '攻击者尝试通过跨站脚本攻击获取用户会话信息',
-    solution: '已拦截攻击请求，建议检查并更新Web应用输入过滤规则'
-  },
-  { 
-    id: 5, 
-    time: '2023-05-13 14:22:10', 
-    type: '中危', 
-    source: '防火墙', 
-    description: '异常流量',
-    analysis: '检测到来自单一IP的异常高流量，可能是DDoS攻击的一部分',
-    solution: '已启用流量清洗，建议持续监控网络流量模式'
-  },
-  { 
-    id: 6, 
-    time: '2023-05-13 11:05:43', 
-    type: '低危', 
-    source: '终端', 
-    description: '未授权访问尝试',
-    analysis: '检测到对受限资源的访问尝试，可能是内部员工权限滥用',
-    solution: '已记录访问日志，建议审查用户权限分配'
-  },
-  { 
-    id: 7, 
-    time: '2023-05-12 16:33:28', 
-    type: '高危', 
-    source: 'IDS', 
-    description: '暴力破解攻击',
-    analysis: '检测到针对管理接口的暴力破解尝试，攻击者尝试猜测密码',
-    solution: '已锁定攻击IP，建议启用账户锁定机制和登录失败报警'
-  },
-  { 
-    id: 8, 
-    time: '2023-05-12 13:20:17', 
-    type: '中危', 
-    source: '服务器', 
-    description: '可疑进程启动',
-    analysis: '检测到服务器上启动了未知的可执行文件，可能是恶意软件',
-    solution: '已隔离受影响服务器，建议进行全盘扫描并检查系统完整性'
-  },
-]);
+const riskList = ref([])
+const warningList = ref([])
+const chartData = reactive({
+  riskLevel: null,
+  riskTrend: null
+})
 
-// 表单相关
-const showAddForm = ref(false);
-const newEvent = ref({
+const warningForm = reactive({
   type: '',
-  source: '',
-  description: ''
-});
-const eventForm = ref(null);
-const eventRules = {
-  type: [{ required: true, message: '请选择事件类型', trigger: 'change' }],
-  source: [{ required: true, message: '请输入来源', trigger: 'blur' }],
-  description: [{ required: true, message: '请输入描述', trigger: 'blur' }]
-};
+  content: '',
+  deadline: ''
+})
 
-// 搜索和分页
-const eventSearch = ref('');
-const currentPage = ref(1);
-const pageSize = ref(5);
-
-// 对话框
-const detailDialogVisible = ref(false);
-const deleteDialogVisible = ref(false);
-const currentEvent = ref(null);
-const deletingEventId = ref(null);
-
-// 计算属性
-const filteredEvents = computed(() => {
-  const search = eventSearch.value.toLowerCase();
-  const filtered = securityEvents.value.filter(event => 
-    event.type.toLowerCase().includes(search) || 
-    event.source.toLowerCase().includes(search) || 
-    event.description.toLowerCase().includes(search)
-  );
-  
-  return filtered.slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value);
-});
-
-// 方法
-const getEventTagType = (type) => {
-  switch (type) {
-    case '高危': return 'danger';
-    case '中危': return 'warning';
-    case '低危': return 'info';
-    default: return '';
+// 计算属性 - 过滤后的风险列表
+const filteredRiskList = computed(() => {
+  let list = [...riskList.value]
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    list = list.filter(item => 
+      item.name.toLowerCase().includes(query) || 
+      item.id.toLowerCase().includes(query) ||
+      item.department.toLowerCase().includes(query) ||
+      item.person.toLowerCase().includes(query)
+    )
   }
-};
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  return list.slice(start, end)
+})
 
-const handlePageChange = (page) => {
-  currentPage.value = page;
-};
-
-const addEvent = () => {
-  eventForm.value.validate(valid => {
-    if (valid) {
-      const newId = securityEvents.value.length > 0 
-        ? Math.max(...securityEvents.value.map(e => e.id)) + 1 
-        : 1;
-      
-      const now = new Date();
-      const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-      
-      securityEvents.value.unshift({
-        id: newId,
-        time: formattedTime,
-        type: newEvent.value.type,
-        source: newEvent.value.source,
-        description: newEvent.value.description,
-        analysis: '新添加事件，待安全团队分析',
-        solution: '请等待安全团队处理建议'
-      });
-      
-      showAddForm.value = false;
-      newEvent.value = { type: '', source: '', description: '' };
-      
-      // 模拟API调用
-      simulateAddEventAPI({
-        id: newId,
-        ...newEvent.value
-      });
-      
-      ElMessage.success('安全事件添加成功');
-    }
-  });
-};
-
-const showDetail = (event) => {
-  currentEvent.value = event;
-  detailDialogVisible.value = true;
-};
-
-const confirmDelete = (id) => {
-  deletingEventId.value = id;
-  deleteDialogVisible.value = true;
-};
-
-const deleteEvent = () => {
-  const index = securityEvents.value.findIndex(e => e.id === deletingEventId.value);
-  if (index !== -1) {
-    securityEvents.value.splice(index, 1);
-    
-    // 模拟API调用
-    simulateDeleteEventAPI(deletingEventId.value);
-    ElMessage.success('安全事件删除成功');
+const getRiskTagType = (level) => {
+  switch (level) {
+    case '高风险': return 'danger'
+    case '中风险': return 'warning'
+    case '低风险': return 'success'
+    default: return 'info'
   }
-  deleteDialogVisible.value = false;
-};
+}
 
-const handleEventAction = (event) => {
-  // 模拟处理安全事件
-  ElMessage.success(`已处理安全事件: ${event.description}`);
-  detailDialogVisible.value = false;
-};
+const showDetail = (risk) => {
+  currentRisk.value = risk
+  detailVisible.value = true
+}
 
-const fetchTrafficData = () => {
-  // 模拟获取流量数据
-  const data = generateTrafficData(trafficRange.value);
-  initTrafficChart(data);
-};
+const showWarning = (risk) => {
+  currentRisk.value = risk
+  warningForm.type = ''
+  warningForm.content = `关于【${risk.name}】的风险预警通知`
+  warningForm.deadline = ''
+  warningVisible.value = true
+}
 
-const initTrafficChart = (data) => {
-  nextTick(() => {
-    if (!trafficChart && trafficChartRef.value) {
-      trafficChart = echarts.init(trafficChartRef.value);
-    }
-    
-    const option = {
-      tooltip: {
-        trigger: 'axis',
-        formatter: '{b}<br/>流量: {c} Mbps'
-      },
-      xAxis: {
-        type: 'category',
-        data: data.labels,
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        }
-      },
-      yAxis: {
-        type: 'value',
-        name: '流量(Mbps)',
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        splitLine: {
-          lineStyle: {
-            type: 'dashed'
-          }
-        }
-      },
-      series: [
-        {
-          name: '入站流量',
-          type: 'line',
-          smooth: true,
-          data: data.inbound,
-          lineStyle: {
-            width: 3,
-            color: '#409EFF'
-          },
-          itemStyle: {
-            color: '#409EFF'
-          }
-        },
-        {
-          name: '出站流量',
-          type: 'line',
-          smooth: true,
-          data: data.outbound,
-          lineStyle: {
-            width: 3,
-            color: '#67C23A'
-          },
-          itemStyle: {
-            color: '#67C23A'
-          }
-        }
-      ],
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      }
-    };
-    
-    trafficChart.setOption(option);
-  });
-};
+const handleWarning = (warning) => {
+  ElMessage.success(`已处理预警: ${warning.title}`)
+}
 
-const initAlertChart = () => {
-  nextTick(() => {
-    if (!alertChart && alertChartRef.value) {
-      alertChart = echarts.init(alertChartRef.value);
-    }
-    
-    const option = {
-      tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b}: {c} ({d}%)'
-      },
-      legend: {
-        orient: 'vertical',
-        right: 10,
-        top: 'center',
-        data: ['高危', '中危', '低危', '信息']
-      },
-      series: [
-        {
-          name: '告警分布',
-          type: 'pie',
-          radius: ['50%', '70%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '18',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: 8, name: '高危', itemStyle: { color: '#F56C6C' } },
-            { value: 15, name: '中危', itemStyle: { color: '#E6A23C' } },
-            { value: 20, name: '低危', itemStyle: { color: '#909399' } },
-            { value: 5, name: '信息', itemStyle: { color: '#409EFF' } }
-          ]
-        }
-      ]
-    };
-    
-    alertChart.setOption(option);
-  });
-};
-
-// 模拟数据生成
-const generateTrafficData = (range) => {
-  const data = { labels: [], inbound: [], outbound: [] };
-  
-  if (range === 'day') {
-    for (let i = 0; i < 24; i++) {
-      data.labels.push(`${i}:00`);
-      data.inbound.push(Math.round(Math.random() * 500 + 200));
-      data.outbound.push(Math.round(Math.random() * 300 + 100));
-    }
-  } else if (range === 'week') {
-    const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-    days.forEach(day => {
-      data.labels.push(day);
-      data.inbound.push(Math.round(Math.random() * 800 + 300));
-      data.outbound.push(Math.round(Math.random() * 500 + 200));
-    });
-  } else {
-    for (let i = 1; i <= 30; i++) {
-      data.labels.push(`${i}日`);
-      data.inbound.push(Math.round(Math.random() * 1000 + 400));
-      data.outbound.push(Math.round(Math.random() * 600 + 300));
-    }
+const submitWarning = () => {
+  if (!warningForm.type || !warningForm.content) {
+    ElMessage.warning('请填写完整的预警信息')
+    return
   }
-  
-  return data;
-};
 
-// 模拟API调用
-const simulateAddEventAPI = (event) => {
-  console.log('API调用: 添加安全事件', event);
-  // 这里可以添加实际的API调用逻辑
-};
+  warningList.value.unshift({
+    title: `风险预警: ${currentRisk.value.name}`,
+    content: warningForm.content,
+    time: new Date().toLocaleString()
+  })
 
-const simulateDeleteEventAPI = (id) => {
-  console.log('API调用: 删除安全事件', id);
-  // 这里可以添加实际的API调用逻辑
-};
+  ElMessage.success('预警发送成功')
+  warningVisible.value = false
+}
 
-// 初始化
+const handleSearch = () => {
+  currentPage.value = 1
+}
+
+const handleSearchClear = () => {
+  searchQuery.value = ''
+  currentPage.value = 1
+}
+
+const handleSizeChange = (val) => {
+  pageSize.value = val
+}
+
+const handleCurrentChange = (val) => {
+  currentPage.value = val
+}
+
+const handleAddRisk = () => {
+  ElMessage.info('新增风险功能待实现')
+}
+
+const handleExport = () => {
+  ElMessage.success('导出数据成功')
+}
+
+// 模拟数据加载
 onMounted(() => {
-  fetchTrafficData();
-  initAlertChart();
-  
-  // 模拟获取统计数据
-  setTimeout(() => {
-    networkDevices.value = { total: 135, online: 130 };
-    securityAlerts.value = { total: 15, today: 4 };
-    networkTraffic.value = { current: '1.5Gbps', peak: '2.1Gbps' };
-    vulnerabilities.value = { total: 28, critical: 10 };
-  }, 1000);
-});
+  // 模拟风险统计数据
+  riskStats.total = 156
+  riskStats.high = 23
+  riskStats.medium = 67
+  riskStats.low = 66
+
+  // 模拟风险列表数据
+  riskList.value = [
+    {
+      id: 'R2023001',
+      name: '高空作业防护缺失',
+      level: '高风险',
+      department: '工程部',
+      person: '张三',
+      status: '管控中',
+      lastCheck: '2023-05-15',
+      desc: '施工现场高空作业区域防护栏缺失，存在坠落风险',
+      measure: '1.立即安装防护栏；2.加强现场巡查；3.作业人员佩戴安全带'
+    },
+    {
+      id: 'R2023002',
+      name: '电气线路老化',
+      level: '中风险',
+      department: '设备部',
+      person: '李四',
+      status: '整改中',
+      lastCheck: '2023-05-10',
+      desc: '车间部分电气线路老化，存在短路起火风险',
+      measure: '1.制定更换计划；2.临时增加巡检频次；3.配备灭火器材'
+    },
+    {
+      id: 'R2023003',
+      name: '消防通道堵塞',
+      level: '低风险',
+      department: '安全部',
+      person: '王五',
+      status: '已管控',
+      lastCheck: '2023-05-18',
+      desc: '仓库消防通道被临时货物堵塞',
+      measure: '1.立即清理通道；2.设置禁止堆放标识；3.每周检查'
+    },
+    // 更多模拟数据...
+    ...Array.from({ length: 20 }, (_, i) => ({
+      id: `R2023${1004 + i}`,
+      name: `模拟风险${i + 4}`,
+      level: ['高风险', '中风险', '低风险'][Math.floor(Math.random() * 3)],
+      department: ['工程部', '设备部', '安全部', '生产部'][Math.floor(Math.random() * 4)],
+      person: ['张三', '李四', '王五', '赵六'][Math.floor(Math.random() * 4)],
+      status: ['管控中', '整改中', '已管控'][Math.floor(Math.random() * 3)],
+      lastCheck: `2023-05-${Math.floor(Math.random() * 30) + 1}`,
+      desc: `这是模拟风险${i + 4}的描述内容`,
+      measure: `1.措施一；2.措施二；3.措施三`
+    }))
+  ]
+
+  // 模拟预警数据
+  warningList.value = [
+    {
+      title: '电气线路老化预警',
+      content: '检测到电气线路温度异常升高，请立即检查处理',
+      time: '2023-05-20 09:30'
+    },
+    {
+      title: '安全培训提醒',
+      content: '本月安全培训完成率不足80%，请及时组织培训',
+      time: '2023-05-18 14:15'
+    }
+  ]
+
+  // 模拟图表数据
+  chartData.riskLevel = {
+    title: '风险等级分布',
+    data: [
+      { value: riskStats.high, name: '高风险' },
+      { value: riskStats.medium, name: '中风险' },
+      { value: riskStats.low, name: '低风险' }
+    ]
+  }
+
+  chartData.riskTrend = {
+    title: '风险趋势分析',
+    xAxis: ['1月', '2月', '3月', '4月', '5月'],
+    series: [
+      {
+        name: '高风险',
+        data: [15, 18, 20, 22, 23]
+      },
+      {
+        name: '中风险',
+        data: [45, 50, 55, 60, 67]
+      },
+      {
+        name: '低风险',
+        data: [50, 55, 60, 62, 66]
+      }
+    ]
+  }
+})
 </script>
 
 <style lang="scss" scoped>
+
 @use './Home.scss';
+
 </style>

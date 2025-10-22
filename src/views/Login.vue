@@ -6,7 +6,7 @@
         <div class="bubble bubble-1"></div>
         <div class="bubble bubble-2"></div>
         <div class="bubble bubble-3"></div>
-        <h1 class="system-title">安全生产风险分级管控与动态预警平台</h1>
+        <h1 class="system-title">浩泽金郡智慧终端设备调度管理平台</h1>
         <p class="system-desc">全面监控 · 智能预警 · 分级管控</p>
         <div class="feature-list">
           <div class="feature-item">

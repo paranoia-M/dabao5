@@ -2,7 +2,7 @@
 <template>
   <el-container class="layout-container">
     <el-header class="header">
-      <div class="logo">安全生产风险分级管控与动态预警平台</div>
+      <div class="logo">浩泽金郡智慧终端设备调度管理平台</div>
       <el-dropdown @command="handleCommand" class="user-dropdown" trigger="click">
         <span class="el-dropdown-link">
           <el-avatar :size="40" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />

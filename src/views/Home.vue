@@ -3,7 +3,7 @@
     <!-- 移除多余的头部和菜单导航 -->
     <el-card class="header-card">
       <div class="header-title">
-        <h2>安全生产风险分级管控与动态预警平台</h2>
+        <h2>浩泽金郡智慧终端设备调度管理平台</h2>
       </div>
       <el-divider />
       <div class="header-stats">

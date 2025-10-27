@@ -1,0 +1,138 @@
+.data-management-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+
+  .dashboard-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        color: #333;
+      }
+    }
+
+    .data-overview {
+      margin-top: 20px;
+
+      .overview-item {
+        display: flex;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+        .item-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 15px;
+          color: white;
+          font-size: 18px;
+          font-weight: bold;
+        }
+
+        .item-content {
+          flex: 1;
+
+          .item-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+          }
+
+          .item-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+
+            .unit {
+              font-size: 14px;
+              color: #999;
+            }
+          }
+
+          .item-trend {
+            font-size: 12px;
+
+            &.up {
+              color: #f56c6c;
+            }
+
+            &.down {
+              color: #67c23a;
+            }
+
+            &.stable {
+              color: #909399;
+            }
+
+            .trend-icon {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+
+    .chart-section {
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        h3 {
+          margin: 0;
+          font-size: 16px;
+          color: #333;
+        }
+      }
+
+      .chart-container {
+        .chart-wrapper {
+          position: relative;
+
+          .chart {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+      }
+    }
+
+    .pagination-wrapper {
+      margin-top: 20px;
+      text-align: right;
+    }
+  }
+
+  .detail-content {
+    padding: 20px;
+  }
+}

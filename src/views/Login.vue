@@ -3,40 +3,38 @@
   <div class="login-container">
     <div class="login-wrapper">
       <div class="login-left">
-        <div class="bubbles">
-          <div class="bubble bubble-1"></div>
-          <div class="bubble bubble-2"></div>
-          <div class="bubble bubble-3"></div>
-        </div>
-        <h1 class="title">人工智能<br>数据采集分析系统</h1>
-        <p class="subtitle">高效管理 · 智能分类 · 知识整合</p>
-        <div class="features">
-          <div class="feature-item">
-            <div class="feature-icon">📊</div>
-            <div class="feature-text">智能数据分析</div>
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <h1 class="system-title">航清环境、污染应急预案处理系统</h1>
+        <p class="system-desc">实时监测环境数据 · 精准校准设备参数</p>
+        <div class="data-panel">
+          <div class="data-item">
+            <span class="data-label">PM2.5</span>
+            <span class="data-value">{{ mockData.pm25 }} μg/m³</span>
           </div>
-          <div class="feature-item">
-            <div class="feature-icon">🔍</div>
-            <div class="feature-text">精准知识检索</div>
+          <div class="data-item">
+            <span class="data-label">温度</span>
+            <span class="data-value">{{ mockData.temperature }} °C</span>
           </div>
-          <div class="feature-item">
-            <div class="feature-icon">🤖</div>
-            <div class="feature-text">AI自动分类</div>
+          <div class="data-item">
+            <span class="data-label">湿度</span>
+            <span class="data-value">{{ mockData.humidity }}%</span>
           </div>
         </div>
       </div>
       <div class="login-right">
-        <el-card class="login-card">
+        <el-card class="login-card" shadow="hover">
           <h2 class="login-title">用户登录</h2>
           <el-form :model="loginForm" class="login-form">
             <el-form-item>
               <el-input 
                 v-model="loginForm.username" 
                 placeholder="请输入账号" 
-                class="custom-input"
+                clearable
               >
                 <template #prefix>
-                  <span class="input-prefix">👤</span>
+                  <el-icon><User /></el-icon>
                 </template>
               </el-input>
             </el-form-item>
@@ -45,12 +43,10 @@
                 v-model="loginForm.password" 
                 type="password" 
                 placeholder="请输入密码" 
-                class="custom-input"
                 show-password
-                @keyup.enter="handleLogin"
               >
                 <template #prefix>
-                  <span class="input-prefix">🔒</span>
+                  <el-icon><Lock /></el-icon>
                 </template>
               </el-input>
             </el-form-item>
@@ -65,96 +61,59 @@
               </el-button>
             </el-form-item>
           </el-form>
-          <div class="login-footer">
-            <el-button type="text" @click="showHelpDialog">使用帮助</el-button>
-            <el-button type="text" @click="showContactDialog">联系我们</el-button>
-          </div>
         </el-card>
       </div>
     </div>
-
-    <!-- 帮助对话框 -->
-    <el-dialog v-model="helpVisible" title="使用帮助" width="500px">
-      <div class="dialog-content">
-        <p>1. 请输入您的企业账号和密码登录系统</p>
-        <p>2. 默认管理员账号: admin/admin123</p>
-        <p>3. 登录后可体验智能分类、知识整合等功能</p>
-      </div>
-      <template #footer>
-        <el-button @click="helpVisible = false">确定</el-button>
-      </template>
-    </el-dialog>
-
-    <!-- 联系对话框 -->
-    <el-dialog v-model="contactVisible" title="联系我们" width="500px">
-      <div class="dialog-content">
-        <p>技术支持: 400-888-8888</p>
-        <p>邮箱: support@ai-knowledge.com</p>
-        <p>工作时间: 周一至周五 9:00-18:00</p>
-      </div>
-      <template #footer>
-        <el-button @click="contactVisible = false">确定</el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
+import { User, Lock } from '@element-plus/icons-vue';
 
-const router = useRouter()
+const router = useRouter();
+
+// 模拟环境数据
+const mockData = reactive({
+  pm25: Math.floor(Math.random() * 50 + 20),
+  temperature: (Math.random() * 10 + 20).toFixed(1),
+  humidity: Math.floor(Math.random() * 30 + 50)
+});
 
 // 登录相关
 const loginForm = reactive({
   username: '',
   password: ''
-})
-
-const loading = ref(false)
-const helpVisible = ref(false)
-const contactVisible = ref(false)
-
-const showHelpDialog = () => {
-  helpVisible.value = true
-}
-
-const showContactDialog = () => {
-  contactVisible.value = true
-}
+});
+const loading = ref(false);
 
 const handleLogin = () => {
   if (!loginForm.username || !loginForm.password) {
-    ElMessage.warning('请输入账号和密码')
-    return
+    ElMessage.warning('请输入账号和密码');
+    return;
   }
-  
-  loading.value = true
+
+  loading.value = true;
   
   // 模拟登录请求
   setTimeout(() => {
     if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
-      ElMessage.success('登录成功')
-      localStorage.setItem('token', 'token_admin')
-      // 模拟获取用户信息
-      const userInfo = {
-        name: '管理员',
-        role: 'admin',
-        avatar: '',
-        permissions: ['all']
-      }
-      localStorage.setItem('userInfo', JSON.stringify(userInfo))
-      router.push('/')
+      ElMessage.success('登录成功');
+      localStorage.setItem("token", "token_admin");
+      router.push('/');
     } else {
-      ElMessage.error('账号或密码错误')
+      ElMessage.error('账号或密码错误');
     }
-    loading.value = false
-  }, 1000)
-}
+    loading.value = false;
+  }, 1000);
+};
 </script>
 
 <style lang="scss" scoped>
+
 @use './Login.scss';
+
 </style>
     

@@ -1,0 +1,130 @@
+.monitor-container {
+  padding: 20px;
+  height: 100vh;
+  overflow: auto;
+  background-color: #f5f7fa;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #303133;
+    }
+
+    .time-display {
+      font-size: 16px;
+      color: #606266;
+    }
+  }
+
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .data-overview {
+    .metric-card {
+      margin-bottom: 20px;
+
+      .metric-content {
+        padding: 15px;
+
+        .metric-title {
+          font-size: 14px;
+          color: #909399;
+          margin-bottom: 10px;
+        }
+
+        .metric-value {
+          font-size: 24px;
+          font-weight: bold;
+          color: #303133;
+          margin-bottom: 5px;
+
+          &.warning-value {
+            color: #e6a23c;
+          }
+        }
+
+        .metric-trend {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          color: #606266;
+
+          span {
+            margin-right: 5px;
+
+            &.up-trend {
+              color: #f56c6c;
+            }
+
+            &.down-trend {
+              color: #67c23a;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .main-content {
+    margin-bottom: 20px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+  }
+
+  .chart-card, .alert-card {
+    height: 100%;
+
+    .chart-container {
+      margin-top: 15px;
+    }
+  }
+
+  .data-table {
+    .table-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .pagination {
+      margin-top: 15px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .abnormal-value {
+      color: #f56c6c;
+      font-weight: bold;
+    }
+  }
+
+  .el-timeline {
+    padding: 0 10px;
+
+    .el-timeline-item {
+      padding-bottom: 15px;
+    }
+  }
+}

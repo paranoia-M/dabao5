@@ -1,0 +1,130 @@
+.monitor-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  
+  .dashboard-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      
+      .header-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+    }
+  }
+  
+  .data-overview {
+    padding: 10px 0;
+    
+    .data-card {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+      }
+      
+      .data-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+      }
+      
+      .data-title {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+      }
+      
+      .data-trend {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        
+        .trend-icon {
+          margin-right: 5px;
+          font-weight: bold;
+          
+          &.up {
+            color: #f56c6c;
+          }
+          
+          &.down {
+            color: #67c23a;
+          }
+        }
+        
+        .trend-value {
+          color: #666;
+        }
+      }
+      
+      .data-status {
+        margin-top: 8px;
+        font-size: 12px;
+        padding: 2px 8px;
+        border-radius: 10px;
+        display: inline-block;
+        background-color: #f5f5f5;
+        color: #666;
+      }
+      
+      &.warning {
+        border-left: 4px solid #e6a23c;
+        
+        .data-status {
+          background-color: #fdf6ec;
+          color: #e6a23c;
+        }
+      }
+      
+      &.danger {
+        border-left: 4px solid #f56c6c;
+        
+        .data-status {
+          background-color: #fef0f0;
+          color: #f56c6c;
+        }
+      }
+    }
+  }
+  
+  .chart-container {
+    padding: 10px;
+  }
+  
+  .chart-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .pagination-container {
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .badge {
+    :deep(.el-badge__content) {
+      background-color: #f56c6c;
+    }
+  }
+}

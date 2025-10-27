@@ -17,30 +17,31 @@ const routes = [
             name: 'Home',
             component: () => import('@/views/Home.vue')
           },
+    
           {
-            path: 'knowledge-base',
-            name: 'KnowledgeBase',
-            component: () => import('@/views/KnowledgeBase.vue')
+            path: 'calibration',
+            name: 'Calibration',
+            component: () => import('@/views/Calibration.vue')
           },
           {
-            path: 'classification',
-            name: 'Classification',
-            component: () => import('@/views/Classification.vue')
+            path: 'data-management',
+            name: 'DataManagement',
+            component: () => import('@/views/DataManagement.vue')
           },
           {
-            path: 'integration',
-            name: 'Integration',
-            component: () => import('@/views/Integration.vue')
+            path: 'alarm',
+            name: 'Alarm',
+            component: () => import('@/views/Alarm.vue')
           },
           {
-            path: 'settings',
-            name: 'Settings',
-            component: () => import('@/views/Settings.vue')
+            path: 'report',
+            name: 'Report',
+            component: () => import('@/views/Report.vue')
           },
           {
-            path: 'user-management',
-            name: 'UserManagement',
-            component: () => import('@/views/UserManagement.vue')
+            path: 'system-setting',
+            name: 'SystemSetting',
+            component: () => import('@/views/SystemSetting.vue')
           }
         ]
   }

@@ -1,0 +1,124 @@
+.monitor-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #303133;
+    }
+    
+    .time-display {
+      font-size: 16px;
+      color: #606266;
+    }
+  }
+  
+  .dashboard {
+    .data-overview {
+      margin-bottom: 20px;
+      
+      .metric-card {
+        margin-bottom: 20px;
+        
+        .metric-content {
+          padding: 10px;
+          
+          .metric-title {
+            font-size: 14px;
+            color: #909399;
+            margin-bottom: 10px;
+          }
+          
+          .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #303133;
+            
+            &.warning-value {
+              color: #e6a23c;
+            }
+          }
+          
+          .metric-trend {
+            font-size: 12px;
+            color: #909399;
+            
+            .up-trend {
+              color: #f56c6c;
+            }
+            
+            .down-trend {
+              color: #67c23a;
+            }
+          }
+        }
+      }
+    }
+    
+    .main-content {
+      margin-bottom: 20px;
+      
+      .chart-card, .alert-card {
+        height: 100%;
+        
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+          
+          h3 {
+            margin: 0;
+            font-size: 16px;
+          }
+        }
+        
+        .chart-container {
+          width: 100%;
+        }
+      }
+    }
+    
+    .data-table {
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        
+        h3 {
+          margin: 0;
+          font-size: 16px;
+        }
+        
+        .table-actions {
+          display: flex;
+        }
+      }
+      
+      .abnormal-value {
+        color: #f56c6c;
+        font-weight: bold;
+      }
+      
+      .pagination {
+        margin-top: 15px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

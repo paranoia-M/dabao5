@@ -1,0 +1,103 @@
+.calibration-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  
+  .main-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      
+      .platform-title {
+        color: #409eff;
+        font-size: 22px;
+        font-weight: bold;
+        margin: 0;
+      }
+      
+      .operation-area {
+        display: flex;
+        align-items: center;
+        
+        .search-input {
+          margin-right: 15px;
+        }
+        
+        .status-filter {
+          margin-right: 15px;
+        }
+        
+        .add-btn {
+          background-color: #409eff;
+          border-color: #409eff;
+        }
+      }
+    }
+  }
+  
+  .data-overview {
+    margin-bottom: 20px;
+    
+    .stat-card {
+      padding: 15px;
+      border-radius: 6px;
+      color: #fff;
+      text-align: center;
+      
+      h3 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+      }
+      
+      .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+      }
+      
+      &.success-card {
+        background-color: #67c23a;
+      }
+      
+      &.warning-card {
+        background-color: #e6a23c;
+      }
+      
+      &.danger-card {
+        background-color: #f56c6c;
+      }
+    }
+  }
+  
+  .data-table {
+    margin-bottom: 20px;
+    
+    .warning-text {
+      color: #f56c6c;
+      font-weight: bold;
+    }
+    
+    .status-tag {
+      font-weight: bold;
+    }
+    
+    .action-btn {
+      margin: 0 5px;
+    }
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .calibration-dialog {
+    .el-form-item {
+      margin-bottom: 20px;
+    }
+  }
+}

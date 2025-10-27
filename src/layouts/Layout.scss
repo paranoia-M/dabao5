@@ -1,64 +1,98 @@
 
 .layout-container {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    height: 60px;
-    line-height: 60px;
+  .el-container {
+    height: 100%;
+  }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bold;
+  .el-aside {
+    background-color: #001529;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+    transition: width 0.3s;
 
-      .logo-icon {
-        margin-right: 10px;
-        font-size: 24px;
+    .menu-title {
+      padding: 20px 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      .platform-name {
+        display: block;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #fff;
+      }
+
+      .platform-subtitle {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.65);
       }
     }
 
-    .user-info {
-      .user-dropdown {
+    .el-menu {
+      border-right: none;
+      background-color: #001529 !important;
+
+      .el-menu-item {
+        height: 50px;
+        line-height: 50px;
+        margin: 4px 0;
+        padding: 0 10px !important;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        &.is-active {
+          background-color: #1890ff !important;
+          color: #fff !important;
+        }
+
+        .menu-item-content {
+          display: flex;
+          align-items: center;
+
+          .menu-icon {
+            margin-right: 8px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .main-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+    .header-right {
+      .user-info {
         display: flex;
         align-items: center;
         cursor: pointer;
 
-        .username {
-          margin: 0 8px;
-        }
-
-        .dropdown-arrow {
-          font-size: 12px;
+        .user-avatar {
+          margin-right: 8px;
+          font-size: 16px;
         }
       }
     }
   }
 
-  .aside {
-    background-color: #f8fafc;
-    border-right: 1px solid #e6e6e6;
-
-    .menu {
-      border-right: none;
-      height: 100%;
-
-      .menu-icon {
-        margin-right: 8px;
-      }
-    }
-  }
-
-  .main {
+  .main-content {
     padding: 20px;
-    background-color: #f5f7fa;
+    background-color: #f0f2f5;
+    height: calc(100vh - 60px);
+    overflow: auto;
   }
 }

@@ -1,0 +1,264 @@
+.enterprise-list-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    
+    h1 {
+      color: #303133;
+      font-size: 28px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    p {
+      color: #606266;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+  
+  .filter-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    
+    .custom-search-icon, .custom-plus-icon, .custom-view-icon, .custom-edit-icon {
+      font-size: 14px;
+    }
+    
+    .el-select, .el-input {
+      width: 100%;
+    }
+  }
+  
+  .table-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      .completed-text {
+        color: #67c23a;
+        font-weight: 500;
+      }
+    }
+    
+    .risk-tag {
+      font-weight: 600;
+      
+      &.el-tag--danger {
+        background-color: #fef0f0;
+        border-color: #fde2e2;
+        color: #f56c6c;
+      }
+      
+      &.el-tag--warning {
+        background-color: #fdf6ec;
+        border-color: #faecd8;
+        color: #e6a23c;
+      }
+      
+      &.el-tag--info {
+        background-color: #f4f4f5;
+        border-color: #e9e9eb;
+        color: #909399;
+      }
+      
+      &.el-tag--success {
+        background-color: #f0f9eb;
+        border-color: #e1f3d8;
+        color: #67c23a;
+      }
+    }
+    
+    .deadline-warning {
+      color: #e6a23c;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+    
+    .view-btn, .edit-btn {
+      .custom-view-icon, .custom-edit-icon {
+        margin-right: 4px;
+      }
+    }
+    
+    :deep(.high-risk-row) {
+      --el-table-tr-bg-color: #fef0f0;
+      
+      &:hover > td {
+        background-color: #fedddd !important;
+      }
+    }
+    
+    :deep(.medium-risk-row) {
+      --el-table-tr-bg-color: #fdf6ec;
+      
+      &:hover > td {
+        background-color: #fae6c8 !important;
+      }
+    }
+    
+    .pagination-section {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .project-dialog, .detail-dialog {
+    .progress-value {
+      margin-left: 10px;
+      color: #606266;
+      font-weight: 500;
+    }
+    
+    .el-form-item {
+      margin-bottom: 22px;
+    }
+  }
+  
+  .detail-dialog {
+    .project-detail {
+      .detail-section {
+        margin-bottom: 24px;
+        
+        h3 {
+          color: #303133;
+          margin-bottom: 16px;
+          padding-bottom: 8px;
+          border-bottom: 1px solid #ebeef5;
+          font-weight: 600;
+        }
+        
+        .detail-item {
+          margin-bottom: 12px;
+          
+          label {
+            color: #606266;
+            font-weight: 500;
+            margin-right: 8px;
+          }
+          
+          span {
+            color: #303133;
+          }
+          
+          .progress-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            
+            .completed-text {
+              color: #67c23a;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+      
+      .risk-warning, .deadline-reminder {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 6px;
+        
+        .warning-icon, .reminder-icon {
+          font-size: 24px;
+          flex-shrink: 0;
+        }
+      }
+      
+      .risk-warning {
+        background-color: #fef0f0;
+        border: 1px solid #fde2e2;
+        
+        .warning-content {
+          .warning-title {
+            color: #f56c6c;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+          }
+          
+          .warning-desc {
+            color: #606266;
+            margin: 0 0 12px 0;
+          }
+          
+          .warning-suggestions {
+            margin: 0;
+            padding-left: 18px;
+            
+            li {
+              color: #606266;
+              margin-bottom: 4px;
+            }
+          }
+        }
+      }
+      
+      .deadline-reminder {
+        background-color: #fdf6ec;
+        border: 1px solid #faecd8;
+        
+        .reminder-content {
+          p {
+            margin: 0 0 8px 0;
+            color: #606266;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+          
+          .reminder-suggestion {
+            color: #e6a23c;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .enterprise-list-container {
+    padding: 12px;
+    
+    .page-header {
+      h1 {
+        font-size: 24px;
+      }
+      
+      p {
+        font-size: 14px;
+      }
+    }
+    
+    .filter-section, .table-section {
+      padding: 16px;
+    }
+    
+    .detail-dialog .project-detail .detail-section .detail-item {
+      margin-bottom: 16px;
+    }
+  }
+}

@@ -18,24 +18,44 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: 'monitoring',
-            name: 'Monitoring',
-            component: () => import('@/views/Monitoring.vue')
+            path: '/enterprise-list',
+            name: 'EnterpriseList',
+            component: () => import('@/views/enterprise/EnterpriseList.vue')
           },
           {
-            path: 'alarm',
-            name: 'Alarm',
-            component: () => import('@/views/Alarm.vue')
+            path: '/preference-application',
+            name: 'PreferenceApplication',
+            component: () => import('@/views/application/PreferenceApplication.vue')
           },
           {
-            path: 'statistics',
-            name: 'Statistics',
-            component: () => import('@/views/Statistics.vue')
+            path: '/application-history',
+            name: 'ApplicationHistory',
+            component: () => import('@/views/application/ApplicationHistory.vue')
           },
           {
-            path: 'settings',
-            name: 'Settings',
-            component: () => import('@/views/Settings.vue')
+            path: '/policy-guidance',
+            name: 'PolicyGuidance',
+            component: () => import('@/views/policy/PolicyGuidance.vue')
+          },
+          {
+            path: '/audit-management',
+            name: 'AuditManagement',
+            component: () => import('@/views/audit/AuditManagement.vue')
+          },
+          {
+            path: '/statistics-report',
+            name: 'StatisticsReport',
+            component: () => import('@/views/report/StatisticsReport.vue')
+          },
+          {
+            path: '/user-profile',
+            name: 'UserProfile',
+            component: () => import('@/views/user/UserProfile.vue')
+          },
+          {
+            path: '/system-settings',
+            name: 'SystemSettings',
+            component: () => import('@/views/system/SystemSettings.vue')
           }
         ]
   }

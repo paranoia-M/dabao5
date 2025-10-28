@@ -1,83 +1,226 @@
-.monitor-container {
+.home-container {
   padding: 20px;
   background-color: #f5f7fa;
   min-height: 100vh;
-
-  .header {
-    text-align: center;
-    margin-bottom: 30px;
-
-    h2 {
-      font-size: 24px;
-      color: #303133;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: #909399;
+  
+  .stats-cards {
+    margin-bottom: 20px;
+    
+    .stat-card {
+      margin-bottom: 20px;
+      
+      .stat-content {
+        display: flex;
+        align-items: center;
+        
+        .stat-icon {
+          font-size: 36px;
+          margin-right: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50px;
+          height: 50px;
+          border-radius: 8px;
+          background-color: rgba(64, 158, 255, 0.1);
+          
+          &.green {
+            background-color: rgba(103, 194, 58, 0.1);
+          }
+          
+          &.orange {
+            background-color: rgba(230, 162, 60, 0.1);
+          }
+          
+          &.red {
+            background-color: rgba(245, 108, 108, 0.1);
+          }
+        }
+        
+        .stat-info {
+          .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #303133;
+            margin-bottom: 5px;
+          }
+          
+          .stat-label {
+            font-size: 14px;
+            color: #909399;
+          }
+        }
+      }
     }
   }
-
-  .form-row {
+  
+  .chart-card, .project-list-card {
     margin-bottom: 20px;
-
-    .form-card, .stats-card {
-      height: 100%;
-
-      .card-title {
+    border-radius: 8px;
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      span {
         font-size: 16px;
         font-weight: bold;
-        color: #303133;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ebeef5;
-      }
-    }
-
-    .stat-item {
-      text-align: center;
-      padding: 15px 0;
-
-      .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: #409eff;
-        margin-bottom: 5px;
-      }
-
-      .stat-label {
-        font-size: 14px;
-        color: #909399;
       }
     }
   }
-
-  .table-card {
+  
+  .chart-container {
+    padding: 10px 0;
+    
+    .progress-chart {
+      .progress-item {
+        margin-bottom: 15px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        .progress-info {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 5px;
+          
+          .progress-label {
+            font-size: 14px;
+            color: #606266;
+          }
+          
+          .progress-value {
+            font-size: 14px;
+            color: #909399;
+          }
+        }
+      }
+    }
+  }
+  
+  .pagination-container {
     margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .project-detail {
+    .el-descriptions {
+      margin: 10px 0;
+    }
+  }
+  
+  .progress-detail {
+    .progress-summary {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f5f7fa;
+      border-radius: 4px;
+      
+      h4 {
+        margin: 0 0 10px 0;
+        color: #303133;
+      }
+      
+      p {
+        margin: 5px 0;
+        color: #606266;
+        
+        .highlight {
+          color: #67C23A;
+          font-weight: 500;
+        }
+        
+        .warning {
+          color: #E6A23C;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
 
-    .card-title {
-      font-size: 16px;
+// 响应式设计
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+    
+    .stats-cards {
+      .el-col {
+        margin-bottom: 10px;
+      }
+    }
+    
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start !important;
+      
+      > div {
+        margin-top: 10px;
+        width: 100%;
+        
+        .el-input {
+          width: 100% !important;
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+        
+        .el-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// 动画效果
+.stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+// 表格样式优化
+.el-table {
+  .el-table__header {
+    th {
+      background-color: #f5f7fa;
       font-weight: bold;
       color: #303133;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ebeef5;
-    }
-
-    .pagination {
-      margin-top: 20px;
-      justify-content: flex-end;
     }
   }
-
-  .el-card {
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  
+  .el-table__body {
+    tr:hover > td {
+      background-color: #f5f7fa !important;
+    }
   }
+}
 
-  .el-table {
-    margin-top: 10px;
+// 弹窗样式优化
+.el-dialog {
+  border-radius: 8px;
+  
+  .el-dialog__header {
+    border-bottom: 1px solid #ebeef5;
+    padding: 15px 20px;
+    margin-right: 0;
+    
+    .el-dialog__title {
+      font-weight: bold;
+    }
+  }
+  
+  .el-dialog__body {
+    padding: 20px;
+  }
+  
+  .el-dialog__footer {
+    border-top: 1px solid #ebeef5;
+    padding: 15px 20px;
   }
 }

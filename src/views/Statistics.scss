@@ -1,0 +1,224 @@
+.statistics-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+
+  .dashboard-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ebeef5;
+
+      .system-title {
+        margin: 0;
+        color: #303133;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .time-range {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .date-picker {
+          width: 280px;
+        }
+
+        .refresh-btn {
+          .btn-text {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .data-overview {
+    margin-bottom: 20px;
+
+    .metric-card {
+      border-radius: 8px;
+      text-align: center;
+      padding: 15px 0;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .metric-value {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .metric-label {
+        font-size: 14px;
+        color: #909399;
+        margin-bottom: 5px;
+      }
+
+      .metric-trend {
+        font-size: 12px;
+
+        .trend-text {
+          color: #67c23a;
+        }
+      }
+
+      &.total-alerts {
+        border-top: 3px solid #409eff;
+
+        .metric-value {
+          color: #409eff;
+        }
+      }
+
+      &.high-risk {
+        border-top: 3px solid #f56c6c;
+
+        .metric-value {
+          color: #f56c6c;
+        }
+
+        .trend-text {
+          color: #f56c6c;
+        }
+      }
+
+      &.medium-risk {
+        border-top: 3px solid #e6a23c;
+
+        .metric-value {
+          color: #e6a23c;
+        }
+
+        .trend-text {
+          color: #e6a23c;
+        }
+      }
+
+      &.low-risk {
+        border-top: 3px solid #67c23a;
+
+        .metric-value {
+          color: #67c23a;
+        }
+      }
+    }
+  }
+
+  .chart-section {
+    margin-bottom: 20px;
+
+    .chart-card {
+      border-radius: 8px;
+      margin-bottom: 20px;
+
+      .chart-title {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color: #303133;
+      }
+
+      .chart-container {
+        height: 300px;
+      }
+
+      .chart-footer {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #909399;
+        text-align: right;
+      }
+    }
+  }
+
+  .alert-table {
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        color: #303133;
+      }
+
+      .table-actions {
+        display: flex;
+        gap: 10px;
+
+        .search-input {
+          margin-right: 10px;
+        }
+
+        .risk-select {
+          width: 120px;
+        }
+      }
+    }
+
+    .alert-data-table {
+      margin-bottom: 20px;
+
+      .exceed-value {
+        color: #f56c6c;
+        font-weight: bold;
+      }
+
+      .risk-tag {
+        font-weight: bold;
+      }
+
+      .detail-btn {
+        padding: 5px 10px;
+      }
+    }
+
+    .pagination {
+      margin-top: 20px;
+      text-align: right;
+    }
+  }
+
+  .alert-detail-dialog {
+    .alert-detail {
+      .detail-descriptions {
+        margin-bottom: 20px;
+
+        .detail-risk-tag {
+          font-weight: bold;
+        }
+      }
+
+      .detail-chart {
+        height: 250px;
+      }
+    }
+  }
+
+  .export-dialog {
+    .export-options {
+      .export-range {
+        margin-top: 20px;
+
+        .export-page-range {
+          margin-top: 10px;
+          font-size: 14px;
+          color: #606266;
+        }
+      }
+    }
+  }
+}

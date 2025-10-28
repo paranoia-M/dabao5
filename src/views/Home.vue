@@ -1,461 +1,342 @@
 <template>
   <div class="home-container">
-    <!-- 顶部统计卡片 -->
-    <div class="stats-cards">
+    <!-- 顶部横幅 -->
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h1 class="hero-title">航清噪音项目申报综合管理系统</h1>
+        <p class="hero-subtitle">一站式政策项目申报解决方案，高效协同，智能管理</p>
+        <div class="hero-actions">
+          <el-button type="primary" size="large" @click="showCreateProjectDialog">
+            新建项目
+          </el-button>
+          <el-button size="large" @click="showGuideDialog">
+            查看申报指南
+          </el-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据统计 -->
+    <div class="stats-section">
       <el-row :gutter="20">
-        <el-col :xs="12" :sm="6" :md="6" :lg="6" :xl="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="color: #409EFF;">
-                <i class="el-icon-document"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">128</div>
-                <div class="stat-label">总申报项目</div>
-              </div>
-            </div>
-          </el-card>
+        <el-col :xs="12" :sm="6">
+          <div class="stat-card">
+            <div class="stat-value">{{ stats.totalProjects }}</div>
+            <div class="stat-label">总项目数</div>
+          </div>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="6" :lg="6" :xl="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="color: #67C23A;">
-                <i class="el-icon-check"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">86</div>
-                <div class="stat-label">审批通过</div>
-              </div>
-            </div>
-          </el-card>
+        <el-col :xs="12" :sm="6">
+          <div class="stat-card">
+            <div class="stat-value">{{ stats.inProgress }}</div>
+            <div class="stat-label">进行中</div>
+          </div>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="6" :lg="6" :xl="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="color: #E6A23C;">
-                <i class="el-icon-time"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">32</div>
-                <div class="stat-label">审批中</div>
-              </div>
-            </div>
-          </el-card>
+        <el-col :xs="12" :sm="6">
+          <div class="stat-card">
+            <div class="stat-value">{{ stats.completed }}</div>
+            <div class="stat-label">已完成</div>
+          </div>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="6" :lg="6" :xl="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="color: #F56C6C;">
-                <i class="el-icon-warning"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">10</div>
-                <div class="stat-label">风险预警</div>
-              </div>
-            </div>
-          </el-card>
+        <el-col :xs="12" :sm="6">
+          <div class="stat-card">
+            <div class="stat-value">{{ stats.teamMembers }}</div>
+            <div class="stat-label">团队成员</div>
+          </div>
         </el-col>
       </el-row>
     </div>
 
-    <!-- 项目进度图表 -->
-    <el-card class="chart-card" shadow="never">
-      <template #header>
-        <div class="card-header">
-          <span>项目进度分布</span>
-          <el-button type="text" @click="showProgressDetail">查看详情</el-button>
-        </div>
-      </template>
-      <div class="chart-container">
-        <div class="progress-chart">
-          <div class="progress-item" v-for="(item, index) in progressData" :key="index">
-            <div class="progress-info">
-              <span class="progress-label">{{ item.label }}</span>
-              <span class="progress-value">{{ item.value }}个</span>
-            </div>
-            <el-progress 
-              :percentage="item.percentage" 
-              :color="item.color" 
-              :show-text="false" 
-              :stroke-width="12">
-            </el-progress>
+    <!-- 功能特性展示 -->
+    <div class="features-section">
+      <h2 class="section-title">平台核心功能</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon document-icon">
+            <span class="icon-text">📄</span>
           </div>
+          <h3>材料智能管理</h3>
+          <p>统一管理申报材料，版本清晰，随时调用</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon user-icon">
+            <span class="icon-text">👥</span>
+          </div>
+          <h3>多角色协同</h3>
+          <p>申报人、审核人、管理员高效协作</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon time-icon">
+            <span class="icon-text">⏱️</span>
+          </div>
+          <h3>进度实时追踪</h3>
+          <p>申报进度一目了然，关键节点及时提醒</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon policy-icon">
+            <span class="icon-text">📋</span>
+          </div>
+          <h3>政策精准匹配</h3>
+          <p>智能推荐适合申报的政策项目</p>
         </div>
       </div>
-    </el-card>
+    </div>
 
-    <!-- 项目列表 -->
-    <el-card class="project-list-card" shadow="never">
-      <template #header>
-        <div class="card-header">
-          <span>最近申报项目</span>
-          <div>
-            <el-input 
-              v-model="searchKeyword" 
-              placeholder="搜索项目" 
-              prefix-icon="el-icon-search" 
-              style="width: 200px; margin-right: 10px;">
-            </el-input>
-            <el-button type="primary" icon="el-icon-refresh" @click="refreshList">刷新</el-button>
-          </div>
-        </div>
-      </template>
+    <!-- 最近项目 -->
+    <div class="recent-projects">
+      <div class="section-header">
+        <h2 class="section-title">最近项目</h2>
+        <el-button type="text" @click="showAllProjects">查看全部</el-button>
+      </div>
       
-      <el-table 
-        :data="paginatedProjects" 
-        style="width: 100%" 
-        v-loading="loading">
-        <el-table-column prop="name" label="项目名称" min-width="200"></el-table-column>
-        <el-table-column prop="applicant" label="申报单位" width="150"></el-table-column>
-        <el-table-column prop="date" label="申报日期" width="120"></el-table-column>
-        <el-table-column prop="status" label="状态" width="120">
+      <el-table :data="recentProjects" style="width: 100%" empty-text="暂无项目数据" stripe>
+        <el-table-column prop="name" label="项目名称" min-width="200" />
+        <el-table-column prop="policy" label="政策类型" width="120" />
+        <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
-            <el-tag 
-              :type="getStatusType(row.status)" 
-              size="small">
+            <el-tag :type="getStatusType(row.status)" size="small">
               {{ row.status }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="progress" label="进度" width="120">
+        <el-table-column prop="deadline" label="截止日期" width="120" />
+        <el-table-column prop="lastUpdate" label="最后更新" width="140" />
+        <el-table-column label="操作" width="120" fixed="right">
           <template #default="{ row }">
-            <el-progress 
-              :percentage="row.progress" 
-              :color="getProgressColor(row.progress)" 
-              :show-text="false" 
-              :stroke-width="12">
-            </el-progress>
-            <span style="margin-left: 8px; font-size: 12px;">{{ row.progress }}%</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="120">
-          <template #default="{ row }">
-            <el-button type="text" size="small" @click="viewDetails(row)">查看</el-button>
+            <el-button link type="primary" size="small" @click="showProjectDetail(row)">
+              查看
+            </el-button>
+            <el-button link type="primary" size="small" @click="showEditProject(row)">
+              编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
-      
-      <div class="pagination-container">
-        <el-pagination
-          :current-page="currentPage"
-          :page-size="pageSize"
-          :total="filteredProjects.length"
-          layout="total, prev, pager, next, jumper"
-          @current-change="handlePageChange">
-        </el-pagination>
-      </div>
-    </el-card>
+    </div>
 
-    <!-- 项目详情弹窗 -->
-    <el-dialog
-      v-model="detailDialogVisible"
-      :title="currentProject ? currentProject.name : '项目详情'"
-      width="50%"
-      center>
-      <div v-if="currentProject" class="project-detail">
-        <el-descriptions :column="2" border>
-          <el-descriptions-item label="项目名称">{{ currentProject.name }}</el-descriptions-item>
-          <el-descriptions-item label="申报单位">{{ currentProject.applicant }}</el-descriptions-item>
-          <el-descriptions-item label="申报日期">{{ currentProject.date }}</el-descriptions-item>
-          <el-descriptions-item label="当前状态">
-            <el-tag :type="getStatusType(currentProject.status)">{{ currentProject.status }}</el-tag>
-          </el-descriptions-item>
-          <el-descriptions-item label="项目进度" :span="2">
-            <el-progress :percentage="currentProject.progress" :color="getProgressColor(currentProject.progress)" />
-          </el-descriptions-item>
-          <el-descriptions-item label="项目描述" :span="2">
-            {{ getProjectDescription(currentProject) }}
-          </el-descriptions-item>
-          <el-descriptions-item label="风险评估" :span="2" v-if="currentProject.progress < 30 || currentProject.status === '风险预警'">
-            <el-alert
-              title="项目存在风险"
-              type="warning"
-              description="此项目进度较慢或存在审批风险，请密切关注并及时跟进。"
-              show-icon>
-            </el-alert>
-          </el-descriptions-item>
-        </el-descriptions>
-      </div>
+    <!-- 弹窗组件 -->
+    <el-dialog v-model="createProjectDialogVisible" title="新建项目" width="500px">
+      <el-form :model="newProjectForm" label-width="80px">
+        <el-form-item label="项目名称">
+          <el-input v-model="newProjectForm.name" placeholder="请输入项目名称" />
+        </el-form-item>
+        <el-form-item label="政策类型">
+          <el-select v-model="newProjectForm.policy" placeholder="请选择政策类型">
+            <el-option label="科技创新" value="科技创新" />
+            <el-option label="产业扶持" value="产业扶持" />
+            <el-option label="绿色发展" value="绿色发展" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="截止日期">
+          <el-date-picker v-model="newProjectForm.deadline" type="date" placeholder="选择截止日期" />
+        </el-form-item>
+      </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="detailDialogVisible = false">关闭</el-button>
-          <el-button type="primary" @click="handleProjectAction">
-            {{ currentProject && currentProject.status === '风险预警' ? '处理风险' : '跟进项目' }}
-          </el-button>
+          <el-button @click="createProjectDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="createNewProject">确定</el-button>
         </span>
       </template>
     </el-dialog>
 
-    <!-- 进度详情弹窗 -->
-    <el-dialog
-      v-model="progressDialogVisible"
-      title="项目进度分布详情"
-      width="60%"
-      center>
-      <div class="progress-detail">
-        <el-table :data="progressData" style="width: 100%">
-          <el-table-column prop="label" label="进度阶段" width="120" />
-          <el-table-column prop="value" label="项目数量" width="100" />
-          <el-table-column prop="percentage" label="占比" width="100">
-            <template #default="{ row }">{{ row.percentage }}%</template>
-          </el-table-column>
-          <el-table-column label="进度条">
-            <template #default="{ row }">
-              <el-progress :percentage="row.percentage" :color="row.color" />
-            </template>
-          </el-table-column>
-        </el-table>
-        
-        <div class="progress-summary">
-          <h4>进度分析</h4>
-          <p>当前共有 {{ totalProjectsCount }} 个项目处于不同审批阶段。</p>
-          <p>其中 <span class="highlight">{{ getProgressCount('已完成') }} 个项目已完成审批</span>，占总数的 {{ getProgressPercentage('已完成') }}%。</p>
-          <p><span class="warning">{{ getProgressCount('风险预警') }} 个项目存在风险</span>，需要重点关注和处理。</p>
-        </div>
+    <el-dialog v-model="guideDialogVisible" title="申报指南" width="700px">
+      <div class="guide-content">
+        <h3>政策项目申报流程</h3>
+        <ol>
+          <li>选择适合的政策项目类型</li>
+          <li>准备相关申报材料</li>
+          <li>填写项目基本信息</li>
+          <li>上传所需证明文件</li>
+          <li>提交申报并等待审核</li>
+          <li>根据反馈修改完善材料</li>
+        </ol>
+        <h3>常见问题</h3>
+        <p>1. 如何选择适合的政策项目？</p>
+        <p>2. 申报材料需要准备哪些？</p>
+        <p>3. 申报截止时间是什么时候？</p>
       </div>
+      <template #footer>
+        <el-button type="primary" @click="guideDialogVisible = false">我知道了</el-button>
+      </template>
+    </el-dialog>
+
+    <el-dialog v-model="projectDetailDialogVisible" :title="'项目详情 - ' + currentProject.name" width="600px">
+      <div class="project-detail">
+        <p><strong>项目名称：</strong>{{ currentProject.name }}</p>
+        <p><strong>政策类型：</strong>{{ currentProject.policy }}</p>
+        <p><strong>当前状态：</strong>{{ currentProject.status }}</p>
+        <p><strong>截止日期：</strong>{{ currentProject.deadline }}</p>
+        <p><strong>最后更新：</strong>{{ currentProject.lastUpdate }}</p>
+      </div>
+      <template #footer>
+        <el-button type="primary" @click="projectDetailDialogVisible = false">关闭</el-button>
+      </template>
+    </el-dialog>
+
+    <el-dialog v-model="allProjectsDialogVisible" title="全部项目" width="80%">
+      <el-table :data="allProjects" stripe>
+        <el-table-column prop="name" label="项目名称" min-width="200" />
+        <el-table-column prop="policy" label="政策类型" width="120" />
+        <el-table-column prop="status" label="状态" width="100">
+          <template #default="{ row }">
+            <el-tag :type="getStatusType(row.status)" size="small">
+              {{ row.status }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="deadline" label="截止日期" width="120" />
+        <el-table-column prop="lastUpdate" label="最后更新" width="140" />
+      </el-table>
+      <template #footer>
+        <el-button @click="allProjectsDialogVisible = false">关闭</el-button>
+      </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, onMounted, reactive } from 'vue'
+import { ElMessage } from 'element-plus'
 
-// 搜索关键词
-const searchKeyword = ref('')
+// 模拟数据
+const recentProjects = ref([
+  {
+    id: 1,
+    name: '2023年度高新技术企业认定',
+    policy: '科技创新',
+    status: '审核中',
+    deadline: '2023-10-15',
+    lastUpdate: '2023-09-20'
+  },
+  {
+    id: 2,
+    name: '中小企业发展专项资金申报',
+    policy: '产业扶持',
+    status: '草稿',
+    deadline: '2023-11-30',
+    lastUpdate: '2023-09-18'
+  },
+  {
+    id: 3,
+    name: '节能减排技术改造项目',
+    policy: '绿色发展',
+    status: '已提交',
+    deadline: '2023-12-05',
+    lastUpdate: '2023-09-15'
+  }
+])
 
-// 加载状态
-const loading = ref(false)
-
-// 分页数据
-const currentPage = ref(1)
-const pageSize = ref(5)
+const stats = ref({
+  totalProjects: 15,
+  inProgress: 8,
+  completed: 5,
+  teamMembers: 12
+})
 
 // 弹窗控制
-const detailDialogVisible = ref(false)
-const progressDialogVisible = ref(false)
-const currentProject = ref(null)
+const createProjectDialogVisible = ref(false)
+const guideDialogVisible = ref(false)
+const projectDetailDialogVisible = ref(false)
+const allProjectsDialogVisible = ref(false)
+const currentProject = ref({})
 
-// 进度数据
-const progressData = ref([
-  { label: '申报中', value: 42, percentage: 33, color: '#409EFF' },
-  { label: '初审中', value: 28, percentage: 22, color: '#E6A23C' },
-  { label: '专家评审', value: 18, percentage: 14, color: '#909399' },
-  { label: '终审中', value: 12, percentage: 9, color: '#67C23A' },
-  { label: '已完成', value: 28, percentage: 22, color: '#67C23A' }
-])
+// 表单数据
+const newProjectForm = reactive({
+  name: '',
+  policy: '',
+  deadline: ''
+})
 
-// 项目数据
-const projects = ref([
-  { 
-    id: 1, 
-    name: '智慧城市大数据平台建设', 
-    applicant: '科技信息局', 
-    date: '2023-06-15', 
-    status: '初审中', 
-    progress: 30,
-    description: '构建城市级大数据平台，整合各部门数据资源，提升城市管理智能化水平。'
+// 模拟全部项目数据
+const allProjects = ref([
+  ...recentProjects.value,
+  {
+    id: 4,
+    name: '文化产业发展专项资金',
+    policy: '文化创意',
+    status: '审核通过',
+    deadline: '2023-08-30',
+    lastUpdate: '2023-08-15'
   },
-  { 
-    id: 2, 
-    name: '新能源汽车产业园区规划', 
-    applicant: '经济发展局', 
-    date: '2023-06-12', 
-    status: '专家评审', 
-    progress: 60,
-    description: '规划建设新能源汽车产业园区，吸引产业链上下游企业集聚发展。'
-  },
-  { 
-    id: 3, 
-    name: '生态环境保护监测系统', 
-    applicant: '环境保护局', 
-    date: '2023-06-10', 
-    status: '申报中', 
-    progress: 20,
-    description: '建立全域生态环境监测网络，实时监控环境质量变化趋势。'
-  },
-  { 
-    id: 4, 
-    name: '乡村振兴示范项目', 
-    applicant: '农业农村局', 
-    date: '2023-06-08', 
-    status: '终审中', 
-    progress: 80,
-    description: '选取典型乡村开展综合示范建设，探索乡村振兴可复制推广模式。'
-  },
-  { 
-    id: 5, 
-    name: '文化创意产业发展计划', 
-    applicant: '文化广电局', 
-    date: '2023-06-05', 
-    status: '已完成', 
-    progress: 100,
-    description: '支持文化创意产业发展，培育新型文化业态和文化消费模式。'
-  },
-  { 
-    id: 6, 
-    name: '医疗卫生服务体系升级', 
-    applicant: '卫生健康局', 
-    date: '2023-06-03', 
-    status: '初审中', 
-    progress: 40,
-    description: '升级医疗卫生服务基础设施，提高医疗服务能力和水平。'
-  },
-  { 
-    id: 7, 
-    name: '智慧交通管理系统', 
-    applicant: '交通运输局', 
-    date: '2023-06-01', 
-    status: '专家评审', 
-    progress: 70,
-    description: '利用物联网、大数据技术构建智慧交通管理系统，缓解城市交通拥堵。'
-  },
-  { 
-    id: 8, 
-    name: '人才引进与培养计划', 
-    applicant: '人力资源和社会保障局', 
-    date: '2023-05-28', 
-    status: '申报中', 
-    progress: 15,
-    description: '实施高层次人才引进和本土人才培养计划，强化人才支撑。'
-  },
-  { 
-    id: 9, 
-    name: '老旧小区改造工程', 
-    applicant: '住房和城乡建设局', 
-    date: '2023-05-25', 
-    status: '终审中', 
-    progress: 90,
-    description: '对城区老旧小区进行综合改造，改善居民居住环境和生活质量。'
-  },
-  { 
-    id: 10, 
-    name: '全民健身设施建设', 
-    applicant: '体育局', 
-    date: '2023-05-22', 
-    status: '已完成', 
-    progress: 100,
-    description: '建设全民健身设施网络，满足人民群众日益增长的健身需求。'
+  {
+    id: 5,
+    name: '农业产业化重点项目',
+    policy: '农业发展',
+    status: '审核驳回',
+    deadline: '2023-09-10',
+    lastUpdate: '2023-09-05'
   }
 ])
 
-// 过滤后的项目列表
-const filteredProjects = computed(() => {
-  if (!searchKeyword.value) {
-    return projects.value
-  }
-  
-  return projects.value.filter(project => 
-    project.name.toLowerCase().includes(searchKeyword.value.toLowerCase()) ||
-    project.applicant.toLowerCase().includes(searchKeyword.value.toLowerCase())
-  )
-})
-
-// 分页后的项目列表
-const paginatedProjects = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return filteredProjects.value.slice(start, end)
-})
-
-// 计算总项目数
-const totalProjectsCount = computed(() => {
-  return progressData.value.reduce((total, item) => total + item.value, 0)
-})
-
-// 获取状态标签类型
+// 状态标签类型
 const getStatusType = (status) => {
   const statusMap = {
-    '申报中': 'info',
-    '初审中': 'warning',
-    '专家评审': '',
-    '终审中': 'success',
-    '已完成': 'success',
-    '风险预警': 'danger'
+    '草稿': 'info',
+    '已提交': '',
+    '审核中': 'warning',
+    '审核通过': 'success',
+    '审核驳回': 'danger'
   }
   return statusMap[status] || ''
 }
 
-// 获取进度条颜色
-const getProgressColor = (progress) => {
-  if (progress < 30) {
-    return '#F56C6C'
-  } else if (progress < 70) {
-    return '#E6A23C'
-  } else {
-    return '#67C23A'
-  }
+// 交互处理函数
+const showCreateProjectDialog = () => {
+  createProjectDialogVisible.value = true
 }
 
-// 获取项目描述
-const getProjectDescription = (project) => {
-  return project.description || '暂无详细项目描述信息。'
+const showGuideDialog = () => {
+  guideDialogVisible.value = true
 }
 
-// 获取特定进度阶段的项目数量
-const getProgressCount = (label) => {
-  const item = progressData.value.find(item => item.label === label)
-  return item ? item.value : 0
+const showAllProjects = () => {
+  allProjectsDialogVisible.value = true
 }
 
-// 获取特定进度阶段的百分比
-const getProgressPercentage = (label) => {
-  const item = progressData.value.find(item => item.label === label)
-  return item ? item.percentage : 0
-}
-
-// 查看详情
-const viewDetails = (project) => {
+const showProjectDetail = (project) => {
   currentProject.value = project
-  detailDialogVisible.value = true
+  projectDetailDialogVisible.value = true
 }
 
-// 显示进度详情
-const showProgressDetail = () => {
-  progressDialogVisible.value = true
+const showEditProject = (project) => {
+  ElMessage.info(`即将编辑项目: ${project.name}`)
+  // 这里可以打开编辑项目的弹窗
 }
 
-// 处理项目操作
-const handleProjectAction = () => {
-  if (currentProject.value && currentProject.value.status === '风险预警') {
-    ElMessageBox.confirm(
-      '确定要处理此项目的风险吗？系统将通知相关负责人跟进。',
-      '处理风险提示',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    ).then(() => {
-      ElMessage.success('已通知相关负责人处理项目风险')
-      detailDialogVisible.value = false
-    }).catch(() => {
-      // 取消操作
-    })
-  } else {
-    ElMessage.info('已记录项目跟进需求，将安排专人联系')
-    detailDialogVisible.value = false
+const createNewProject = () => {
+  if (!newProjectForm.name || !newProjectForm.policy || !newProjectForm.deadline) {
+    ElMessage.warning('请填写完整项目信息')
+    return
   }
+  
+  // 模拟创建新项目
+  const newProject = {
+    id: Date.now(),
+    name: newProjectForm.name,
+    policy: newProjectForm.policy,
+    status: '草稿',
+    deadline: newProjectForm.deadline,
+    lastUpdate: new Date().toLocaleDateString()
+  }
+  
+  recentProjects.value.unshift(newProject)
+  stats.value.totalProjects += 1
+  stats.value.inProgress += 1
+  
+  ElMessage.success('项目创建成功')
+  createProjectDialogVisible.value = false
+  
+  // 重置表单
+  newProjectForm.name = ''
+  newProjectForm.policy = ''
+  newProjectForm.deadline = ''
 }
 
-// 刷新列表
-const refreshList = () => {
-  loading.value = true
-  // 模拟数据刷新
-  setTimeout(() => {
-    loading.value = false
-    ElMessage.success('数据已刷新')
-  }, 800)
-}
-
-// 处理分页变化
-const handlePageChange = (page) => {
-  currentPage.value = page
-}
-
-// 初始化数据
+// 模拟数据加载
 onMounted(() => {
-  // 初始化代码
+  // 模拟异步加载数据
+  setTimeout(() => {
+    ElMessage.success('数据加载完成')
+  }, 500)
 })
 </script>
 

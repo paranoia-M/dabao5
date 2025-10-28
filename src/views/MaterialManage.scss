@@ -1,0 +1,319 @@
+.material-manage {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+
+    h1 {
+      color: #303133;
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    p {
+      color: #606266;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+
+  .filter-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+
+    .input-prefix-icon {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      color: #909399;
+    }
+
+    .create-btn {
+      background: linear-gradient(45deg, #409eff, #66b1ff);
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-weight: 500;
+
+      .btn-icon {
+        margin-right: 5px;
+      }
+
+      &:hover {
+        background: linear-gradient(45deg, #66b1ff, #409eff);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+      }
+    }
+  }
+
+  .material-list {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+
+    .material-table {
+      margin-bottom: 20px;
+
+      .status-tag {
+        font-weight: 500;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+
+      .action-btn {
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+
+        .btn-icon {
+          margin-right: 4px;
+          font-size: 12px;
+        }
+
+        &.edit-btn {
+          background: linear-gradient(45deg, #67c23a, #85ce61);
+          border: none;
+          color: #fff;
+
+          &:hover {
+            background: linear-gradient(45deg, #85ce61, #67c23a);
+          }
+        }
+
+        &.delete-btn {
+          background: linear-gradient(45deg, #f56c6c, #f78989);
+          border: none;
+
+          &:hover {
+            background: linear-gradient(45deg, #f78989, #f56c6c);
+          }
+        }
+
+        &.collaborate-btn {
+          background: linear-gradient(45deg, #e6a23c, #ebb563);
+          border: none;
+          color: #fff;
+
+          &:hover {
+            background: linear-gradient(45deg, #ebb563, #e6a23c);
+          }
+        }
+      }
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  }
+
+  .material-dialog {
+    .el-dialog__header {
+      background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
+      border-radius: 12px 12px 0 0;
+      padding: 15px 20px;
+      margin: 0;
+
+      .el-dialog__title {
+        color: #303133;
+        font-weight: 600;
+      }
+    }
+
+    .el-form-item__label {
+      color: #606266;
+      font-weight: 500;
+    }
+
+    .cancel-btn {
+      background: #f2f6fc;
+      border-color: #dcdfe6;
+      color: #606266;
+
+      &:hover {
+        background: #ebedf0;
+        border-color: #c0c4cc;
+      }
+    }
+
+    .submit-btn {
+      background: linear-gradient(45deg, #409eff, #66b1ff);
+      border: none;
+
+      &:hover {
+        background: linear-gradient(45deg, #66b1ff, #409eff);
+      }
+    }
+  }
+
+  .delete-dialog {
+    .el-dialog__header {
+      background: #fef0f0;
+      border-radius: 12px 12px 0 0;
+      padding: 15px 20px;
+      margin: 0;
+
+      .el-dialog__title {
+        color: #f56c6c;
+        font-weight: 600;
+      }
+    }
+
+    p {
+      color: #606266;
+      line-height: 1.6;
+      margin: 0;
+      padding: 10px 0;
+    }
+  }
+
+  .collaborate-dialog {
+    .el-dialog__header {
+      background: linear-gradient(135deg, #fff6e6 0%, #ffefd5 100%);
+      border-radius: 12px 12px 0 0;
+      padding: 15px 20px;
+      margin: 0;
+
+      .el-dialog__title {
+        color: #e6a23c;
+        font-weight: 600;
+      }
+    }
+
+    .collaborate-content {
+      h3 {
+        color: #303133;
+        text-align: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f2f5;
+      }
+
+      h4 {
+        color: #606266;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .collaborators-list {
+        margin-bottom: 20px;
+
+        .collaborators {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+
+          .collaborator {
+            display: flex;
+            align-items: center;
+            background: #f5f7fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            min-width: 120px;
+
+            .user-avatar {
+              margin-right: 8px;
+              font-size: 16px;
+            }
+
+            .user-name {
+              color: #303133;
+              font-weight: 500;
+              margin-right: 8px;
+            }
+
+            .user-role {
+              font-size: 12px;
+              padding: 2px 6px;
+              border-radius: 3px;
+
+              &.owner {
+                background: #ecf5ff;
+                color: #409eff;
+              }
+
+              &.editor {
+                background: #f0f9eb;
+                color: #67c23a;
+              }
+            }
+          }
+        }
+      }
+
+      .version-history {
+        margin-bottom: 20px;
+
+        .el-timeline-item {
+          padding-bottom: 10px;
+
+          &:last-child {
+            padding-bottom: 0;
+          }
+        }
+      }
+
+      .invite-section {
+        .invite-input {
+          .invite-btn {
+            background: linear-gradient(45deg, #409eff, #66b1ff);
+            border: none;
+            color: #fff;
+
+            &:hover {
+              background: linear-gradient(45deg, #66b1ff, #409eff);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.text-right {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .material-manage {
+    padding: 10px;
+
+    .filter-section {
+      .el-col {
+        margin-bottom: 15px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .text-right {
+        text-align: left;
+      }
+    }
+
+    .material-list {
+      .action-btn {
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

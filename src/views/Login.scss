@@ -1,138 +1,164 @@
 .login-container {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.login-wrapper {
+.login-card {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 480px;
-  padding: 0 20px;
-}
-
-.login-form {
+  width: 400px;
+  padding: 40px;
   background: rgba(255, 255, 255, 0.95);
-  padding: 40px 30px;
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
 }
 
-.login-title {
+.login-header {
   text-align: center;
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.system-description {
-  text-align: center;
-  color: #666;
-  font-size: 14px;
   margin-bottom: 30px;
-}
-
-.form-content {
-  margin-bottom: 20px;
-}
-
-.custom-input {
-  :deep(.el-input__wrapper) {
-    border-radius: 10px;
-    padding: 0 15px;
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #666;
   }
 }
 
-.input-icon {
-  font-size: 16px;
-  margin-right: 8px;
+.login-form {
+  .el-form-item {
+    margin-bottom: 24px;
+  }
+  
+  .custom-input {
+    .el-input__wrapper {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+    
+    .input-icon {
+      font-size: 16px;
+      padding-right: 8px;
+    }
+  }
 }
 
 .login-btn {
   width: 100%;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
   height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
   
   &:hover {
     opacity: 0.9;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+  
+  &:active {
+    transform: translateY(0);
   }
 }
 
-.login-tip {
+.login-footer {
   text-align: center;
-  color: #888;
-  font-size: 12px;
-  margin-bottom: 30px;
-}
-
-.tip-icon {
-  margin-right: 5px;
-}
-
-.feature-highlights {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.feature-item {
-  text-align: center;
-}
-
-.feature-icon {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-.feature-text {
-  font-size: 12px;
-  color: #666;
-}
-
-.bubbles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1;
+  margin-top: 30px;
+  
+  p {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  
+  .platform-features {
+    font-size: 11px;
+    color: #888;
+    font-weight: 300;
+  }
 }
 
 .bubble {
   position: absolute;
-  bottom: -100px;
-  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  animation: rise 15s infinite ease-in;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 8s infinite ease-in-out;
 }
 
-@keyframes rise {
-  0% {
-    bottom: -100px;
-    transform: translateX(0) scale(1);
-    opacity: 0;
+.bubble-1 {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.bubble-2 {
+  width: 60px;
+  height: 60px;
+  top: 20%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.bubble-3 {
+  width: 100px;
+  height: 100px;
+  bottom: 15%;
+  left: 15%;
+  animation-delay: 2s;
+}
+
+.bubble-4 {
+  width: 70px;
+  height: 70px;
+  bottom: 25%;
+  right: 20%;
+  animation-delay: 3s;
+}
+
+.bubble-5 {
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  left: 25%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
   }
   50% {
-    opacity: 0.6;
-    transform: translateX(100px) scale(1.2);
+    transform: translateY(-20px) rotate(180deg);
   }
-  100% {
-    bottom: 100vh;
-    transform: translateX(200px) scale(0);
-    opacity: 0;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    width: 90%;
+    padding: 30px 20px;
+  }
+  
+  .login-header h1 {
+    font-size: 20px;
   }
 }

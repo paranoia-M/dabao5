@@ -1,226 +1,229 @@
 .home-container {
-  padding: 20px;
-  background-color: #f5f7fa;
+  padding: 0;
+  margin: 0;
   min-height: 100vh;
+  background-color: #f5f7fa;
   
-  .stats-cards {
-    margin-bottom: 20px;
+  .hero-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
     
-    .stat-card {
-      margin-bottom: 20px;
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
       
-      .stat-content {
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 32px;
+        opacity: 0.9;
+      }
+      
+      .hero-actions {
         display: flex;
-        align-items: center;
+        justify-content: center;
+        gap: 16px;
         
-        .stat-icon {
-          font-size: 36px;
-          margin-right: 15px;
-          display: flex;
+        @media (max-width: 768px) {
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          width: 50px;
-          height: 50px;
-          border-radius: 8px;
-          background-color: rgba(64, 158, 255, 0.1);
-          
-          &.green {
-            background-color: rgba(103, 194, 58, 0.1);
-          }
-          
-          &.orange {
-            background-color: rgba(230, 162, 60, 0.1);
-          }
-          
-          &.red {
-            background-color: rgba(245, 108, 108, 0.1);
-          }
-        }
-        
-        .stat-info {
-          .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #303133;
-            margin-bottom: 5px;
-          }
-          
-          .stat-label {
-            font-size: 14px;
-            color: #909399;
-          }
         }
       }
     }
   }
   
-  .chart-card, .project-list-card {
-    margin-bottom: 20px;
-    border-radius: 8px;
+  .stats-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
     
-    .card-header {
+    .stat-card {
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      
+      .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #409EFF;
+        margin-bottom: 8px;
+      }
+      
+      .stat-label {
+        color: #606266;
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  .features-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: #303133;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      
+      .feature-card {
+        background: white;
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+          font-size: 3rem;
+          margin-bottom: 16px;
+        }
+        
+        h3 {
+          font-size: 1.2rem;
+          margin-bottom: 12px;
+          color: #303133;
+        }
+        
+        p {
+          color: #606266;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+  
+  .recent-projects {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    
+    .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 24px;
       
-      span {
-        font-size: 16px;
-        font-weight: bold;
+      .section-title {
+        font-size: 1.8rem;
+        color: #303133;
+        margin: 0;
       }
     }
-  }
-  
-  .chart-container {
-    padding: 10px 0;
     
-    .progress-chart {
-      .progress-item {
-        margin-bottom: 15px;
-        
-        &:last-child {
-          margin-bottom: 0;
-        }
-        
-        .progress-info {
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 5px;
-          
-          .progress-label {
-            font-size: 14px;
-            color: #606266;
-          }
-          
-          .progress-value {
-            font-size: 14px;
-            color: #909399;
-          }
+    :deep(.el-table) {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
         }
       }
     }
   }
   
-  .pagination-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
+  .guide-content {
+    line-height: 1.8;
+    
+    h3 {
+      color: #303133;
+      margin: 20px 0 12px;
+    }
+    
+    ol {
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    
+    p {
+      margin: 8px 0;
+      color: #606266;
+    }
   }
   
   .project-detail {
-    .el-descriptions {
-      margin: 10px 0;
-    }
-  }
-  
-  .progress-detail {
-    .progress-summary {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #f5f7fa;
-      border-radius: 4px;
+    p {
+      margin: 12px 0;
+      line-height: 1.6;
       
-      h4 {
-        margin: 0 0 10px 0;
+      strong {
         color: #303133;
       }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-banner {
+      padding: 40px 16px;
       
-      p {
-        margin: 5px 0;
-        color: #606266;
-        
-        .highlight {
-          color: #67C23A;
-          font-weight: 500;
+      .hero-content {
+        .hero-title {
+          font-size: 2rem;
         }
         
-        .warning {
-          color: #E6A23C;
-          font-weight: 500;
+        .hero-subtitle {
+          font-size: 1rem;
         }
       }
     }
-  }
-}
-
-// 响应式设计
-@media (max-width: 768px) {
-  .home-container {
-    padding: 10px;
     
-    .stats-cards {
-      .el-col {
-        margin-bottom: 10px;
-      }
-    }
-    
-    .card-header {
-      flex-direction: column;
-      align-items: flex-start !important;
+    .stats-section {
+      margin: 24px auto;
       
-      > div {
-        margin-top: 10px;
-        width: 100%;
+      .stat-card {
+        padding: 16px;
         
-        .el-input {
-          width: 100% !important;
-          margin-right: 0;
-          margin-bottom: 10px;
-        }
-        
-        .el-button {
-          width: 100%;
+        .stat-value {
+          font-size: 1.5rem;
         }
       }
     }
-  }
-}
-
-// 动画效果
-.stat-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-3px);
-  }
-}
-
-// 表格样式优化
-.el-table {
-  .el-table__header {
-    th {
-      background-color: #f5f7fa;
-      font-weight: bold;
-      color: #303133;
-    }
-  }
-  
-  .el-table__body {
-    tr:hover > td {
-      background-color: #f5f7fa !important;
-    }
-  }
-}
-
-// 弹窗样式优化
-.el-dialog {
-  border-radius: 8px;
-  
-  .el-dialog__header {
-    border-bottom: 1px solid #ebeef5;
-    padding: 15px 20px;
-    margin-right: 0;
     
-    .el-dialog__title {
-      font-weight: bold;
+    .features-section {
+      margin: 40px auto;
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        
+        .feature-card {
+          padding: 20px;
+        }
+      }
     }
-  }
-  
-  .el-dialog__body {
-    padding: 20px;
-  }
-  
-  .el-dialog__footer {
-    border-top: 1px solid #ebeef5;
-    padding: 15px 20px;
+    
+    .recent-projects {
+      margin: 40px auto;
+      
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+    }
   }
 }

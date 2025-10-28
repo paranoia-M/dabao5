@@ -18,44 +18,44 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: '/enterprise-list',
-            name: 'EnterpriseList',
-            component: () => import('@/views/enterprise/EnterpriseList.vue')
+            path: 'project-list',
+            name: 'ProjectList',
+            component: () => import('@/views/ProjectList.vue')
           },
           {
-            path: '/preference-application',
-            name: 'PreferenceApplication',
-            component: () => import('@/views/application/PreferenceApplication.vue')
+            path: 'project-detail',
+            name: 'ProjectDetail',
+            component: () => import('@/views/ProjectDetail.vue')
           },
           {
-            path: '/application-history',
-            name: 'ApplicationHistory',
-            component: () => import('@/views/application/ApplicationHistory.vue')
+            path: 'project-create',
+            name: 'ProjectCreate',
+            component: () => import('@/views/ProjectCreate.vue')
           },
           {
-            path: '/policy-guidance',
-            name: 'PolicyGuidance',
-            component: () => import('@/views/policy/PolicyGuidance.vue')
+            path: 'project-edit',
+            name: 'ProjectEdit',
+            component: () => import('@/views/ProjectEdit.vue')
           },
           {
-            path: '/audit-management',
-            name: 'AuditManagement',
-            component: () => import('@/views/audit/AuditManagement.vue')
+            path: 'material-manage',
+            name: 'MaterialManage',
+            component: () => import('@/views/MaterialManage.vue')
           },
           {
-            path: '/statistics-report',
-            name: 'StatisticsReport',
-            component: () => import('@/views/report/StatisticsReport.vue')
+            path: 'approval-process',
+            name: 'ApprovalProcess',
+            component: () => import('@/views/ApprovalProcess.vue')
           },
           {
-            path: '/user-profile',
-            name: 'UserProfile',
-            component: () => import('@/views/user/UserProfile.vue')
+            path: 'user-center',
+            name: 'UserCenter',
+            component: () => import('@/views/UserCenter.vue')
           },
           {
-            path: '/system-settings',
-            name: 'SystemSettings',
-            component: () => import('@/views/system/SystemSettings.vue')
+            path: 'system-setting',
+            name: 'SystemSetting',
+            component: () => import('@/views/SystemSetting.vue')
           }
         ]
   }

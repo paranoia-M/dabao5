@@ -1,81 +1,60 @@
 <template>
   <div class="layout-container">
     <el-container>
-      <!-- 头部区域 -->
+      <!-- 顶部导航栏 -->
       <el-header class="header">
         <div class="header-left">
-          <h1>航清智能项目实时追踪及进度提醒软件</h1>
+          <h1 class="title">航清噪音项目申报综合管理系统</h1>
+          <span class="subtitle">一站式申报材料协作与管理</span>
         </div>
         <div class="header-right">
-          <el-button type="danger" @click="handleLogout">退出登录</el-button>
+          <el-button type="primary" plain @click="$router.push('/user-center')">
+            <span class="user-icon">👤</span>
+            用户中心
+          </el-button>
+          <el-button type="info" plain @click="handleLogout">退出登录</el-button>
         </div>
       </el-header>
       
       <el-container>
-        <!-- 侧边栏菜单 -->
+        <!-- 侧边菜单 -->
         <el-aside width="220px" class="aside">
           <el-menu
-            :default-active="$route.path"
+            :default-active="activeMenu"
             class="menu"
             background-color="#f8f9fa"
-            text-color="#303133"
-            active-text-color="#1890ff"
+            text-color="#495057"
+            :active-text-color="activeTextColor"
             router
-            :unique-opened="false"
+            :collapse="false"
           >
-            <el-menu-item index="/">
-              <span class="menu-item-content">
-                <el-icon><House /></el-icon>
-                <span>首页</span>
-              </span>
+            <el-menu-item index="/" class="menu-item">
+              <span class="menu-icon">🏠</span>
+              <span>首页</span>
             </el-menu-item>
-            <el-menu-item index="/enterprise-list">
-              <span class="menu-item-content">
-                <el-icon><OfficeBuilding /></el-icon>
-                <span>企业列表</span>
-              </span>
+            <el-menu-item index="/project-list" class="menu-item">
+              <span class="menu-icon">📋</span>
+              <span>项目列表</span>
             </el-menu-item>
-            <el-menu-item index="/preference-application">
-              <span class="menu-item-content">
-                <el-icon><Document /></el-icon>
-                <span>优惠申报</span>
-              </span>
+            <el-menu-item index="/project-create" class="menu-item">
+              <span class="menu-icon">➕</span>
+              <span>创建项目</span>
             </el-menu-item>
-            <el-menu-item index="/application-history">
-              <span class="menu-item-content">
-                <el-icon><DataBoard /></el-icon>
-                <span>申报历史</span>
-              </span>
+            <el-menu-item index="/material-manage" class="menu-item">
+              <span class="menu-icon">📁</span>
+              <span>材料管理</span>
             </el-menu-item>
-            <el-menu-item index="/policy-guidance">
-              <span class="menu-item-content">
-                <el-icon><Notebook /></el-icon>
-                <span>政策指导</span>
-              </span>
+            <el-menu-item index="/approval-process" class="menu-item">
+              <span class="menu-icon">✅</span>
+              <span>审批流程</span>
             </el-menu-item>
-            <el-menu-item index="/audit-management">
-              <span class="menu-item-content">
-                <el-icon><Finished /></el-icon>
-                <span>审核管理</span>
-              </span>
+            <el-menu-item index="/user-center" class="menu-item">
+              <span class="menu-icon">👥</span>
+              <span>用户中心</span>
             </el-menu-item>
-            <el-menu-item index="/statistics-report">
-              <span class="menu-item-content">
-                <el-icon><DataAnalysis /></el-icon>
-                <span>统计报表</span>
-              </span>
-            </el-menu-item>
-            <el-menu-item index="/user-profile">
-              <span class="menu-item-content">
-                <el-icon><User /></el-icon>
-                <span>用户资料</span>
-              </span>
-            </el-menu-item>
-            <el-menu-item index="/system-settings">
-              <span class="menu-item-content">
-                <el-icon><Setting /></el-icon>
-                <span>系统设置</span>
-              </span>
+            <el-menu-item index="/system-setting" class="menu-item">
+              <span class="menu-icon">⚙️</span>
+              <span>系统设置</span>
             </el-menu-item>
           </el-menu>
         </el-aside>
@@ -90,25 +69,33 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import {
-  House,
-  OfficeBuilding,
-  Document,
-  DataBoard,
-  Notebook,
-  Finished,
-  DataAnalysis,
-  User,
-  Setting
-} from '@element-plus/icons-vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
+// 计算当前激活的菜单项
+const activeMenu = computed(() => {
+  return route.path
+})
+
+// 计算激活菜单的对比色
+const activeTextColor = computed(() => {
+  // 背景色为#f8f9fa，对比色选择深蓝色
+  return '#1a56db'
+})
+
+// 退出登录
 const handleLogout = async () => {
   localStorage.clear()
   await router.push('/login')
 }
+
+onMounted(() => {
+  // 初始化用户信息
+  console.log('政策项目申报平台初始化完成')
+})
 </script>
 
 <style lang="scss" scoped>

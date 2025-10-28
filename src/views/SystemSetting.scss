@@ -1,0 +1,241 @@
+.policy-platform-dashboard {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+    
+    h1 {
+      color: #303133;
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    
+    p {
+      color: #606266;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+  
+  .dashboard {
+    margin-bottom: 24px;
+    
+    .stat-card {
+      margin-bottom: 20px;
+      
+      .stat-content {
+        display: flex;
+        align-items: center;
+        
+        .stat-icon {
+          width: 60px;
+          height: 60px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 16px;
+          
+          .custom-icon {
+            font-size: 24px;
+          }
+        }
+        
+        .stat-info {
+          h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+            color: #303133;
+          }
+          
+          p {
+            margin: 0;
+            color: #606266;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  
+  .recent-projects {
+    margin-bottom: 24px;
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      h2 {
+        margin: 0;
+        color: #303133;
+      }
+    }
+    
+    .project-name {
+      display: flex;
+      align-items: center;
+      
+      .project-icon {
+        margin-right: 8px;
+        font-size: 18px;
+      }
+    }
+    
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .quick-actions {
+    .action-list {
+      .action-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border-radius: 4px;
+        
+        &:hover {
+          background-color: #f5f7fa;
+        }
+        
+        .action-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 12px;
+          
+          .custom-icon {
+            font-size: 18px;
+          }
+        }
+        
+        .action-info {
+          h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            color: #303133;
+          }
+          
+          p {
+            margin: 0;
+            font-size: 12px;
+            color: #606266;
+          }
+        }
+      }
+    }
+    
+    .notice-list {
+      .notice-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-bottom: 1px solid #ebeef5;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .notice-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          margin-top: 8px;
+          margin-right: 12px;
+          flex-shrink: 0;
+        }
+        
+        .notice-content {
+          .notice-title {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            color: #303133;
+          }
+          
+          .notice-time {
+            margin: 0;
+            font-size: 12px;
+            color: #909399;
+          }
+        }
+      }
+    }
+    
+    .todo-list {
+      margin-bottom: 16px;
+      
+      .todo-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #ebeef5;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .todo-tag {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+  
+  .project-detail {
+    .project-actions {
+      display: flex;
+      gap: 10px;
+    }
+  }
+  
+  .action-detail {
+    p {
+      margin: 0 0 12px 0;
+      color: #606266;
+      line-height: 1.5;
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .policy-platform-dashboard {
+    padding: 12px;
+    
+    .header {
+      h1 {
+        font-size: 22px;
+      }
+      
+      p {
+        font-size: 14px;
+      }
+    }
+    
+    .recent-projects {
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        
+        h2 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

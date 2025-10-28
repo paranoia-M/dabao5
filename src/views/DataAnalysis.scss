@@ -1,0 +1,337 @@
+.data-analysis {
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+  min-height: 100vh;
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      color: #2c3e50;
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-subtitle {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+  }
+
+  .overview-cards {
+    margin-bottom: 30px;
+
+    .stat-card {
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-content {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+
+        .stat-icon {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 15px;
+          transition: all 0.3s ease;
+
+          .icon-text {
+            font-size: 24px;
+            color: white;
+          }
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+
+        .stat-info {
+          flex: 1;
+
+          .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+          }
+
+          .stat-title {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+
+  .chart-section {
+    margin-bottom: 30px;
+
+    .chart-card {
+      border-radius: 12px;
+      border: none;
+      margin-bottom: 20px;
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .chart-container {
+        height: 300px;
+        padding: 20px;
+
+        .fake-chart {
+          position: relative;
+          height: 100%;
+          background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+          border-radius: 8px;
+          border: 1px solid #e9ecef;
+
+          &.temperature-chart {
+            .chart-line {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 2px;
+              background: linear-gradient(90deg, #3498db, #2ecc71);
+              opacity: 0.7;
+            }
+
+            .chart-points {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 100%;
+
+              .chart-point {
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                background: #e74c3c;
+                border-radius: 50%;
+                transform: translate(-50%, 50%);
+                border: 2px solid white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+                &:nth-child(even) {
+                  background: #3498db;
+                }
+
+                &:nth-child(3n) {
+                  background: #2ecc71;
+                }
+              }
+            }
+          }
+
+          &.humidity-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 20px;
+
+            .chart-bar {
+              width: 30px;
+              background: linear-gradient(to top, #3498db, #2ecc71);
+              border-radius: 4px 4px 0 0;
+              transition: all 0.3s ease;
+              position: relative;
+
+              &:hover {
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+              }
+
+              &::before {
+                content: '';
+                position: absolute;
+                top: -2px;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: rgba(255, 255, 255, 0.5);
+              }
+            }
+          }
+
+          .chart-labels {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+
+            span {
+              font-size: 0.8rem;
+              color: #7f8c8d;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .device-section {
+    .device-card {
+      border-radius: 12px;
+      border: none;
+
+      .device-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #2c3e50;
+
+        .device-actions {
+          display: flex;
+          align-items: center;
+
+          .search-icon {
+            color: #7f8c8d;
+            font-size: 14px;
+          }
+        }
+      }
+
+      .device-name {
+        display: flex;
+        align-items: center;
+
+        .device-icon {
+          margin-right: 8px;
+          font-size: 16px;
+
+          &.online {
+            color: #67c23a;
+          }
+
+          &.offline {
+            color: #909399;
+          }
+
+          &.error {
+            color: #f56c6c;
+          }
+        }
+      }
+
+      .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .alert-section {
+    margin-top: 20px;
+
+    .el-alert {
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+  }
+
+  .device-detail-content {
+    .device-history {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+
+      h4 {
+        margin-bottom: 10px;
+        color: #2c3e50;
+      }
+
+      .mini-chart {
+        height: 60px;
+        background: white;
+        border-radius: 4px;
+        position: relative;
+        overflow: hidden;
+
+        .mini-chart-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #3498db, #2ecc71);
+          animation: chartFlow 2s ease-in-out infinite;
+        }
+      }
+    }
+  }
+}
+
+@keyframes chartFlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .data-analysis {
+    padding: 10px;
+
+    .page-header {
+      .page-title {
+        font-size: 1.8rem;
+      }
+
+      .page-subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    .device-header {
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+
+      .device-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+}

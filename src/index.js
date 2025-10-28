@@ -14,48 +14,38 @@ const routes = [
     children: [
           {
             path: '',
-            name: 'Home',
-            component: () => import('@/views/Home.vue')
+            name: 'Dashboard',
+            component: () => import('@/views/Dashboard.vue')
           },
           {
-            path: 'project-list',
-            name: 'ProjectList',
-            component: () => import('@/views/ProjectList.vue')
+            path: 'real-time-monitoring',
+            name: 'RealTimeMonitoring',
+            component: () => import('@/views/RealTimeMonitoring.vue')
           },
           {
-            path: 'project-detail',
-            name: 'ProjectDetail',
-            component: () => import('@/views/ProjectDetail.vue')
+            path: 'environment-data',
+            name: 'EnvironmentData',
+            component: () => import('@/views/EnvironmentData.vue')
           },
           {
-            path: 'project-create',
-            name: 'ProjectCreate',
-            component: () => import('@/views/ProjectCreate.vue')
+            path: 'device-management',
+            name: 'DeviceManagement',
+            component: () => import('@/views/DeviceManagement.vue')
           },
           {
-            path: 'project-edit',
-            name: 'ProjectEdit',
-            component: () => import('@/views/ProjectEdit.vue')
+            path: 'alarm-management',
+            name: 'AlarmManagement',
+            component: () => import('@/views/AlarmManagement.vue')
           },
           {
-            path: 'material-manage',
-            name: 'MaterialManage',
-            component: () => import('@/views/MaterialManage.vue')
+            path: 'data-analysis',
+            name: 'DataAnalysis',
+            component: () => import('@/views/DataAnalysis.vue')
           },
           {
-            path: 'approval-process',
-            name: 'ApprovalProcess',
-            component: () => import('@/views/ApprovalProcess.vue')
-          },
-          {
-            path: 'user-center',
-            name: 'UserCenter',
-            component: () => import('@/views/UserCenter.vue')
-          },
-          {
-            path: 'system-setting',
-            name: 'SystemSetting',
-            component: () => import('@/views/SystemSetting.vue')
+            path: 'system-settings',
+            name: 'SystemSettings',
+            component: () => import('@/views/SystemSettings.vue')
           }
         ]
   }

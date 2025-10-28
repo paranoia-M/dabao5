@@ -1,66 +1,63 @@
 <template>
   <div class="layout-container">
     <el-container>
-      <!-- 顶部导航栏 -->
       <el-header class="header">
-        <div class="header-left">
-          <h1 class="title">航清噪音项目申报综合管理系统</h1>
-          <span class="subtitle">一站式申报材料协作与管理</span>
-        </div>
-        <div class="header-right">
-          <el-button type="primary" plain @click="$router.push('/user-center')">
-            <span class="user-icon">👤</span>
-            用户中心
-          </el-button>
-          <el-button type="info" plain @click="handleLogout">退出登录</el-button>
+        <div class="header-content">
+          <h1 class="title">航清环境应急移动源管理软件</h1>
+          <div class="user-info">
+            <el-button 
+              type="primary" 
+              @click="handleLogout"
+              class="logout-btn"
+            >
+              退出登录
+            </el-button>
+          </div>
         </div>
       </el-header>
       
       <el-container>
-        <!-- 侧边菜单 -->
-        <el-aside width="220px" class="aside">
+        <el-aside width="200px" class="sidebar">
           <el-menu
-            :default-active="activeMenu"
+            :default-active="currentRoute"
             class="menu"
-            background-color="#f8f9fa"
-            text-color="#495057"
-            :active-text-color="activeTextColor"
             router
-            :collapse="false"
+            background-color="#f8f9fa"
+            text-color="#333333"
+            active-text-color="#ffffff"
           >
             <el-menu-item index="/" class="menu-item">
-              <span class="menu-icon">🏠</span>
-              <span>首页</span>
+              <span class="menu-icon">📊</span>
+              <span>首页看板</span>
             </el-menu-item>
-            <el-menu-item index="/project-list" class="menu-item">
-              <span class="menu-icon">📋</span>
-              <span>项目列表</span>
+            <el-menu-item index="/real-time-monitoring" class="menu-item">
+              <span class="menu-icon">🔍</span>
+              <span>实时监测</span>
             </el-menu-item>
-            <el-menu-item index="/project-create" class="menu-item">
-              <span class="menu-icon">➕</span>
-              <span>创建项目</span>
+            <el-menu-item index="/environment-data" class="menu-item">
+              <span class="menu-icon">🌡️</span>
+              <span>环境数据</span>
             </el-menu-item>
-            <el-menu-item index="/material-manage" class="menu-item">
-              <span class="menu-icon">📁</span>
-              <span>材料管理</span>
+            <el-menu-item index="/device-management" class="menu-item">
+              <span class="menu-icon">🔧</span>
+              <span>设备管理</span>
             </el-menu-item>
-            <el-menu-item index="/approval-process" class="menu-item">
-              <span class="menu-icon">✅</span>
-              <span>审批流程</span>
+            <el-menu-item index="/alarm-management" class="menu-item">
+              <span class="menu-icon">⚠️</span>
+              <span>告警管理</span>
             </el-menu-item>
-            <el-menu-item index="/user-center" class="menu-item">
-              <span class="menu-icon">👥</span>
-              <span>用户中心</span>
+            <el-menu-item index="/data-analysis" class="menu-item">
+              <span class="menu-icon">📈</span>
+              <span>数据分析</span>
             </el-menu-item>
-            <el-menu-item index="/system-setting" class="menu-item">
+            <el-menu-item index="/system-settings" class="menu-item">
               <span class="menu-icon">⚙️</span>
               <span>系统设置</span>
             </el-menu-item>
           </el-menu>
         </el-aside>
         
-        <!-- 主内容区域 -->
-        <el-main class="main">
+        <el-main class="main-content">
           <RouterView />
         </el-main>
       </el-container>
@@ -75,26 +72,20 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
-// 计算当前激活的菜单项
-const activeMenu = computed(() => {
-  return route.path
+const currentRoute = computed(() => {
+  return route.path === '/' ? '/' : route.path
 })
 
-// 计算激活菜单的对比色
-const activeTextColor = computed(() => {
-  // 背景色为#f8f9fa，对比色选择深蓝色
-  return '#1a56db'
-})
-
-// 退出登录
 const handleLogout = async () => {
   localStorage.clear()
   await router.push('/login')
 }
 
+// 模拟系统初始化
 onMounted(() => {
-  // 初始化用户信息
-  console.log('政策项目申报平台初始化完成')
+  console.log('航清环境应急移动源管理软件初始化完成')
+  console.log('当前监测节点：温室大棚A区、露天种植B区、育苗基地C区')
+  console.log('监测参数：温度、湿度、光照强度、土壤湿度、CO2浓度')
 })
 </script>
 

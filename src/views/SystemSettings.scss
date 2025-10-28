@@ -1,0 +1,215 @@
+.system-settings {
+  padding: 24px;
+  background: #f5f7fa;
+  min-height: 100vh;
+
+  .settings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .settings-header {
+    padding: 32px 32px 24px;
+    border-bottom: 1px solid #e4e7ed;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+
+    .page-title {
+      margin: 0 0 8px 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .page-description {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 16px;
+    }
+  }
+
+  .settings-content {
+    padding: 0;
+
+    .settings-tabs {
+      :deep(.el-tabs__header) {
+        margin: 0;
+        background: #fafbfc;
+        
+        .el-tabs__nav-wrap::after {
+          height: 1px;
+        }
+        
+        .el-tabs__item {
+          padding: 0 32px;
+          height: 60px;
+          line-height: 60px;
+          font-size: 16px;
+          font-weight: 500;
+          
+          &.is-active {
+            color: #409eff;
+          }
+        }
+      }
+
+      :deep(.el-tabs__content) {
+        padding: 32px;
+      }
+    }
+
+    .tab-content {
+      min-height: 400px;
+    }
+  }
+
+  .settings-form {
+    max-width: 600px;
+
+    .unit-text {
+      margin-left: 8px;
+      color: #606266;
+      font-size: 14px;
+    }
+  }
+
+  .device-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e4e7ed;
+  }
+
+  .device-table {
+    margin-bottom: 20px;
+    
+    :deep(.el-table__header) {
+      th {
+        background-color: #f5f7fa;
+        color: #606266;
+        font-weight: 600;
+      }
+    }
+    
+    :deep(.el-table__row) {
+      &:hover {
+        background-color: #f5f7fa;
+      }
+    }
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 0;
+  }
+
+  .alert-form {
+    max-width: 800px;
+
+    .threshold-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      .threshold-label {
+        color: #606266;
+        font-size: 14px;
+        min-width: 80px;
+      }
+
+      .unit-text {
+        margin-left: 4px;
+        color: #606266;
+        font-size: 14px;
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    .settings-header {
+      padding: 24px 20px 16px;
+
+      .page-title {
+        font-size: 24px;
+      }
+
+      .page-description {
+        font-size: 14px;
+      }
+    }
+
+    .settings-content {
+      .settings-tabs {
+        :deep(.el-tabs__content) {
+          padding: 20px;
+        }
+        
+        :deep(.el-tabs__item) {
+          padding: 0 16px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .device-toolbar {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+
+      .el-input {
+        width: 100% !important;
+      }
+    }
+
+    .alert-form {
+      .threshold-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+
+        .threshold-label {
+          min-width: auto;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .settings-header {
+      padding: 20px 16px 12px;
+
+      .page-title {
+        font-size: 20px;
+      }
+    }
+
+    .settings-content {
+      .settings-tabs {
+        :deep(.el-tabs__content) {
+          padding: 16px;
+        }
+      }
+    }
+  }
+}
+
+// 动画效果
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

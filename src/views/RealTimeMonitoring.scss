@@ -1,0 +1,274 @@
+.real-time-monitoring {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #303133;
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: #909399;
+    }
+  }
+
+  .overview-cards {
+    margin-bottom: 30px;
+
+    .data-card {
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .card-content {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+
+        .card-icon {
+          font-size: 40px;
+          margin-right: 16px;
+          opacity: 0.8;
+        }
+
+        .card-info {
+          flex: 1;
+
+          .card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #303133;
+            margin-bottom: 4px;
+          }
+
+          .card-label {
+            font-size: 14px;
+            color: #909399;
+            margin-bottom: 4px;
+          }
+
+          .card-trend {
+            font-size: 12px;
+            font-weight: 500;
+
+            &.trend-up {
+              color: #f56c6c;
+            }
+
+            &.trend-down {
+              color: #67c23a;
+            }
+          }
+        }
+      }
+
+      // 不同卡片类型的颜色主题
+      &.temperature-card {
+        border-left: 4px solid #e6a23c;
+        .card-icon { color: #e6a23c; }
+      }
+
+      &.humidity-card {
+        border-left: 4px solid #409eff;
+        .card-icon { color: #409eff; }
+      }
+
+      &.soil-card {
+        border-left: 4px solid #67c23a;
+        .card-icon { color: #67c23a; }
+      }
+
+      &.light-card {
+        border-left: 4px solid #e6a23c;
+        .card-icon { color: #e6a23c; }
+      }
+    }
+  }
+
+  .chart-section {
+    margin-bottom: 30px;
+
+    .chart-card {
+      border-radius: 12px;
+      border: none;
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #303133;
+      }
+
+      .chart-container {
+        height: 200px;
+        padding: 20px 0;
+
+        .mock-chart {
+          position: relative;
+          height: 100%;
+          display: flex;
+          align-items: flex-end;
+          padding: 0 20px;
+
+          .chart-line {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            background: linear-gradient(to top, #409eff, #79bbff);
+            border-radius: 2px 2px 0 0;
+            transition: all 0.3s ease;
+
+            &:hover {
+              background: linear-gradient(to top, #337ecc, #409eff);
+            }
+          }
+
+          &.temperature-chart .chart-line {
+            background: linear-gradient(to top, #e6a23c, #f0c78a);
+
+            &:hover {
+              background: linear-gradient(to top, #cf9236, #e6a23c);
+            }
+          }
+
+          &.humidity-chart .chart-line {
+            background: linear-gradient(to top, #409eff, #79bbff);
+
+            &:hover {
+              background: linear-gradient(to top, #337ecc, #409eff);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .device-section {
+    margin-bottom: 20px;
+
+    .device-card {
+      border-radius: 12px;
+      border: none;
+
+      .device-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #303133;
+
+        .device-actions {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .device-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .el-icon {
+          &.online { color: #67c23a; }
+          &.offline { color: #909399; }
+          &.error { color: #f56c6c; }
+        }
+      }
+
+      .pagination-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #ebeef5;
+      }
+    }
+  }
+
+  .status-indicator {
+    .el-alert {
+      border-radius: 8px;
+      border: none;
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .real-time-monitoring {
+    padding: 12px;
+
+    .page-header {
+      .page-title {
+        font-size: 22px;
+      }
+
+      .page-subtitle {
+        font-size: 14px;
+      }
+    }
+
+    .overview-cards {
+      .data-card {
+        .card-content {
+          padding: 12px;
+
+          .card-icon {
+            font-size: 32px;
+            margin-right: 12px;
+          }
+
+          .card-info {
+            .card-value {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    .device-section {
+      .device-card {
+        .device-header {
+          flex-direction: column;
+          gap: 12px;
+          align-items: stretch;
+
+          .device-actions {
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .real-time-monitoring {
+    .overview-cards {
+      .el-col-xs-12 {
+        margin-bottom: 16px;
+      }
+    }
+
+    .chart-section {
+      .el-col-xs-24 {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}

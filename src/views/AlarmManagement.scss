@@ -1,0 +1,365 @@
+.home-container {
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+
+  .overview-cards {
+    margin-bottom: 24px;
+
+    .stat-card {
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-content {
+        display: flex;
+        align-items: center;
+        padding: 16px 0;
+
+        .card-icon {
+          width: 60px;
+          height: 60px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 16px;
+          transition: all 0.3s ease;
+
+          .icon-symbol {
+            font-size: 24px;
+            color: white;
+          }
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+
+        .card-info {
+          flex: 1;
+
+          .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #303133;
+            margin-bottom: 4px;
+          }
+
+          .card-title {
+            font-size: 14px;
+            color: #606266;
+          }
+        }
+      }
+    }
+  }
+
+  .charts-section {
+    margin-bottom: 24px;
+
+    .chart-card {
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #303133;
+      }
+
+      .chart-container {
+        height: 300px;
+        padding: 20px 0;
+
+        .chart-content {
+          height: 100%;
+          position: relative;
+
+          .chart-mock {
+            height: 100%;
+            position: relative;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            padding: 20px;
+
+            .mock-line {
+              height: 3px;
+              border-radius: 2px;
+              margin-bottom: 30px;
+              position: relative;
+              animation: wave 3s ease-in-out infinite;
+
+              &::before {
+                content: '';
+                position: absolute;
+                top: -8px;
+                left: 0;
+                right: 0;
+                height: 20px;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+                animation: shine 2s ease-in-out infinite;
+              }
+            }
+
+            .temp-line {
+              background: linear-gradient(90deg, #ff6b6b, #ffa726);
+              width: 85%;
+            }
+
+            .humidity-line {
+              background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+              width: 65%;
+              animation-delay: 0.5s;
+
+              &::before {
+                animation-delay: 0.5s;
+              }
+            }
+
+            .chart-legend {
+              display: flex;
+              justify-content: center;
+              gap: 30px;
+              margin-top: 40px;
+
+              .legend-item {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                color: #606266;
+
+                .legend-color {
+                  width: 16px;
+                  height: 4px;
+                  border-radius: 2px;
+                  margin-right: 8px;
+                }
+
+                .temp-color {
+                  background: linear-gradient(90deg, #ff6b6b, #ffa726);
+                }
+
+                .humidity-color {
+                  background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .soil-data {
+        .soil-item {
+          margin-bottom: 20px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .soil-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+
+            .soil-name {
+              font-size: 14px;
+              color: #606266;
+            }
+
+            .soil-value {
+              font-size: 16px;
+              font-weight: 600;
+              color: #303133;
+            }
+          }
+
+          :deep(.el-progress-bar) {
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .devices-section {
+    margin-bottom: 24px;
+
+    .el-card {
+      border-radius: 12px;
+      border: none;
+
+      .devices-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #303133;
+
+        .refresh-icon {
+          margin-right: 4px;
+          font-size: 14px;
+        }
+      }
+
+      .device-name {
+        display: flex;
+        align-items: center;
+
+        .device-icon {
+          margin-right: 8px;
+          font-size: 16px;
+          transition: all 0.3s ease;
+
+          &.online {
+            color: #67c23a;
+            animation: pulse 2s infinite;
+          }
+
+          &.offline {
+            color: #f56c6c;
+          }
+        }
+      }
+    }
+  }
+
+  .alerts-section {
+    .el-alert {
+      border-radius: 8px;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .device-control-content {
+    .control-section {
+      margin-bottom: 24px;
+
+      h4 {
+        margin-bottom: 16px;
+        color: #303133;
+        font-weight: 600;
+        border-left: 4px solid #409eff;
+        padding-left: 12px;
+      }
+
+      .device-info {
+        background: #f8f9fa;
+        padding: 16px;
+        border-radius: 8px;
+
+        .info-item {
+          display: flex;
+          margin-bottom: 8px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .info-label {
+            color: #606266;
+            font-weight: 500;
+            min-width: 80px;
+          }
+
+          .info-value {
+            color: #303133;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.05);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .home-container {
+    padding: 12px;
+
+    .overview-cards {
+      .stat-card {
+        .card-content {
+          padding: 12px 0;
+
+          .card-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+
+            .icon-symbol {
+              font-size: 20px;
+            }
+          }
+
+          .card-info {
+            .card-value {
+              font-size: 20px;
+            }
+
+            .card-title {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    .charts-section {
+      .chart-card {
+        .chart-container {
+          height: 250px;
+        }
+      }
+    }
+  }
+}

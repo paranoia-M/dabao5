@@ -1,0 +1,332 @@
+.environment-data {
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+  min-height: 100vh;
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      color: #2c5530;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-subtitle {
+      color: #5d7e5d;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+
+  .data-overview {
+    margin-bottom: 30px;
+
+    .data-card {
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.95);
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      .card-content {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+
+        .card-icon {
+          font-size: 32px;
+          margin-right: 15px;
+          width: 60px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: rgba(76, 175, 80, 0.1);
+        }
+
+        .card-info {
+          flex: 1;
+
+          .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5530;
+            margin-bottom: 4px;
+          }
+
+          .card-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 4px;
+          }
+
+          .card-trend {
+            font-size: 16px;
+            font-weight: bold;
+
+            &.trend-up {
+              color: #f56c6c;
+            }
+
+            &.trend-down {
+              color: #67c23a;
+            }
+          }
+        }
+      }
+
+      &.temperature-card {
+        .card-icon {
+          background: rgba(245, 108, 108, 0.1);
+        }
+      }
+
+      &.humidity-card {
+        .card-icon {
+          background: rgba(64, 158, 255, 0.1);
+        }
+      }
+
+      &.light-card {
+        .card-icon {
+          background: rgba(230, 162, 60, 0.1);
+        }
+      }
+
+      &.soil-card {
+        .card-icon {
+          background: rgba(103, 194, 58, 0.1);
+        }
+      }
+    }
+  }
+
+  .chart-section {
+    margin-bottom: 30px;
+
+    .chart-card {
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.95);
+
+      :deep(.el-card__header) {
+        border-bottom: 1px solid #e6e6e6;
+        padding: 15px 20px;
+
+        .chart-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          span {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c5530;
+          }
+        }
+      }
+
+      .chart-container {
+        height: 300px;
+        padding: 20px;
+
+        .mock-chart {
+          height: 100%;
+          position: relative;
+          background: #f8f9fa;
+          border-radius: 8px;
+
+          &.temperature-chart {
+            .chart-line {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 2px;
+              background: linear-gradient(90deg, #f56c6c, #67c23a);
+            }
+
+            .chart-points {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+
+              .chart-point {
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                background: #f56c6c;
+                border-radius: 50%;
+                transform: translate(-50%, 50%);
+                border: 2px solid white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+              }
+            }
+          }
+
+          &.distribution-chart {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            padding: 20px;
+
+            .distribution-bar {
+              width: 40px;
+              border-radius: 4px 4px 0 0;
+
+              &.temperature-bar {
+                height: 70%;
+                background: linear-gradient(to top, #f56c6c, #f8b4b4);
+              }
+
+              &.humidity-bar {
+                height: 85%;
+                background: linear-gradient(to top, #409eff, #a0cfff);
+              }
+
+              &.light-bar {
+                height: 60%;
+                background: linear-gradient(to top, #e6a23c, #f5dab1);
+              }
+
+              &.soil-bar {
+                height: 75%;
+                background: linear-gradient(to top, #67c23a, #b3e19d);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .data-table-section {
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2c5530;
+      }
+
+      .table-actions {
+        display: flex;
+        align-items: center;
+
+        .search-icon,
+        .refresh-icon,
+        .export-icon {
+          font-size: 14px;
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .pagination-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .sensor-detail {
+    .sensor-history {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e6e6e6;
+
+      h4 {
+        color: #2c5530;
+        margin-bottom: 15px;
+      }
+
+      .history-chart {
+        height: 100px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        position: relative;
+
+        .history-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #67c23a, #409eff);
+        }
+      }
+    }
+  }
+
+  .alert-setting {
+    .alert-actions {
+      margin-top: 20px;
+      text-align: right;
+    }
+  }
+
+  .analysis-report {
+    .recommendations {
+      margin-top: 20px;
+
+      h4 {
+        color: #2c5530;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        padding-left: 20px;
+
+        li {
+          margin-bottom: 8px;
+          color: #5d7e5d;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .environment-data {
+    padding: 10px;
+
+    .page-header {
+      .page-title {
+        font-size: 22px;
+      }
+
+      .page-subtitle {
+        font-size: 14px;
+      }
+    }
+
+    .table-header {
+      flex-direction: column;
+      gap: 10px;
+
+      .table-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+}

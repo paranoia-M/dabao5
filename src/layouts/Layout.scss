@@ -1,96 +1,96 @@
 .layout-container {
   height: 100vh;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    border-bottom: 1px solid #e4e7ed;
-    padding: 0 20px;
+    background: linear-gradient(135deg, #67C23A 0%, #85ce61 100%);
+    padding: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     
-    .header-left {
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding: 0 20px;
+      
       .title {
-        margin: 0;
+        color: #ffffff;
         font-size: 20px;
         font-weight: 600;
-        color: #303133;
+        margin: 0;
       }
       
-      .subtitle {
-        font-size: 14px;
-        color: #909399;
-        margin-left: 10px;
-      }
-    }
-    
-    .header-right {
-      .user-icon {
-        margin-right: 5px;
+      .user-info {
+        .logout-btn {
+          background-color: #ffffff;
+          color: #67C23A;
+          border: 1px solid #ffffff;
+          font-weight: 500;
+          
+          &:hover {
+            background-color: #f5f7fa;
+            border-color: #f5f7fa;
+          }
+        }
       }
     }
   }
   
-  .aside {
+  .sidebar {
     background-color: #f8f9fa;
-    border-right: 1px solid #e4e7ed;
+    border-right: 1px solid #e6e6e6;
     
     .menu {
-      border-right: none;
+      border: none;
       
       .menu-item {
         height: 50px;
         line-height: 50px;
-        margin: 4px 0;
-        border-radius: 4px;
-        
-        &:hover {
-          background-color: #e9ecef !important;
-        }
-        
-        &.is-active {
-          background-color: #e3f2fd !important;
-          font-weight: 600;
-          
-          .menu-icon {
-            color: inherit;
-          }
-        }
+        margin: 4px 8px;
+        border-radius: 6px;
         
         .menu-icon {
           margin-right: 8px;
           font-size: 16px;
         }
+        
+        &:hover {
+          background-color: #e6f7e6 !important;
+          color: #67C23A !important;
+        }
+        
+        &.is-active {
+          background-color: #67C23A !important;
+          color: #ffffff !important;
+          
+          .menu-icon {
+            color: #ffffff !important;
+          }
+        }
       }
     }
   }
   
-  .main {
-    padding: 20px;
+  .main-content {
     background-color: #f5f7fa;
-    overflow-y: auto;
-    height: 100vh;
+    padding: 20px;
+    overflow: auto;
   }
 }
 
-// 响应式设计
-@media (max-width: 768px) {
-  .layout-container {
-    .header {
-      flex-direction: column;
-      height: auto !important;
-      padding: 10px;
-      
-      .header-left {
-        margin-bottom: 10px;
-        text-align: center;
-      }
+// 全局菜单样式覆盖
+:deep(.el-menu-item) {
+  &.is-active {
+    background-color: #67C23A !important;
+    
+    span {
+      color: #ffffff !important;
     }
     
-    .aside {
-      width: 100% !important;
+    .menu-icon {
+      color: #ffffff !important;
     }
   }
 }

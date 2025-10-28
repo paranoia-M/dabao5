@@ -1,82 +1,69 @@
 
 <template>
-  <div class="layout-container">
+  <el-container class="layout-container">
+    <el-header class="header">
+      <div class="title">航清水资源保护与智能化系统</div>
+      <el-button type="danger" @click="handleLogout" class="logout-btn">退出</el-button>
+    </el-header>
     <el-container>
-      <el-aside width="220px">
-        <div class="menu-title">
-          <span class="platform-name">航清环境、污染应急预案处理系统</span>
-        </div>
+      <el-aside width="220px" class="aside">
         <el-menu
           :default-active="activeMenu"
-          background-color="#001529"
-          text-color="#fff"
-          active-text-color="#ffd04b"
+          class="menu"
+          background-color="#f5f7fa"
+          text-color="#333"
+          :active-text-color="activeTextColor"
           router
         >
-          <el-menu-item index="/">
-            <span class="menu-item-content">
-              <span class="menu-icon">🏠</span>
-              <span>首页</span>
-            </span>
+          <el-menu-item index="/" route="/">
+            <el-icon><House /></el-icon>
+            <span>首页</span>
           </el-menu-item>
-        
-          <el-menu-item index="/calibration">
-            <span class="menu-item-content">
-              <span class="menu-icon">🔧</span>
-              <span>校准管理</span>
-            </span>
+          <el-menu-item index="/data-monitoring" route="/data-monitoring">
+            <el-icon><Monitor /></el-icon>
+            <span>数据监测</span>
           </el-menu-item>
-          <el-menu-item index="/data-management">
-            <span class="menu-item-content">
-              <span class="menu-icon">📁</span>
-              <span>数据管理</span>
-            </span>
+          <el-menu-item index="/quality-assessment" route="/quality-assessment">
+            <el-icon><DataAnalysis /></el-icon>
+            <span>质量评估</span>
           </el-menu-item>
-          <el-menu-item index="/alarm">
-            <span class="menu-item-content">
-              <span class="menu-icon">⚠️</span>
-              <span>告警管理</span>
-            </span>
+          <el-menu-item index="/data-fusion" route="/data-fusion">
+            <el-icon><Connection /></el-icon>
+            <span>数据融合</span>
           </el-menu-item>
-          <el-menu-item index="/report">
-            <span class="menu-item-content">
-              <span class="menu-icon">📈</span>
-              <span>报表统计</span>
-            </span>
+          <el-menu-item index="/report-generation" route="/report-generation">
+            <el-icon><Document /></el-icon>
+            <span>报告生成</span>
           </el-menu-item>
-          <el-menu-item index="/system-setting">
-            <span class="menu-item-content">
-              <span class="menu-icon">⚙️</span>
-              <span>系统设置</span>
-            </span>
+          <el-menu-item index="/system-management" route="/system-management">
+            <el-icon><Setting /></el-icon>
+            <span>系统管理</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
-      <el-container>
-        <el-header class="main-header">
-          <div class="header-right">
-            <el-button type="text" @click="handleLogout">
-              <span class="user-info">
-                <span class="user-avatar">👤</span>
-                <span>退出登录</span>
-              </span>
-            </el-button>
-          </div>
-        </el-header>
-        <el-main class="main-content">
-          <RouterView />
-        </el-main>
-      </el-container>
+      <el-main class="main">
+        <RouterView />
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import {
+  House,
+  Monitor,
+  DataAnalysis,
+  Connection,
+  Document,
+  Setting
+} from '@element-plus/icons-vue'
 
-const route = useRoute()
 const router = useRouter()
+const route = useRoute()
+
+const activeTextColor = ref('#409eff')
 
 const activeMenu = computed(() => {
   return route.path

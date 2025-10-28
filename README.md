@@ -1,23 +1,5 @@
-# Vue 3 + Vite
+# 创建一个新 tag，例如 1.0.0 版本
+git tag v1.0.0
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
-
-vue < js < html < css
-
-·.·vue -> html -> js -> css
-11
-html -> css
-
-js -> css
-
-js -> html -> c
-
-vue -> html -> js -> css
-
-.·. 1: css < html < js < vue
-    2: vue < js < html < css
-
-//    "dev": "concurrently \"npm run dev:node\" \"npm run dev:vue\"",
-//    "dev:node": "node serve/index.js",
+# 将这个 tag 推送到 GitHub
+git push origin v1.0.0

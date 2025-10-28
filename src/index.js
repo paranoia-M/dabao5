@@ -17,31 +17,30 @@ const routes = [
             name: 'Home',
             component: () => import('@/views/Home.vue')
           },
-    
           {
-            path: 'calibration',
-            name: 'Calibration',
-            component: () => import('@/views/Calibration.vue')
+            path: 'data-monitoring',
+            name: 'DataMonitoring',
+            component: () => import('@/views/DataMonitoring.vue')
           },
           {
-            path: 'data-management',
-            name: 'DataManagement',
-            component: () => import('@/views/DataManagement.vue')
+            path: 'quality-assessment',
+            name: 'QualityAssessment',
+            component: () => import('@/views/QualityAssessment.vue')
           },
           {
-            path: 'alarm',
-            name: 'Alarm',
-            component: () => import('@/views/Alarm.vue')
+            path: 'data-fusion',
+            name: 'DataFusion',
+            component: () => import('@/views/DataFusion.vue')
           },
           {
-            path: 'report',
-            name: 'Report',
-            component: () => import('@/views/Report.vue')
+            path: 'report-generation',
+            name: 'ReportGeneration',
+            component: () => import('@/views/ReportGeneration.vue')
           },
           {
-            path: 'system-setting',
-            name: 'SystemSetting',
-            component: () => import('@/views/SystemSetting.vue')
+            path: 'system-management',
+            name: 'SystemManagement',
+            component: () => import('@/views/SystemManagement.vue')
           }
         ]
   }

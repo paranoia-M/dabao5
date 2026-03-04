@@ -40,7 +40,7 @@
           text-color="#333"
           :active-text-color="menuActiveColor"
         >
-          <el-menu-item index="/">
+          <el-menu-item index="/dashboard">
             <div class="menu-item-content">
               <span class="menu-icon dashboard"></span>
               <span class="menu-text">系统仪表盘</span>
@@ -154,7 +154,7 @@ const mockData = {
     { id: 3, name: '电梯系统', status: '维护中', location: '3号楼', type: 'Elevator' },
     { id: 4, name: '给排水系统', status: '正常', location: '1号楼', type: 'Plumbing' },
     { id: 5, name: '消防系统', status: '正常', location: '2号楼', type: 'Fire' }
-  ],
+  ]),
   getEnergyData: () => ({
     today: 2450.5,
     yesterday: 2380.2,
@@ -262,8 +262,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
-@use './Layout.scss';
 .layout-container {
   height: 100vh;
   display: flex;
@@ -505,5 +503,4 @@ onMounted(() => {
   background-color: #f5f7fa;
   overflow: auto;
 }
-
 </style>

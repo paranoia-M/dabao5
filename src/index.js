@@ -18,34 +18,29 @@ const routes = [
             component: () => import('@/views/Dashboard.vue')
           },
           {
-            path: 'real-time-monitoring',
-            name: 'RealTimeMonitoring',
-            component: () => import('@/views/RealTimeMonitoring.vue')
+            path: 'device-monitor',
+            name: 'DeviceMonitor',
+            component: () => import('@/views/device/DeviceMonitor.vue')
           },
           {
-            path: 'environment-data',
-            name: 'EnvironmentData',
-            component: () => import('@/views/EnvironmentData.vue')
+            path: 'energy-management',
+            name: 'EnergyManagement',
+            component: () => import('@/views/energy/EnergyManagement.vue')
           },
           {
-            path: 'device-management',
-            name: 'DeviceManagement',
-            component: () => import('@/views/DeviceManagement.vue')
+            path: 'environment-control',
+            name: 'EnvironmentControl',
+            component: () => import('@/views/environment/EnvironmentControl.vue')
           },
           {
-            path: 'alarm-management',
-            name: 'AlarmManagement',
-            component: () => import('@/views/AlarmManagement.vue')
+            path: 'security-system',
+            name: 'SecuritySystem',
+            component: () => import('@/views/security/SecuritySystem.vue')
           },
           {
-            path: 'data-analysis',
-            name: 'DataAnalysis',
-            component: () => import('@/views/DataAnalysis.vue')
-          },
-          {
-            path: 'system-settings',
-            name: 'SystemSettings',
-            component: () => import('@/views/SystemSettings.vue')
+            path: 'alarm-center',
+            name: 'AlarmCenter',
+            component: () => import('@/views/alarm/AlarmCenter.vue')
           }
         ]
   }

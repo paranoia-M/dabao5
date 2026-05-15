@@ -1,690 +1,721 @@
 <template>
-  <div class="dashboard-container">
-    <!-- 页面标题 -->
-    <div class="page-header">
-      <h1 class="page-title">楼宇设备自动化控制中心</h1>
-      <p class="page-subtitle">实时监控与管理楼宇设备运行状态</p>
-    </div>
-
-    <!-- 统计卡片区域 -->
-    <div class="stats-cards">
-      <el-row :gutter="20">
-        <el-col :xs="24" :sm="12" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="background-color: #409EFF;">
-                <i class="el-icon-s-home"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.totalDevices }}</div>
-                <div class="stat-label">总设备数</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :xs="24" :sm="12" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="background-color: #67C23A;">
-                <i class="el-icon-success"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.onlineDevices }}</div>
-                <div class="stat-label">在线设备</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :xs="24" :sm="12" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="background-color: #E6A23C;">
-                <i class="el-icon-warning"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.warningDevices }}</div>
-                <div class="stat-label">告警设备</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :xs="24" :sm="12" :md="6" :lg="6">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" style="background-color: #909399;">
-                <i class="el-icon-s-operation"></i>
-              </div>
-              <div class="stat-info">
-                <div class="stat-value">{{ stats.energyConsumption.toFixed(1) }}</div>
-                <div class="stat-label">能耗(kWh)</div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
-    <!-- 设备列表区域 -->
-    <div class="device-section">
-      <el-card class="device-card" shadow="never">
-        <template #header>
-          <div class="card-header">
-            <span>设备监控列表</span>
-            <div class="header-actions">
-              <el-input
-                v-model="searchQuery"
-                placeholder="搜索设备名称或位置"
-                class="search-input"
-                clearable
-                @input="handleSearch"
-              >
-                <template #prefix>
-                  <i class="el-icon-search"></i>
-                </template>
-              </el-input>
-              
-              <el-select
-                v-model="filterStatus"
-                placeholder="状态筛选"
-                class="status-filter"
-                clearable
-                @change="handleFilter"
-              >
-                <el-option label="全部" value=""></el-option>
-                <el-option label="在线" value="online"></el-option>
-                <el-option label="离线" value="offline"></el-option>
-                <el-option label="告警" value="warning"></el-option>
-              </el-select>
-            </div>
-          </div>
-        </template>
-        
-        <el-table
-          :data="filteredDevices"
-          style="width: 100%"
-          :row-class-name="tableRowClassName"
-          @row-click="handleRowClick"
-        >
-          <el-table-column prop="name" label="设备名称" width="180">
-            <template #default="{ row }">
-              <div class="device-name">
-                <i :class="getDeviceIcon(row.type)" class="device-icon"></i>
-                <span>{{ row.name }}</span>
-              </div>
-            </template>
-          </el-table-column>
-          
-          <el-table-column prop="type" label="设备类型" width="120">
-            <template #default="{ row }">
-              <el-tag :type="getTypeTagType(row.type)" size="small">
-                {{ row.type }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          
-          <el-table-column prop="location" label="位置" width="150"></el-table-column>
-          
-          <el-table-column prop="status" label="状态" width="100">
-            <template #default="{ row }">
-              <el-tag
-                :type="getStatusTagType(row.status)"
-                :effect="row.status === 'warning' ? 'dark' : 'light'"
-                size="small"
-              >
-                {{ getStatusText(row.status) }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          
-          <el-table-column prop="value" label="当前值" width="120">
-            <template #default="{ row }">
-              <span :class="getValueClass(row)">{{ row.value }} {{ row.unit }}</span>
-            </template>
-          </el-table-column>
-          
-          <el-table-column prop="lastUpdate" label="最后更新" width="180"></el-table-column>
-          
-          <el-table-column label="操作" width="120" fixed="right">
-            <template #default="{ row }">
-              <el-button
-                type="primary"
-                size="small"
-                :disabled="row.status === 'offline'"
-                @click.stop="handleControl(row)"
-              >
-                控制
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        
-        <div class="pagination-container">
-          <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"
-            :page-sizes="[10, 20, 30, 50]"
-            :total="totalDevices"
-            layout="total, sizes, prev, pager, next, jumper"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+  <div class="page-dashboard">
+    <!-- 顶部筛选栏 -->
+    <div class="dashboard-header">
+      <div class="header-left">
+        <h2 class="header-title">食品质量安全检测平台</h2>
+        <span class="header-subtitle">实时监测 · 智能预警 · 全程追溯</span>
+      </div>
+      <div class="header-right">
+        <div class="filter-group">
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="datePickerOptions"
+            value-format="YYYY-MM-DD"
+            clearable
+            @change="handleDateChange"
           />
-        </div>
-      </el-card>
-    </div>
-
-    <!-- 控制对话框 -->
-    <el-dialog
-      v-model="controlDialogVisible"
-      :title="`控制设备 - ${selectedDevice?.name}`"
-      width="500px"
-      @close="handleDialogClose"
-    >
-      <div v-if="selectedDevice" class="control-dialog-content">
-        <div class="device-info">
-          <p><strong>设备类型：</strong>{{ selectedDevice.type }}</p>
-          <p><strong>当前位置：</strong>{{ selectedDevice.location }}</p>
-          <p><strong>当前状态：</strong>
-            <el-tag :type="getStatusTagType(selectedDevice.status)" size="small">
-              {{ getStatusText(selectedDevice.status) }}
-            </el-tag>
-          </p>
-        </div>
-        
-        <el-divider></el-divider>
-        
-        <div class="control-form">
-          <el-form
-            :model="controlForm"
-            label-width="100px"
-            :disabled="selectedDevice.status === 'offline'"
+          <el-select
+            v-model="selectedCategory"
+            placeholder="样品类别"
+            clearable
+            multiple
+            collapse-tags
+            collapse-tags-tooltip
+            style="width: 180px"
           >
-            <el-form-item label="目标值：">
-              <el-input-number
-                v-model="controlForm.targetValue"
-                :min="selectedDevice.minValue || 0"
-                :max="selectedDevice.maxValue || 100"
-                :step="selectedDevice.step || 1"
-                controls-position="right"
-                style="width: 100%"
-              />
-              <div class="form-hint">范围：{{ selectedDevice.minValue || 0 }} - {{ selectedDevice.maxValue || 100 }} {{ selectedDevice.unit }}</div>
-            </el-form-item>
-            
-            <el-form-item label="操作模式：">
-              <el-radio-group v-model="controlForm.mode">
-                <el-radio label="auto">自动</el-radio>
-                <el-radio label="manual">手动</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            
-            <el-form-item v-if="selectedDevice.type === '空调'" label="运行模式：">
-              <el-select v-model="controlForm.operationMode" placeholder="请选择运行模式" style="width: 100%">
-                <el-option label="制冷" value="cooling"></el-option>
-                <el-option label="制热" value="heating"></el-option>
-                <el-option label="通风" value="ventilation"></el-option>
-                <el-option label="除湿" value="dehumidification"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
+            <el-option
+              v-for="cat in categoryOptions"
+              :key="cat.value"
+              :label="cat.label"
+              :value="cat.value"
+            />
+          </el-select>
+          <el-button type="primary" :icon="Download" @click="handleExport">
+            导出报表
+          </el-button>
         </div>
       </div>
-      
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="controlDialogVisible = false">取消</el-button>
-          <el-button
-            type="primary"
-            :loading="controlLoading"
-            :disabled="selectedDevice?.status === 'offline'"
-            @click="handleControlSubmit"
+    </div>
+
+    <!-- KPI 卡片行 -->
+    <div class="kpi-row">
+      <div class="kpi-card" v-for="kpi in kpiList" :key="kpi.label">
+        <div class="kpi-icon" :style="{ background: kpi.bg }">
+          <el-icon :size="22"><component :is="kpi.icon" /></el-icon>
+        </div>
+        <div class="kpi-body">
+          <span class="kpi-label">{{ kpi.label }}</span>
+          <span class="kpi-value">{{ kpi.value }}</span>
+          <span class="kpi-trend" v-if="kpi.trend !== undefined">
+            <span :class="kpi.trend >= 0 ? 'up' : 'down'">
+              {{ kpi.trend >= 0 ? '▲' : '▼' }} {{ Math.abs(kpi.trend) }}%
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主内容区：第一行 -->
+    <div class="main-row">
+      <div class="main-left">
+        <div class="section-card compliance-card">
+          <div class="section-header">
+            <span class="section-title">检测项目达标环</span>
+            <div class="section-actions">
+              <el-tag
+                v-for="cat in complianceCategories"
+                :key="cat"
+                :type="activeComplianceCat === cat ? 'primary' : 'info'"
+                size="small"
+                style="cursor: pointer; margin-left: 6px"
+                @click="switchComplianceCat(cat)"
+              >
+                {{ cat }}
+              </el-tag>
+            </div>
+          </div>
+          <div class="compliance-body">
+            <div class="ring-container" ref="ringRef" @click="cycleComplianceCat">
+              <svg width="200" height="200" viewBox="0 0 200 200">
+                <circle
+                  cx="100" cy="100" r="80"
+                  fill="none" stroke="#2a2a3e" stroke-width="18"
+                />
+                <circle
+                  cx="100" cy="100" r="80"
+                  fill="none"
+                  :stroke="complianceRingColor"
+                  stroke-width="18"
+                  stroke-linecap="round"
+                  :stroke-dasharray="complianceDashArray"
+                  :stroke-dashoffset="complianceDashOffset"
+                  transform="rotate(-90, 100, 100)"
+                  style="transition: stroke-dashoffset 0.6s ease, stroke 0.4s ease"
+                />
+                <text x="100" y="92" text-anchor="middle" fill="#e8e8f0" font-size="38" font-weight="700">
+                  {{ complianceRate }}%
+                </text>
+                <text x="100" y="120" text-anchor="middle" fill="#8a8aa0" font-size="13">
+                  达标率
+                </text>
+              </svg>
+            </div>
+            <div class="ring-legend">
+              <div class="legend-item">
+                <span class="dot pass"></span>
+                <span>合格 {{ compliancePass }}</span>
+              </div>
+              <div class="legend-item">
+                <span class="dot fail"></span>
+                <span>不合格 {{ complianceFail }}</span>
+              </div>
+              <div class="legend-item">
+                <span class="dot total"></span>
+                <span>总计 {{ complianceTotal }}</span>
+              </div>
+              <div class="legend-hint">点击切换类别</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-right">
+        <div class="section-card">
+          <div class="section-header">
+            <span class="section-title">样品类别分布</span>
+          </div>
+          <div ref="pieChartRef" class="chart-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主内容区：第二行 -->
+    <div class="main-row second">
+      <div class="main-left">
+        <div class="section-card">
+          <div class="section-header">
+            <span class="section-title">检测任务状态分布</span>
+          </div>
+          <div ref="barChartRef" class="chart-container"></div>
+        </div>
+      </div>
+      <div class="main-right">
+        <div class="section-card todo-card">
+          <div class="section-header">
+            <span class="section-title">待办任务</span>
+            <el-button link type="primary" size="small" @click="refreshTodo">
+              刷新
+            </el-button>
+          </div>
+          <div class="todo-list" v-if="todoTasks.length > 0">
+            <div
+              class="todo-item"
+              v-for="task in todoTasks"
+              :key="task.id"
+            >
+              <div class="todo-priority" :class="task.priority"></div>
+              <div class="todo-info">
+                <span class="todo-name">{{ task.sampleName || '检测任务' }}</span>
+                <span class="todo-meta">
+                  <el-tag :type="priorityTagType(task.priority)" size="small">{{ task.priority }}</el-tag>
+                  <span class="todo-date">截止: {{ task.dueDate }}</span>
+                </span>
+              </div>
+              <el-button
+                link
+                type="primary"
+                size="small"
+                @click="handleGotoTask(task)"
+              >
+                前往处理
+              </el-button>
+            </div>
+          </div>
+          <el-empty v-else description="暂无待办任务" :image-size="80" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部：预警记录 -->
+    <div class="bottom-section">
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-title">最新预警记录</span>
+          <div class="section-actions">
+            <el-tag type="danger" size="small" v-if="highAlertCount > 0">
+              高风险 {{ highAlertCount }} 条
+            </el-tag>
+          </div>
+        </div>
+        <div class="alert-table-wrap">
+          <el-table
+            :data="filteredAlertRecords"
+            stripe
+            style="width: 100%"
+            max-height="320"
+            @row-click="handleAlertRowClick"
           >
-            确认控制
-          </el-button>
-        </span>
+            <el-table-column label="预警等级" width="90">
+              <template #default="{ row }">
+                <el-tag :type="levelTagType(row.level)" size="small">
+                  {{ row.level }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="description" label="预警描述" min-width="200" show-overflow-tooltip />
+            <el-table-column label="状态" width="90">
+              <template #default="{ row }">
+                <el-tag :type="row.status === '未确认' ? 'warning' : row.status === '已确认' ? 'success' : 'info'" size="small">
+                  {{ row.status }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="createDate" label="触发时间" width="160" />
+            <el-table-column label="操作" width="180" fixed="right">
+              <template #default="{ row }">
+                <el-button link type="primary" size="small" @click.stop="handleAlertDetail(row)">
+                  查看详情
+                </el-button>
+                <el-button
+                  link
+                  type="success"
+                  size="small"
+                  :disabled="row.status !== '未确认'"
+                  @click.stop="handleConfirmAlert(row)"
+                >
+                  {{ row.status === '未确认' ? '确认预警' : '已确认' }}
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 预警详情 Drawer -->
+    <el-drawer
+      v-model="alertDrawerVisible"
+      title="预警详情"
+      size="500px"
+    >
+      <template v-if="currentAlert">
+        <div class="drawer-body">
+          <div class="detail-row">
+            <span class="detail-label">预警等级</span>
+            <el-tag :type="levelTagType(currentAlert.level)" size="default">
+              {{ currentAlert.level }}
+            </el-tag>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">当前状态</span>
+            <el-tag :type="currentAlert.status === '未确认' ? 'warning' : 'success'" size="default">
+              {{ currentAlert.status }}
+            </el-tag>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">预警描述</span>
+            <p class="detail-text">{{ currentAlert.description }}</p>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">触发规则</span>
+            <p class="detail-text">{{ currentAlertConfig?.name || '—' }}</p>
+            <p class="detail-sub" v-if="currentAlertConfig">阈值: {{ currentAlertConfig.threshold }}</p>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">相关样品</span>
+            <p class="detail-text">{{ currentSample?.name || '—' }} ({{ currentSample?.type || '—' }})</p>
+            <p class="detail-sub" v-if="currentSample">来源: {{ currentSample.source }}</p>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">建议措施</span>
+            <p class="detail-text" v-if="currentAlert.remark">{{ currentAlert.remark }}</p>
+            <p class="detail-text" v-else>请及时核查相关样品检测数据，必要时启动复检流程。</p>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">创建时间</span>
+            <span>{{ currentAlert.createDate }}</span>
+          </div>
+          <div class="detail-row" v-if="currentAlert.handledBy">
+            <span class="detail-label">处理人</span>
+            <span>{{ currentAlert.handledBy }}</span>
+          </div>
+          <div class="detail-row" v-if="currentAlert.handledDate">
+            <span class="detail-label">处理时间</span>
+            <span>{{ currentAlert.handledDate }}</span>
+          </div>
+        </div>
       </template>
-    </el-dialog>
+      <template #footer>
+        <el-button @click="alertDrawerVisible = false">关闭</el-button>
+        <el-button
+          v-if="currentAlert && currentAlert.status === '未确认'"
+          type="primary"
+          @click="handleConfirmAlert(currentAlert)"
+        >
+          确认预警
+        </el-button>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, computed, onMounted, watch, nextTick, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import * as echarts from 'echarts'
+import { Download, Warning, CircleCheck, List, TrendCharts } from '@element-plus/icons-vue'
+import dayjs from 'dayjs'
+import { useSampleStore } from '@/stores/sample'
+import { useDetectTaskStore } from '@/stores/detectTask'
+import { useInspectionResultStore } from '@/stores/inspectionResult'
+import { useInspectionReportStore } from '@/stores/inspectionReport'
+import { useDetectStandardStore } from '@/stores/detectStandard'
+import { useAlertConfigStore } from '@/stores/alertConfig'
+import { useAlertRecordStore } from '@/stores/alertRecord'
 
-// 统计数据
-const stats = ref({
-  totalDevices: 156,
-  onlineDevices: 142,
-  warningDevices: 8,
-  energyConsumption: 2456.8
-})
+// ─── Stores ───
+const sampleStore = useSampleStore()
+const detectTaskStore = useDetectTaskStore()
+const resultStore = useInspectionResultStore()
+const reportStore = useInspectionReportStore()
+const standardStore = useDetectStandardStore()
+const alertConfigStore = useAlertConfigStore()
+const alertRecordStore = useAlertRecordStore()
 
-// 设备数据
-const devices = ref([])
-const filteredDevices = ref([])
-const searchQuery = ref('')
-const filterStatus = ref('')
-const currentPage = ref(1)
-const pageSize = ref(10)
-const totalDevices = ref(0)
+const router = useRouter()
 
-// 控制对话框相关
-const controlDialogVisible = ref(false)
-const selectedDevice = ref(null)
-const controlLoading = ref(false)
-const controlForm = ref({
-  targetValue: 0,
-  mode: 'auto',
-  operationMode: 'cooling'
-})
+// ─── 筛选状态 ───
+const dateRange = ref([])
+const selectedCategory = ref([])
+const datePickerOptions = {
+  disabledDate(time) {
+    const max = dayjs().valueOf()
+    const min = dayjs().subtract(30, 'day').valueOf()
+    return time.getTime() > max || time.getTime() < min
+  }
+}
 
-// 模拟设备数据
-const mockDevices = [
-  { id: 1, name: '中央空调-1F', type: '空调', location: '一楼大厅', status: 'online', value: 24, unit: '°C', minValue: 16, maxValue: 30, step: 1, lastUpdate: '2024-01-15 10:30:25' },
-  { id: 2, name: '照明系统-走廊', type: '照明', location: '一楼走廊', status: 'online', value: 75, unit: '%', minValue: 0, maxValue: 100, step: 10, lastUpdate: '2024-01-15 10:28:15' },
-  { id: 3, name: '安防摄像头-入口', type: '安防', location: '主入口', status: 'warning', value: '异常', unit: '', lastUpdate: '2024-01-15 10:25:45' },
-  { id: 4, name: '电梯-1号', type: '电梯', location: 'A栋', status: 'online', value: '运行中', unit: '', lastUpdate: '2024-01-15 10:22:30' },
-  { id: 5, name: '消防报警器-仓库', type: '消防', location: '地下仓库', status: 'offline', value: '--', unit: '', lastUpdate: '2024-01-15 09:45:10' },
-  { id: 6, name: '中央空调-2F', type: '空调', location: '二楼办公区', status: 'online', value: 22, unit: '°C', minValue: 16, maxValue: 30, step: 1, lastUpdate: '2024-01-15 10:29:55' },
-  { id: 7, name: '通风系统-地下室', type: '通风', location: '地下室', status: 'online', value: 85, unit: '%', minValue: 0, maxValue: 100, step: 5, lastUpdate: '2024-01-15 10:27:40' },
-  { id: 8, name: '给排水泵-1号', type: '给排水', location: '水泵房', status: 'online', value: '正常', unit: '', lastUpdate: '2024-01-15 10:26:20' },
-  { id: 9, name: '能耗监测-总表', type: '能耗', location: '配电室', status: 'online', value: 156.8, unit: 'kW', lastUpdate: '2024-01-15 10:31:05' },
-  { id: 10, name: '门禁系统-侧门', type: '门禁', location: '侧门', status: 'warning', value: '未关闭', unit: '', lastUpdate: '2024-01-15 10:24:15' },
-  { id: 11, name: '照明系统-会议室', type: '照明', location: '201会议室', status: 'online', value: 60, unit: '%', minValue: 0, maxValue: 100, step: 10, lastUpdate: '2024-01-15 10:23:50' },
-  { id: 12, name: '中央空调-3F', type: '空调', location: '三楼研发部', status: 'online', value: 23, unit: '°C', minValue: 16, maxValue: 30, step: 1, lastUpdate: '2024-01-15 10:30:10' }
+// ─── 样品类别选项 ───
+const categoryOptions = [
+  { label: '蔬菜', value: '蔬菜' },
+  { label: '水果', value: '水果' },
+  { label: '肉类', value: '肉类' },
+  { label: '乳制品', value: '乳制品' },
+  { label: '水产品', value: '水产品' },
+  { label: '其他', value: '其他' }
 ]
 
-// 初始化数据
-const initData = () => {
-  devices.value = [...mockDevices]
-  totalDevices.value = devices.value.length
-  filterDevices()
-}
-
-// 过滤设备
-const filterDevices = () => {
-  let result = [...devices.value]
-  
-  // 搜索过滤
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    result = result.filter(device => 
-      device.name.toLowerCase().includes(query) || 
-      device.location.toLowerCase().includes(query)
-    )
-  }
-  
-  // 状态过滤
-  if (filterStatus.value) {
-    result = result.filter(device => device.status === filterStatus.value)
-  }
-  
-  totalDevices.value = result.length
-  
-  // 分页
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  filteredDevices.value = result.slice(start, end)
-}
-
-// 搜索处理
-const handleSearch = () => {
-  currentPage.value = 1
-  filterDevices()
-}
-
-// 筛选处理
-const handleFilter = () => {
-  currentPage.value = 1
-  filterDevices()
-}
-
-// 分页大小变化
-const handleSizeChange = (size) => {
-  pageSize.value = size
-  filterDevices()
-}
-
-// 当前页变化
-const handleCurrentChange = (page) => {
-  currentPage.value = page
-  filterDevices()
-}
-
-// 表格行样式
-const tableRowClassName = ({ row }) => {
-  if (row.status === 'warning') {
-    return 'warning-row'
-  } else if (row.status === 'offline') {
-    return 'offline-row'
-  }
-  return ''
-}
-
-// 获取设备图标
-const getDeviceIcon = (type) => {
-  const icons = {
-    '空调': 'el-icon-s-promotion',
-    '照明': 'el-icon-sunny',
-    '安防': 'el-icon-video-camera',
-    '电梯': 'el-icon-sort-up',
-    '消防': 'el-icon-fire',
-    '通风': 'el-icon-wind-power',
-    '给排水': 'el-icon-watermelon',
-    '能耗': 'el-icon-data-line',
-    '门禁': 'el-icon-lock'
-  }
-  return icons[type] || 'el-icon-s-help'
-}
-
-// 获取类型标签样式
-const getTypeTagType = (type) => {
-  const types = {
-    '空调': 'primary',
-    '照明': 'success',
-    '安防': 'warning',
-    '电梯': 'info',
-    '消防': 'danger',
-    '通风': '',
-    '给排水': 'primary',
-    '能耗': 'success',
-    '门禁': 'warning'
-  }
-  return types[type] || ''
-}
-
-// 获取状态标签样式
-const getStatusTagType = (status) => {
-  const types = {
-    'online': 'success',
-    'offline': 'info',
-    'warning': 'danger'
-  }
-  return types[status] || ''
-}
-
-// 获取状态文本
-const getStatusText = (status) => {
-  const texts = {
-    'online': '在线',
-    'offline': '离线',
-    'warning': '告警'
-  }
-  return texts[status] || '未知'
-}
-
-// 获取值样式类
-const getValueClass = (row) => {
-  if (row.status === 'warning') {
-    return 'warning-value'
-  } else if (row.status === 'offline') {
-    return 'offline-value'
-  }
-  return ''
-}
-
-// 行点击事件
-const handleRowClick = (row) => {
-  console.log('点击设备:', row)
-}
-
-// 控制设备
-const handleControl = (device) => {
-  selectedDevice.value = { ...device }
-  controlForm.value.targetValue = typeof device.value === 'number' ? device.value : device.minValue || 0
-  controlDialogVisible.value = true
-}
-
-// 对话框关闭
-const handleDialogClose = () => {
-  controlForm.value = {
-    targetValue: 0,
-    mode: 'auto',
-    operationMode: 'cooling'
-  }
-}
-
-// 提交控制
-const handleControlSubmit = async () => {
-  if (!selectedDevice.value) return
-  
-  controlLoading.value = true
-  
-  // 模拟异步请求
-  setTimeout(() => {
-    controlLoading.value = false
-    controlDialogVisible.value = false
-    
-    // 更新设备状态
-    const deviceIndex = devices.value.findIndex(d => d.id === selectedDevice.value.id)
-    if (deviceIndex !== -1) {
-      devices.value[deviceIndex].value = controlForm.value.targetValue
-      devices.value[deviceIndex].lastUpdate = new Date().toLocaleString('zh-CN')
-      
-      // 重新过滤
-      filterDevices()
+// ─── 日期筛选处理 ───
+function handleDateChange(val) {
+  if (val && val.length === 2) {
+    const start = dayjs(val[0])
+    const end = dayjs(val[1])
+    const diff = end.diff(start, 'day')
+    if (diff > 30) {
+      ElMessage.warning('仅支持查询最近30天数据')
+      dateRange.value = []
     }
-    
-    ElMessage.success(`设备控制指令已发送：${selectedDevice.value.name} 设置为 ${controlForm.value.targetValue}${selectedDevice.value.unit || ''}`)
-  }, 1500)
+  }
 }
 
-// 模拟实时更新
-let updateInterval
-const simulateRealTimeUpdate = () => {
-  updateInterval = setInterval(() => {
-    // 随机更新一个设备的值
-    if (devices.value.length > 0) {
-      const randomIndex = Math.floor(Math.random() * devices.value.length)
-      const device = devices.value[randomIndex]
-      
-      if (device.status === 'online' && typeof device.value === 'number') {
-        // 模拟值波动
-        const change = Math.random() > 0.5 ? 1 : -1
-        const newValue = device.value + change
-        
-        // 确保在合理范围内
-        if (device.minValue !== undefined && device.maxValue !== undefined) {
-          if (newValue >= device.minValue && newValue <= device.maxValue) {
-            device.value = newValue
-            device.lastUpdate = new Date().toLocaleString('zh-CN')
-            
-            // 检查是否进入告警状态
-            if (device.type === '空调' && (newValue > 28 || newValue < 18)) {
-              device.status = 'warning'
-              stats.value.warningDevices++
-            }
-            
-            // 重新过滤
-            filterDevices()
-          }
-        }
-      }
-    }
-  }, 5000)
-}
-
-// 生命周期钩子
-onMounted(() => {
-  initData()
-  simulateRealTimeUpdate()
+// ─── 计算筛选后的数据 ───
+const filteredSamples = computed(() => {
+  let list = sampleStore.sampleList
+  if (selectedCategory.value.length > 0) {
+    list = list.filter(s => selectedCategory.value.includes(s.type))
+  }
+  if (dateRange.value && dateRange.value.length === 2) {
+    const start = dateRange.value[0]
+    const end = dateRange.value[1]
+    list = list.filter(s => s.receiveDate >= start && s.receiveDate <= end)
+  }
+  return list
 })
 
-onUnmounted(() => {
-  if (updateInterval) {
-    clearInterval(updateInterval)
+const filteredResults = computed(() => {
+  let list = resultStore.inspectionResultList
+  if (dateRange.value && dateRange.value.length === 2) {
+    const start = dateRange.value[0]
+    const end = dateRange.value[1]
+    list = list.filter(r => r.testDate >= start && r.testDate <= end)
   }
+  return list
+})
+
+const filteredTasks = computed(() => {
+  let list = detectTaskStore.detectTaskList
+  if (dateRange.value && dateRange.value.length === 2) {
+    const start = dateRange.value[0]
+    const end = dateRange.value[1]
+    list = list.filter(t => t.createDate >= start && t.createDate <= end + ' 23:59:59')
+  }
+  return list
+})
+
+const filteredAlertRecords = computed(() => {
+  let list = alertRecordStore.alertRecordList
+  if (dateRange.value && dateRange.value.length === 2) {
+    const start = dateRange.value[0]
+    const end = dateRange.value[1]
+    list = list.filter(a => a.createDate >= start && a.createDate <= end + ' 23:59:59')
+  }
+  return [...list].sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
+})
+
+// ─── KPI ───
+const kpiList = computed(() => {
+  const totalTasks = detectTaskStore.detectTaskList.length
+  const pendingSamples = sampleStore.sampleList.filter(s => s.status === '待检').length
+  const results = filteredResults.value
+  const totalResults = results.length
+  const passCount = results.filter(r => r.conclusion === '合格').length
+  const passRate = totalResults > 0 ? Math.round((passCount / totalResults) * 100) : 0
+  const highAlerts = alertRecordStore.alertRecordList.filter(a => a.level === '高' && a.status === '未确认').length
+  return [
+    {
+      label: '检测任务总数',
+      value: totalTasks,
+      icon: List,
+      bg: 'linear-gradient(135deg, #2563EB, #1E40AF)',
+      trend: 12
+    },
+    {
+      label: '待处理样品',
+      value: pendingSamples,
+      icon: Warning,
+      bg: 'linear-gradient(135deg, #F59E0B, #D97706)',
+      trend: -5
+    },
+    {
+      label: '检测合格率',
+      value: passRate + '%',
+      icon: CircleCheck,
+      bg: 'linear-gradient(135deg, #10B981, #059669)',
+      trend: passRate >= 90 ? 2 : -1
+    },
+    {
+      label: '高风险预警',
+      value: highAlerts,
+      icon: TrendCharts,
+      bg: 'linear-gradient(135deg, #EF4444, #DC2626)',
+      trend: highAlerts > 0 ? 8 : 0
+    }
+  ]
+})
+
+const highAlertCount = computed(() =>
+  alertRecordStore.alertRecordList.filter(a => a.level === '高' && a.status === '未确认').length
+)
+
+// ─── 检测项目达标环 ───
+const complianceCategories = computed(() => {
+  const types = [...new Set(resultStore.inspectionResultList.map(r => {
+    const task = detectTaskStore.detectTaskList.find(t => t.id === r.taskId)
+    if (task) {
+      const sample = sampleStore.sampleList.find(s => s.id === task.sampleId)
+      return sample ? sample.type : '其他'
+    }
+    return '其他'
+  }))]
+  return ['全部', ...types]
+})
+
+const activeComplianceCat = ref('全部')
+
+function switchComplianceCat(cat) {
+  activeComplianceCat.value = cat
+}
+
+function cycleComplianceCat() {
+  const cats = complianceCategories.value
+  const idx = cats.indexOf(activeComplianceCat.value)
+  activeComplianceCat.value = cats[(idx + 1) % cats.length]
+}
+
+const complianceResults = computed(() => {
+  let list = resultStore.inspectionResultList
+  if (activeComplianceCat.value !== '全部') {
+    const targetType = activeComplianceCat.value
+    const taskIds = detectTaskStore.detectTaskList
+      .filter(t => {
+        const s = sampleStore.sampleList.find(sm => sm.id === t.sampleId)
+        return s && s.type === targetType
+      })
+      .map(t => t.id)
+    list = list.filter(r => taskIds.includes(r.taskId))
+  }
+  return list
+})
+
+const complianceTotal = computed(() => complianceResults.value.length)
+const compliancePass = computed(() => complianceResults.value.filter(r => r.conclusion === '合格').length)
+const complianceFail = computed(() => complianceResults.value.filter(r => r.conclusion === '不合格').length)
+const complianceRate = computed(() =>
+  complianceTotal.value > 0 ? Math.round((compliancePass.value / complianceTotal.value) * 100) : 0
+)
+
+const complianceRingColor = computed(() => {
+  const rate = complianceRate.value
+  if (rate >= 90) return '#10B981'
+  if (rate >= 70) return '#F59E0B'
+  return '#EF4444'
+})
+
+const complianceDashArray = computed(() => {
+  const circumference = 2 * Math.PI * 80
+  return `${circumference} ${circumference}`
+})
+
+const complianceDashOffset = computed(() => {
+  const circumference = 2 * Math.PI * 80
+  const rate = complianceRate.value
+  return circumference - (rate / 100) * circumference
+})
+
+// ─── 待办任务 ───
+const todoTasks = computed(() => {
+  const pending = detectTaskStore.detectTaskList.filter(t =>
+    ['待分配', '已分配', '执行中'].includes(t.status)
+  )
+  return pending.slice(0, 6).map(t => {
+    const sample = sampleStore.sampleList.find(s => s.id === t.sampleId)
+    return { ...t, sampleName: sample ? sample.name : '未知样品' }
+  })
+})
+
+function priorityTagType(p) {
+  if (p === '高') return 'danger'
+  if (p === '中') return 'warning'
+  return 'info'
+}
+
+function refreshTodo() {
+  ElMessage.success('待办任务已刷新')
+}
+
+function handleGotoTask(task) {
+  if (['已完成', '已取消'].includes(task.status)) {
+    ElMessage.info('任务已处理')
+    return
+  }
+  router.push({ path: '/task/detail', query: { id: task.id } })
+}
+
+// ─── 预警操作 ───
+const alertDrawerVisible = ref(false)
+const currentAlert = ref(null)
+const currentAlertConfig = computed(() => {
+  if (!currentAlert.value) return null
+  return alertConfigStore.alertConfigList.find(c => c.id === currentAlert.value.alertConfigId) || null
+})
+const currentSample = computed(() => {
+  if (!currentAlert.value) return null
+  return sampleStore.sampleList.find(s => s.id === currentAlert.value.sampleId) || null
+})
+
+function handleAlertRowClick(row) {
+  currentAlert.value = row
+  alertDrawerVisible.value = true
+}
+
+function handleAlertDetail(row) {
+  currentAlert.value = row
+  alertDrawerVisible.value = true
+}
+
+function handleConfirmAlert(row) {
+  if (row.status !== '未确认') {
+    ElMessage.info('该预警已确认，不可重复操作')
+    return
+  }
+  ElMessageBox.confirm('确认该预警已处理完毕？', '确认预警', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    alertRecordStore.update(row.id, {
+      status: '已确认',
+      handledBy: '系统管理员',
+      handledDate: dayjs().format('YYYY-MM-DD HH:mm:ss')
+    })
+    ElMessage.success('预警已确认')
+    alertDrawerVisible.value = false
+  }).catch(() => {})
+}
+
+function levelTagType(level) {
+  if (level === '高') return 'danger'
+  if (level === '中') return 'warning'
+  return 'info'
+}
+
+// ─── 导出报表 ───
+function handleExport() {
+  const total = filteredResults.value.length + filteredSamples.value.length + filteredAlertRecords.value.length
+  if (total > 1000) {
+    ElMessage.warning('导出数据量过大，请缩小筛选范围')
+    return
+  }
+  ElMessage.success('报表导出任务已提交，请在报告模块查看')
+}
+
+// ─── ECharts ───
+const pieChartRef = ref(null)
+const barChartRef = ref(null)
+let pieInstance = null
+let barInstance = null
+
+function initCharts() {
+  // 饼图
+  if (pieChartRef.value) {
+    pieInstance = echarts.init(pieChartRef.value)
+    updatePieChart()
+  }
+  // 柱状图
+  if (barChartRef.value) {
+    barInstance = echarts.init(barChartRef.value)
+    updateBarChart()
+  }
+}
+
+function updatePieChart() {
+  if (!pieInstance) return
+  const typeMap = {}
+  filteredSamples.value.forEach(s => {
+    typeMap[s.type] = (typeMap[s.type] || 0) + s.quantity
+  })
+  const data = Object.entries(typeMap).map(([name, value]) => ({ name, value }))
+  pieInstance.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+    series: [{
+      type: 'pie',
+      radius: ['40%', '70%'],
+      center: ['50%', '50%'],
+      data: data.length > 0 ? data : [{ name: '暂无数据', value: 1 }],
+      label: { color: '#c0c0d0', fontSize: 12 },
+      labelLine: { lineStyle: { color: '#4a4a60' } },
+      itemStyle: {
+        borderRadius: 4,
+        borderColor: '#1e1e2e',
+        borderWidth: 2
+      },
+      color: ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899']
+    }]
+  })
+}
+
+function updateBarChart() {
+  if (!barInstance) return
+  const statusMap = {}
+  filteredTasks.value.forEach(t => {
+    statusMap[t.status] = (statusMap[t.status] || 0) + 1
+  })
+  const categories = ['待分配', '已分配', '执行中', '已完成', '已取消']
+  const data = categories.map(c => statusMap[c] || 0)
+  barInstance.setOption({
+    tooltip: { trigger: 'axis' },
+    grid: { left: 50, right: 20, top: 30, bottom: 30 },
+    xAxis: {
+      type: 'category',
+      data: categories,
+      axisLine: { lineStyle: { color: '#4a4a60' } },
+      axisLabel: { color: '#a0a0b8' }
+    },
+    yAxis: {
+      type: 'value',
+      axisLine: { lineStyle: { color: '#4a4a60' } },
+      splitLine: { lineStyle: { color: '#2a2a3e' } },
+      axisLabel: { color: '#a0a0b8' }
+    },
+    series: [{
+      type: 'bar',
+      data: data,
+      barWidth: '50%',
+      itemStyle: {
+        borderRadius: [4, 4, 0, 0],
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: '#2563EB' },
+          { offset: 1, color: '#1E40AF' }
+        ])
+      }
+    }]
+  })
+}
+
+watch([filteredSamples, filteredTasks], () => {
+  nextTick(() => {
+    updatePieChart()
+    updateBarChart()
+  })
+})
+
+onMounted(() => {
+  nextTick(() => {
+    initCharts()
+  })
+})
+
+onBeforeUnmount(() => {
+  if (pieInstance) { pieInstance.dispose(); pieInstance = null }
+  if (barInstance) { barInstance.dispose(); barInstance = null }
+})
+
+// ─── 窗口resize ───
+function handleResize() {
+  if (pieInstance) pieInstance.resize()
+  if (barInstance) barInstance.resize()
+}
+window.addEventListener('resize', handleResize)
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 
-<style lang="scss" scoped>
-
-
-@use './Dashboard.scss';
-.dashboard-container {
-  padding: 20px;
-  background-color: #f5f7fa;
-  min-height: calc(100vh - 60px);
-
-  .page-header {
-    margin-bottom: 30px;
-
-    .page-title {
-      font-size: 24px;
-      font-weight: 600;
-      color: #303133;
-      margin-bottom: 8px;
-    }
-
-    .page-subtitle {
-      font-size: 14px;
-      color: #909399;
-    }
-  }
-
-  .stats-cards {
-    margin-bottom: 30px;
-
-    .stat-card {
-      margin-bottom: 20px;
-
-      .stat-content {
-        display: flex;
-        align-items: center;
-
-        .stat-icon {
-          width: 48px;
-          height: 48px;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-right: 16px;
-
-          i {
-            font-size: 24px;
-            color: white;
-          }
-        }
-
-        .stat-info {
-          flex: 1;
-
-          .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #303133;
-            line-height: 1;
-            margin-bottom: 4px;
-          }
-
-          .stat-label {
-            font-size: 14px;
-            color: #909399;
-          }
-        }
-      }
-    }
-  }
-
-  .device-section {
-    .device-card {
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: 600;
-        font-size: 16px;
-        color: #303133;
-
-        .header-actions {
-          display: flex;
-          gap: 12px;
-
-          .search-input {
-            width: 200px;
-          }
-
-          .status-filter {
-            width: 120px;
-          }
-        }
-      }
-
-      .device-name {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-
-        .device-icon {
-          font-size: 16px;
-          color: #409EFF;
-        }
-      }
-
-      .warning-value {
-        color: #f56c6c;
-        font-weight: 500;
-      }
-
-      .offline-value {
-        color: #909399;
-      }
-
-      :deep(.warning-row) {
-        background-color: #fef0f0;
-
-        &:hover {
-          background-color: #fde2e2 !important;
-        }
-      }
-
-      :deep(.offline-row) {
-        background-color: #f4f4f5;
-
-        &:hover {
-          background-color: #e9e9eb !important;
-        }
-      }
-
-      .pagination-container {
-        margin-top: 20px;
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-  }
-
-  .control-dialog-content {
-    .device-info {
-      p {
-        margin: 8px 0;
-        font-size: 14px;
-        color: #606266;
-
-        strong {
-          color: #303133;
-        }
-      }
-    }
-
-    .control-form {
-      .form-hint {
-        font-size: 12px;
-        color: #909399;
-        margin-top: 4px;
-      }
-    }
-  }
-
-  .dialog-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-  }
-}
-
-
+<style scoped lang="scss">
+@use './Dashboard.scss' as *;
 </style>

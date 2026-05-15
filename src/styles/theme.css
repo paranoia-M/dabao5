@@ -1,0 +1,49 @@
+:root {
+  --app-primary: #52525B;
+  --app-accent: #2563EB;
+  --app-success: #10B981;
+  --app-warning: #F59E0B;
+  --app-danger: #EF4444;
+  --app-radius: 12px;
+  --app-spacing: 16px;
+  --app-font: 'Noto Sans SC', 'Inter', system-ui, sans-serif;
+  --app-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --app-motion: 240ms;
+  --app-bg: #FAFAFA;
+  --app-sidebar-bg: #1E293B;
+  --app-sidebar-text: #E5E7EB;
+  --app-header-bg: #FFFFFF;
+  --el-color-primary: #52525B;
+  --el-color-success: #10B981;
+  --el-color-warning: #F59E0B;
+  --el-color-danger: #EF4444;
+  --el-border-radius-base: 12px;
+}
+
+.page-dashboard {
+  --page-primary: #2563EB;
+}
+.page-detect-task {
+  --page-primary: #4B5563;
+}
+.page-sample-records {
+  --page-primary: #6B7280;
+}
+.page-result-input {
+  --page-primary: #0284C7;
+}
+.page-inspection-report {
+  --page-primary: #374151;
+}
+.page-analysis-board {
+  --page-primary: #475569;
+}
+.page-alert-config {
+  --page-primary: #52525B;
+}
+.page-detect-standard {
+  --page-primary: #5A5A5A;
+}
+.page-alert-record {
+  --page-primary: #4A5568;
+}

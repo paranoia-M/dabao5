@@ -1,482 +1,298 @@
-.login-container {
+// Login.scss — Dark Geek 风格食品检测平台登录页
+
+// ----- 全局变量 -----
+$theme: #52525B;
+$bg-dark: #0a0a0f;
+$bg-card: rgba(20, 20, 30, 0.65);
+$text-primary: #e5e5eb;
+$text-secondary: rgba(255,255,255,0.6);
+$border-glow: rgba(82,82,91,0.3);
+
+// ----- 基础布局 -----
+.page-login {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #1a2a6c, #2a3a7c, #3a4a8c);
   overflow: hidden;
-  font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  background: radial-gradient(ellipse at 20% 50%, #1a1a24, $bg-dark 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  color: $text-primary;
+}
 
-  .building-elements {
+// ----- 背景装饰 -----
+.login-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  // 网格 overlay
+  .grid-overlay {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridShift 20s linear infinite;
+  }
 
-    .building-element {
+  // 粒子系统
+  .particles {
+    position: absolute;
+    inset: 0;
+    .particle {
       position: absolute;
-      background: linear-gradient(to bottom, #2c3e50, #34495e);
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-
-      &.building-1 {
-        width: 120px;
-        height: 300px;
-        bottom: 50px;
-        left: 15%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        padding: 20px 0;
-
-        .window {
-          width: 60px;
-          height: 40px;
-          background: linear-gradient(135deg, #f1c40f, #f39c12);
-          border-radius: 4px;
-          box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-      }
-
-      &.building-2 {
-        width: 100px;
-        height: 250px;
-        bottom: 50px;
-        right: 20%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        padding: 15px 0;
-
-        .window {
-          width: 50px;
-          height: 35px;
-          background: linear-gradient(135deg, #3498db, #2980b9);
-          border-radius: 4px;
-          box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-      }
-    }
-
-    .automation-node {
-      position: absolute;
-      width: 20px;
-      height: 20px;
+      left: var(--x, 50%);
+      top: var(--y, 50%);
+      width: var(--s, 3px);
+      height: var(--s, 3px);
+      background: rgba(82,82,91,0.35);
       border-radius: 50%;
-      background: linear-gradient(135deg, #2ecc71, #27ae60);
-      box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
-      animation: pulse 2s infinite;
-
-      &.node-1 {
-        top: 30%;
-        left: 25%;
-      }
-
-      &.node-2 {
-        top: 40%;
-        right: 30%;
-      }
-
-      &.node-3 {
-        bottom: 30%;
-        left: 40%;
-      }
+      animation: floatParticle calc(6s + var(--delay, 0s)) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+      opacity: 0.4;
     }
+  }
+}
 
-    .connection-line {
-      position: absolute;
-      background: rgba(46, 204, 113, 0.3);
-      height: 2px;
-      transform-origin: left center;
+// ----- 主要内容容器 (不对称双栏) -----
+.login-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  padding: 40px;
+  gap: 60px;
+  align-items: center;
+}
 
-      &.line-1 {
-        width: 150px;
-        top: 35%;
-        left: 27%;
-        transform: rotate(30deg);
-      }
+// ----- 左侧品牌区 (55%) -----
+.login-brand {
+  flex: 0 0 55%;
+  max-width: 55%;
+  padding-right: 20px;
 
-      &.line-2 {
-        width: 120px;
-        bottom: 35%;
-        left: 42%;
-        transform: rotate(-15deg);
-      }
+  .brand-icon {
+    margin-bottom: 24px;
+    svg {
+      filter: drop-shadow(0 0 20px rgba(82,82,91,0.3));
     }
   }
 
-  .login-wrapper {
-    position: relative;
+  .brand-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #e0e0e6 0%, #a0a0b0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .brand-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: $text-secondary;
+    margin-bottom: 48px;
+    letter-spacing: 0.05em;
+  }
+
+  .brand-metrics {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    z-index: 1;
-
-    .login-card {
-      width: 420px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-
-      .login-header {
-        padding: 40px 40px 20px;
-        text-align: center;
-        background: linear-gradient(135deg, #3498db, #2980b9);
-        color: white;
-
-        .system-icon {
-          display: inline-block;
-          margin-bottom: 20px;
-
-          .icon-building {
-            position: relative;
-            width: 80px;
-            height: 60px;
-
-            .roof {
-              position: absolute;
-              top: 0;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 0;
-              height: 0;
-              border-left: 40px solid transparent;
-              border-right: 40px solid transparent;
-              border-bottom: 20px solid #e74c3c;
-            }
-
-            .body {
-              position: absolute;
-              bottom: 0;
-              width: 100%;
-              height: 40px;
-              background: #34495e;
-              border-radius: 4px;
-              display: flex;
-              justify-content: space-around;
-              align-items: center;
-              padding: 0 10px;
-
-              .floor {
-                width: 15px;
-                height: 25px;
-                background: #f1c40f;
-                border-radius: 2px;
-              }
-            }
-          }
-        }
-
-        .login-title {
-          font-size: 24px;
-          font-weight: 600;
-          margin: 10px 0;
-          letter-spacing: 1px;
-        }
-
-        .login-subtitle {
-          font-size: 14px;
-          opacity: 0.9;
-          margin: 0;
-        }
-      }
-
-      .login-form {
-        padding: 30px 40px;
-
-        .login-form-content {
-          .input-wrapper {
-            position: relative;
-
-            .input-icon {
-              position: absolute;
-              left: 12px;
-              top: 50%;
-              transform: translateY(-50%);
-              z-index: 2;
-              width: 24px;
-              height: 24px;
-
-              .user-icon {
-                width: 100%;
-                height: 100%;
-                background: #3498db;
-                border-radius: 50%;
-                position: relative;
-
-                &::before {
-                  content: '';
-                  position: absolute;
-                  top: 6px;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  width: 10px;
-                  height: 10px;
-                  background: white;
-                  border-radius: 50%;
-                }
-
-                &::after {
-                  content: '';
-                  position: absolute;
-                  bottom: 4px;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  width: 16px;
-                  height: 8px;
-                  background: white;
-                  border-radius: 8px 8px 0 0;
-                }
-              }
-
-              .lock-icon {
-                width: 100%;
-                height: 100%;
-                position: relative;
-
-                .lock-body {
-                  position: absolute;
-                  top: 4px;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  width: 18px;
-                  height: 14px;
-                  background: #e74c3c;
-                  border-radius: 4px;
-                }
-
-                .lock-arch {
-                  position: absolute;
-                  top: 0;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  width: 12px;
-                  height: 8px;
-                  background: #e74c3c;
-                  border-radius: 6px 6px 0 0;
-                }
-              }
-            }
-
-            .custom-input {
-              :deep(.el-input__wrapper) {
-                padding-left: 48px;
-                background: rgba(255, 255, 255, 0.9);
-                border: 1px solid #e0e0e0;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-                transition: all 0.3s;
-
-                &:hover {
-                  border-color: #3498db;
-                  box-shadow: 0 2px 12px rgba(52, 152, 219, 0.2);
-                }
-
-                &.is-focus {
-                  border-color: #2980b9;
-                  box-shadow: 0 2px 12px rgba(41, 128, 185, 0.3);
-                }
-              }
-            }
-          }
-
-          .login-button {
-            width: 100%;
-            height: 48px;
-            font-size: 16px;
-            font-weight: 500;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border: none;
-            border-radius: 10px;
-            transition: all 0.3s;
-            margin-top: 10px;
-
-            &:hover {
-              background: linear-gradient(135deg, #2980b9, #1c6ea4);
-              transform: translateY(-2px);
-              box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
-            }
-
-            &:active {
-              transform: translateY(0);
-            }
-          }
-        }
-
-        .login-actions {
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-          margin: 20px 0;
-
-          .el-button {
-            color: #666;
-            font-size: 14px;
-            transition: all 0.3s;
-
-            &:hover {
-              color: #3498db;
-              transform: translateY(-1px);
-            }
-          }
-        }
-
-        .login-tips {
-          text-align: center;
-          color: #666;
-          font-size: 13px;
-          margin-top: 20px;
-          padding-top: 20px;
-          border-top: 1px solid #eee;
-
-          p {
-            margin: 5px 0;
-          }
-
-          .system-tip {
-            color: #3498db;
-            font-weight: 500;
-          }
-        }
-      }
-
-      .login-footer {
-        padding: 20px 40px;
-        background: #f8f9fa;
-        text-align: center;
-        border-top: 1px solid #eee;
-
-        .status-indicators {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-bottom: 10px;
-
-          .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ddd;
-            transition: all 0.3s;
-
-            &.active {
-              background: #2ecc71;
-              transform: scale(1.2);
-            }
-          }
-        }
-
-        p {
-          margin: 0;
-          color: #888;
-          font-size: 12px;
-        }
-      }
-    }
-  }
-
-  // 弹窗样式
-  .system-info-content,
-  .device-status-content,
-  .help-content {
-    .info-item,
-    .status-item {
-      margin: 15px 0;
+    gap: 40px;
+    .metric-item {
       display: flex;
+      flex-direction: column;
       align-items: center;
-
-      .info-label {
-        font-weight: 500;
-        color: #333;
-        min-width: 80px;
+      .metric-value {
+        font-size: 28px;
+        font-weight: 600;
+        color: $theme;
+        text-shadow: 0 0 12px rgba(82,82,91,0.5);
       }
-
-      .info-value {
-        color: #666;
+      .metric-label {
+        font-size: 14px;
+        color: $text-secondary;
+        margin-top: 4px;
       }
+    }
+  }
+}
 
-      .status-title {
-        font-weight: 500;
-        color: #333;
-        min-width: 80px;
-      }
+// ----- 右侧登录卡片 (玻璃拟态) -----
+.login-card-wrapper {
+  flex: 0 0 380px;
+  min-width: 380px;
+}
 
-      .status-bar {
-        flex: 1;
-        height: 10px;
-        background: #f0f0f0;
-        border-radius: 5px;
-        overflow: hidden;
-        margin: 0 15px;
+.login-card {
+  background: $bg-card !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid $border-glow !important;
+  border-radius: 16px !important;
+  padding: 32px 28px 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
 
-        .status-progress {
-          height: 100%;
-          background: linear-gradient(90deg, #3498db, #2ecc71);
-          border-radius: 5px;
-          transition: width 1s ease;
+  .el-card__body {
+    padding: 0 !important;
+  }
+
+  .card-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 28px 0;
+    text-align: center;
+    color: $text-primary;
+    letter-spacing: 0.02em;
+  }
+
+  .login-form {
+    .el-form-item {
+      margin-bottom: 22px;
+    }
+
+    :deep(.el-input__wrapper) {
+      background: rgba(255,255,255,0.05) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      transition: all 0.3s;
+
+      .el-input__inner {
+        color: $text-primary;
+        font-size: 16px;
+        &::placeholder {
+          color: rgba(255,255,255,0.3);
         }
       }
 
-      .status-percent {
-        color: #666;
-        min-width: 100px;
-        text-align: right;
+      .el-input__prefix-inner .iconfont,
+      .el-icon {
+        color: rgba(255,255,255,0.4);
+        font-size: 18px;
+      }
+
+      &:hover {
+        border-color: rgba(82,82,91,0.5) !important;
+        background: rgba(255,255,255,0.08) !important;
+      }
+
+      &.is-focus {
+        border-color: $theme !important;
+        box-shadow: 0 0 0 1px rgba(82,82,91,0.2) !important;
+        background: rgba(255,255,255,0.1) !important;
+      }
+    }
+
+    .el-checkbox {
+      color: $text-secondary;
+      font-size: 14px;
+      .el-checkbox__inner {
+        background: transparent;
+        border-color: rgba(255,255,255,0.2);
+      }
+      .el-checkbox__input.is-checked .el-checkbox__inner {
+        background: $theme;
+        border-color: $theme;
+      }
+    }
+
+    .login-btn {
+      width: 100%;
+      height: 48px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 10px;
+      background: linear-gradient(135deg, darken($theme, 8%), $theme);
+      border: none;
+      color: #fff;
+      letter-spacing: 0.04em;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(82,82,91,0.3);
+
+      &:hover {
+        background: linear-gradient(135deg, $theme, lighten($theme, 8%));
+        box-shadow: 0 6px 20px rgba(82,82,91,0.5);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(82,82,91,0.3);
+      }
+
+      &.is-loading {
+        opacity: 0.7;
       }
     }
   }
 
-  .help-content {
-    p {
-      margin: 12px 0;
-      color: #666;
-      line-height: 1.6;
+  .login-footer {
+    margin-top: 24px;
+    text-align: center;
+    span {
+      display: block;
+      font-size: 13px;
+      color: $text-secondary;
+      margin-bottom: 12px;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      .icon-placeholder {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.03);
+        transition: all 0.3s;
+        cursor: pointer;
+        &:hover {
+          border-color: $theme;
+          background: rgba(82,82,91,0.15);
+        }
+      }
     }
   }
-
-  .dialog-footer {
-    display: flex;
-    justify-content: center;
-  }
 }
 
-// 动画
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-  }
+// ----- 动画关键帧 -----
+@keyframes gridShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
 }
 
-// 响应式设计
-@media (max-width: 768px) {
+@keyframes floatParticle {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  50% { transform: translate(30px, -20px) scale(1.4); opacity: 0.6; }
+  100% { transform: translate(-20px, 10px) scale(0.8); opacity: 0.3; }
+}
+
+// ----- 响应式（可选）-----
+@media (max-width: 900px) {
   .login-container {
-    .login-wrapper {
-      .login-card {
-        width: 90%;
-        margin: 0 auto;
-
-        .login-header {
-          padding: 30px 20px 15px;
-        }
-
-        .login-form {
-          padding: 20px;
-        }
-
-        .login-footer {
-          padding: 15px 20px;
-        }
-      }
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+  .login-brand {
+    flex: 0 0 auto;
+    max-width: 100%;
+    text-align: center;
+    .brand-metrics {
+      justify-content: center;
     }
+  }
+  .login-card-wrapper {
+    flex: 0 0 auto;
+    min-width: 340px;
   }
 }

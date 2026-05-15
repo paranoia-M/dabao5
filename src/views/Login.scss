@@ -1,298 +1,187 @@
-// Login.scss — Dark Geek 风格食品检测平台登录页
+// Login.scss
+$primary: #0F766E;
+$bg-dark: #0a2540;
+$card-bg: rgba(255, 255, 255, 0.12);
+$text-light: #e0f2f1;
+$border-light: rgba(255, 255, 255, 0.2);
 
-// ----- 全局变量 -----
-$theme: #52525B;
-$bg-dark: #0a0a0f;
-$bg-card: rgba(20, 20, 30, 0.65);
-$text-primary: #e5e5eb;
-$text-secondary: rgba(255,255,255,0.6);
-$border-glow: rgba(82,82,91,0.3);
-
-// ----- 基础布局 -----
 .page-login {
-  position: relative;
-  width: 100vw;
+  display: flex;
   height: 100vh;
   overflow: hidden;
-  background: radial-gradient(ellipse at 20% 50%, #1a1a24, $bg-dark 70%);
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(135deg, #0a2540 0%, #0F766E 50%, #0a2540 100%);
+}
+
+.login-left {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.brand {
+  text-align: center;
+  color: $text-light;
+  z-index: 1;
+}
+
+.brand-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  color: $text-light;
+}
+
+.brand-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px rgba($primary, 0.5));
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.brand-title {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.brand-subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+  letter-spacing: 6px;
+}
+
+.decorative-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba($text-light, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($text-light, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+}
+
+.login-right {
+  flex: 0 0 40%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  color: $text-primary;
-}
-
-// ----- 背景装饰 -----
-.login-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  // 网格 overlay
-  .grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridShift 20s linear infinite;
-  }
-
-  // 粒子系统
-  .particles {
-    position: absolute;
-    inset: 0;
-    .particle {
-      position: absolute;
-      left: var(--x, 50%);
-      top: var(--y, 50%);
-      width: var(--s, 3px);
-      height: var(--s, 3px);
-      background: rgba(82,82,91,0.35);
-      border-radius: 50%;
-      animation: floatParticle calc(6s + var(--delay, 0s)) ease-in-out infinite alternate;
-      animation-delay: var(--delay, 0s);
-      opacity: 0.4;
-    }
-  }
-}
-
-// ----- 主要内容容器 (不对称双栏) -----
-.login-container {
+  padding: 2rem;
   position: relative;
-  z-index: 1;
-  display: flex;
-  width: 100%;
-  max-width: 1200px;
-  padding: 40px;
-  gap: 60px;
-  align-items: center;
-}
-
-// ----- 左侧品牌区 (55%) -----
-.login-brand {
-  flex: 0 0 55%;
-  max-width: 55%;
-  padding-right: 20px;
-
-  .brand-icon {
-    margin-bottom: 24px;
-    svg {
-      filter: drop-shadow(0 0 20px rgba(82,82,91,0.3));
-    }
-  }
-
-  .brand-title {
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 0 0 16px 0;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #e0e0e6 0%, #a0a0b0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .brand-subtitle {
-    font-size: 20px;
-    font-weight: 400;
-    color: $text-secondary;
-    margin-bottom: 48px;
-    letter-spacing: 0.05em;
-  }
-
-  .brand-metrics {
-    display: flex;
-    gap: 40px;
-    .metric-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .metric-value {
-        font-size: 28px;
-        font-weight: 600;
-        color: $theme;
-        text-shadow: 0 0 12px rgba(82,82,91,0.5);
-      }
-      .metric-label {
-        font-size: 14px;
-        color: $text-secondary;
-        margin-top: 4px;
-      }
-    }
-  }
-}
-
-// ----- 右侧登录卡片 (玻璃拟态) -----
-.login-card-wrapper {
-  flex: 0 0 380px;
-  min-width: 380px;
 }
 
 .login-card {
-  background: $bg-card !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid $border-glow !important;
-  border-radius: 16px !important;
-  padding: 32px 28px 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem 2rem;
+  background: $card-bg;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid $border-light;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
 
-  .el-card__body {
-    padding: 0 !important;
-  }
+.login-card-title {
+  font-size: 28px;
+  color: $text-light;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
 
-  .card-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 28px 0;
-    text-align: center;
-    color: $text-primary;
-    letter-spacing: 0.02em;
-  }
+.el-form-item {
+  margin-bottom: 1.2rem;
+}
 
-  .login-form {
-    .el-form-item {
-      margin-bottom: 22px;
-    }
+.el-input {
+  --el-input-bg-color: rgba(255,255,255,0.05) !important;
+  --el-input-text-color: $text-light !important;
+  --el-input-border-color: $border-light !important;
+  --el-input-focus-border-color: $primary !important;
+  --el-input-placeholder-color: rgba(255,255,255,0.5) !important;
+  --el-input-icon-color: rgba(255,255,255,0.6) !important;
+  --el-input-hover-border-color: $primary !important;
+}
 
-    :deep(.el-input__wrapper) {
-      background: rgba(255,255,255,0.05) !important;
-      border: 1px solid rgba(255,255,255,0.08) !important;
-      border-radius: 10px !important;
-      box-shadow: none !important;
-      transition: all 0.3s;
+.el-checkbox {
+  color: $text-light;
+  --el-checkbox-text-color: $text-light;
+}
 
-      .el-input__inner {
-        color: $text-primary;
-        font-size: 16px;
-        &::placeholder {
-          color: rgba(255,255,255,0.3);
-        }
-      }
-
-      .el-input__prefix-inner .iconfont,
-      .el-icon {
-        color: rgba(255,255,255,0.4);
-        font-size: 18px;
-      }
-
-      &:hover {
-        border-color: rgba(82,82,91,0.5) !important;
-        background: rgba(255,255,255,0.08) !important;
-      }
-
-      &.is-focus {
-        border-color: $theme !important;
-        box-shadow: 0 0 0 1px rgba(82,82,91,0.2) !important;
-        background: rgba(255,255,255,0.1) !important;
-      }
-    }
-
-    .el-checkbox {
-      color: $text-secondary;
-      font-size: 14px;
-      .el-checkbox__inner {
-        background: transparent;
-        border-color: rgba(255,255,255,0.2);
-      }
-      .el-checkbox__input.is-checked .el-checkbox__inner {
-        background: $theme;
-        border-color: $theme;
-      }
-    }
-
-    .login-btn {
-      width: 100%;
-      height: 48px;
-      font-size: 16px;
-      font-weight: 500;
-      border-radius: 10px;
-      background: linear-gradient(135deg, darken($theme, 8%), $theme);
-      border: none;
-      color: #fff;
-      letter-spacing: 0.04em;
-      transition: all 0.3s;
-      box-shadow: 0 4px 12px rgba(82,82,91,0.3);
-
-      &:hover {
-        background: linear-gradient(135deg, $theme, lighten($theme, 8%));
-        box-shadow: 0 6px 20px rgba(82,82,91,0.5);
-        transform: translateY(-1px);
-      }
-
-      &:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(82,82,91,0.3);
-      }
-
-      &.is-loading {
-        opacity: 0.7;
-      }
-    }
-  }
-
-  .login-footer {
-    margin-top: 24px;
-    text-align: center;
-    span {
-      display: block;
-      font-size: 13px;
-      color: $text-secondary;
-      margin-bottom: 12px;
-    }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      .icon-placeholder {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(255,255,255,0.03);
-        transition: all 0.3s;
-        cursor: pointer;
-        &:hover {
-          border-color: $theme;
-          background: rgba(82,82,91,0.15);
-        }
-      }
-    }
+.login-btn {
+  width: 100%;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  background: $primary !important;
+  border-color: $primary !important;
+  &:hover {
+    background: darken($primary, 5%) !important;
   }
 }
 
-// ----- 动画关键帧 -----
-@keyframes gridShift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(60px, 60px); }
+.login-third {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: rgba($text-light, 0.7);
 }
 
-@keyframes floatParticle {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-  50% { transform: translate(30px, -20px) scale(1.4); opacity: 0.6; }
-  100% { transform: translate(-20px, 10px) scale(0.8); opacity: 0.3; }
+.third-label {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 0.8rem;
 }
 
-// ----- 响应式（可选）-----
-@media (max-width: 900px) {
-  .login-container {
+.third-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.third-icon {
+  font-size: 13px;
+  padding: 4px 12px;
+  border: 1px solid $border-light;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-login {
     flex-direction: column;
-    gap: 40px;
-    align-items: center;
   }
-  .login-brand {
-    flex: 0 0 auto;
-    max-width: 100%;
-    text-align: center;
-    .brand-metrics {
-      justify-content: center;
-    }
+  .login-left {
+    flex: 0 0 40%;
+    padding: 1rem;
   }
-  .login-card-wrapper {
-    flex: 0 0 auto;
-    min-width: 340px;
+  .login-right {
+    flex: 0 0 60%;
+    padding: 1rem;
+  }
+  .brand-title {
+    font-size: 28px;
+  }
+  .brand-subtitle {
+    font-size: 16px;
   }
 }

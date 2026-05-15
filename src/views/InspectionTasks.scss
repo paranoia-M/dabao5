@@ -1,0 +1,207 @@
+.page-inspection_tasks {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 20px;
+  background: #f5f7fa;
+  min-height: 100vh;
+  --page-primary: #1E3A6A;
+
+  .kpi-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .kpi-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 100px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border-left: 4px solid var(--page-primary);
+      .kpi-value {
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .kpi-label {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .action-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+    .filter-input {
+      width: 260px;
+    }
+    .filter-select {
+      width: 140px;
+    }
+    .filter-date {
+      width: 240px;
+    }
+    .el-button {
+      &:first-of-type {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .main-body {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+
+    .timeline-wrapper {
+      flex: 1;
+      min-width: 0;
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+      .timeline {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 19px;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: #e0e0e0;
+        }
+
+        .timeline-item {
+          display: flex;
+          align-items: flex-start;
+          padding: 12px 0;
+          padding-left: 40px;
+          position: relative;
+          cursor: pointer;
+          transition: background 0.2s;
+          border-radius: 6px;
+          &:hover {
+            background: #f3f7fb;
+          }
+          &.active {
+            background: #e8f0fe;
+          }
+
+          .timeline-dot {
+            position: absolute;
+            left: 12px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid var(--page-primary);
+            box-shadow: 0 0 0 2px #fff;
+            z-index: 1;
+            top: 16px;
+          }
+
+          .timeline-content {
+            flex: 1;
+            min-width: 0;
+            .task-badge {
+              font-weight: 600;
+              font-size: 15px;
+              color: #1e3a6a;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .task-time {
+              font-size: 13px;
+              color: #999;
+              margin-top: 2px;
+            }
+            .el-tag {
+              margin-top: 4px;
+              margin-right: 6px;
+            }
+            .task-actions {
+              margin-top: 8px;
+            }
+          }
+        }
+      }
+
+      .pagination {
+        margin-top: 16px;
+        text-align: center;
+      }
+    }
+
+    .detail-wrapper {
+      width: 35%;
+      min-width: 320px;
+      max-width: 480px;
+      flex-shrink: 0;
+
+      &.empty-detail {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        border-radius: 8px;
+        padding: 40px 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      }
+
+      .detail-card {
+        border-left: 4px solid var(--page-primary);
+        .detail-fields {
+          .field-row {
+            display: flex;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            label {
+              width: 80px;
+              color: #666;
+              flex-shrink: 0;
+              font-size: 14px;
+            }
+            span {
+              flex: 1;
+              min-width: 0;
+              word-break: break-word;
+            }
+          }
+        }
+        .assign-section {
+          margin-top: 16px;
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        }
+        .transition-buttons {
+          margin-top: 16px;
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .empty-history {
+          color: #bbb;
+          padding: 12px 0;
+        }
+      }
+    }
+  }
+}

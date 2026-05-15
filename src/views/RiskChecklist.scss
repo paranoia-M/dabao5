@@ -1,0 +1,184 @@
+.page-risk_checklist {
+  --page-primary: #059669;
+  --page-bg: #f5f7fa;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--page-bg);
+  padding: 24px;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  // Glass effect
+  .toolbar, .filter-bar, .trend-card, .table-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.2s;
+    &:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    }
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--page-primary);
+      margin: 0;
+      position: relative;
+      padding-left: 16px;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 4px;
+        bottom: 4px;
+        width: 4px;
+        background: var(--page-primary);
+        border-radius: 2px;
+      }
+    }
+    .toolbar-actions {
+      display: flex;
+      gap: 12px;
+    }
+  }
+
+  .filter-bar {
+    .filter-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      .el-form-item {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .main-content {
+    display: flex;
+    gap: 20px;
+    .trend-card {
+      flex: 1 1 50%;
+      min-width: 0;
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 12px;
+        padding-left: 12px;
+        border-left: 4px solid var(--page-primary);
+      }
+      .trend-chart {
+        position: relative;
+        width: 100%;
+        min-height: 200px;
+        .trend-svg {
+          width: 100%;
+          height: 200px;
+          .trend-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 1.5s ease-out forwards;
+          }
+          @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+          }
+          .trend-dot {
+            cursor: pointer;
+            &:hover {
+              r: 6;
+              fill: #fff;
+              stroke: var(--page-primary);
+              stroke-width: 2;
+            }
+          }
+        }
+        .chart-empty {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 200px;
+          color: #999;
+        }
+        .trend-tooltip {
+          position: fixed;
+          background: rgba(0,0,0,0.75);
+          color: #fff;
+          padding: 4px 10px;
+          border-radius: 4px;
+          font-size: 12px;
+          pointer-events: none;
+          white-space: nowrap;
+          transform: translate(-50%, -100%);
+          z-index: 1000;
+        }
+      }
+    }
+    .table-card {
+      flex: 1 1 50%;
+      min-width: 0;
+      .el-table {
+        margin-bottom: 12px;
+        th {
+          background: #f0f5f0;
+          color: #333;
+          font-weight: 600;
+        }
+        .el-table__row {
+          &:hover td {
+            background: #f5faf5;
+          }
+        }
+      }
+      .pagination-wrap {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  // 弹窗内部表格间距
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 24px;
+    .detail-item {
+      display: flex;
+      gap: 8px;
+      .label {
+        font-weight: 600;
+        color: #666;
+        min-width: 70px;
+        flex-shrink: 0;
+      }
+      span:last-child {
+        color: #333;
+        word-break: break-word;
+      }
+    }
+  }
+  .empty-hint {
+    color: #999;
+    padding: 16px 0;
+    text-align: center;
+  }
+
+  // 响应式
+  @media (max-width: 1024px) {
+    .main-content {
+      flex-direction: column;
+    }
+    .trend-card, .table-card {
+      flex: 1 1 100%;
+    }
+  }
+}

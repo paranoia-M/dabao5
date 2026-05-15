@@ -1,80 +1,102 @@
 <template>
   <div class="app-layout">
-    <aside class="layout-aside">
-      <div class="aside-header">
-        <h1 class="project-title">食品生产线智能监控</h1>
+    <header class="top-banner">
+      <div class="brand">
+        <span class="brand-icon">🛡️</span>
+        <span class="brand-title">{{ spec.title }}</span>
       </div>
-      <el-menu
-        :default-active="activeMenu"
-        background-color="transparent"
-        text-color="#ffffff"
-        active-text-color="#0F766E"
-        @select="handleSelect"
-        class="layout-menu"
-      >
-        <el-sub-menu v-for="group in MENU" :key="group.moduleName" :index="group.moduleName">
-          <template #title>
-            <span>{{ group.moduleName }}</span>
+      <div class="search-bar">
+        <el-input
+          v-model="searchQuery"
+          placeholder="全局搜索设备或隐患..."
+          class="search-input"
+        />
+      </div>
+      <div class="user-area">
+        <el-button type="text" @click="handleLogout">退出登录</el-button>
+      </div>
+    </header>
+    <div class="layout-body">
+      <aside class="app-aside">
+        <el-menu
+          :default-active="route.path"
+          :router="true"
+          class="app-menu"
+          mode="vertical"
+          :collapse="false"
+          background-color="transparent"
+          text-color="#ffffff"
+          active-text-color="#059669"
+        >
+          <template v-for="mod in MENU" :key="mod.moduleName">
+            <el-sub-menu
+              v-if="mod.items && mod.items.length > 1"
+              :index="mod.moduleName"
+            >
+              <template #title>
+                <span>{{ mod.moduleName }}</span>
+              </template>
+              <el-menu-item
+                v-for="item in mod.items"
+                :key="item.name"
+                :index="item.path"
+              >
+                {{ item.name }}
+              </el-menu-item>
+            </el-sub-menu>
+            <template v-else>
+              <el-menu-item
+                v-for="item in mod.items"
+                :key="item.name"
+                :index="item.path"
+              >
+                {{ item.name }}
+              </el-menu-item>
+            </template>
           </template>
-          <el-menu-item
-            v-for="item in group.items"
-            :key="item.path"
-            :index="item.path"
-          >
-            <span>{{ item.name }}</span>
-          </el-menu-item>
-        </el-sub-menu>
-      </el-menu>
-      <div class="aside-footer">
-        <el-button text type="primary" size="default" class="logout-btn" @click="handleLogout">退出登录</el-button>
-      </div>
-    </aside>
-    <main class="layout-main">
-      <div class="status-bar">
-        <span class="status-item">设备在线: 42</span>
-        <span class="status-item">今日产量: 12,000件</span>
-        <span class="status-item">当前报警: <span class="alert-count">3</span></span>
-      </div>
-      <div class="content-wrapper">
+        </el-menu>
+      </aside>
+      <main class="app-main">
         <router-view />
-      </div>
-    </main>
+      </main>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
 
+const spec = {
+  title: '特种设备隐患排查评估系统'
+}
+
 const MENU = [
-  { moduleName: '首页概览', items: [
-    { name: '生产总览', path: '/line-dashboard' },
+  { moduleName: '工作台', items: [
+    { name: '数据概览', path: '/dashboard' },
   ]},
-  { moduleName: '产线监控', items: [
-    { name: '实时监控', path: '/line-monitor' },
-    { name: '报警历史', path: '/alarm-history' },
+  { moduleName: '设备管理', items: [
+    { name: '设备台账', path: '/equipment-ledger' },
+    { name: '设备详情', path: '/equipment-profile' },
   ]},
-  { moduleName: '质量检测', items: [
-    { name: '检测任务', path: '/inspection-tasks' },
-    { name: '检测标准', path: '/inspection-standards' },
+  { moduleName: '隐患排查', items: [
+    { name: '排查任务', path: '/inspection-task' },
+    { name: '隐患记录', path: '/hazard-record' },
+    { name: '整改管理', path: '/rectification-management' },
   ]},
-  { moduleName: '维护管理', items: [
-    { name: '维护计划', path: '/maintenance-schedule' },
-    { name: '维护工单', path: '/maintenance-orders' },
+  { moduleName: '风险评估', items: [
+    { name: '风险分析', path: '/risk-analysis' },
+    { name: '风险清单', path: '/risk-checklist' },
   ]},
-  { moduleName: '报表分析', items: [
-    { name: '报表中心', path: '/report-center' },
+  { moduleName: '报告管理', items: [
+    { name: '报告台账', path: '/report-archive' },
   ]},
 ]
 
-const activeMenu = computed(() => route.path)
-
-function handleSelect(key: string) {
-  router.push(key)
-}
+const searchQuery = ref('')
 
 function handleLogout() {
   router.push('/login')

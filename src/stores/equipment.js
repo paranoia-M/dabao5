@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 
 /**
  * 设备（Equipment）store —— 跨菜单数据流通，所有页面通过本 store 读写数据
- * 字段：id(string), name(string), model(string), type(enum), productionLineId(string), status(enum), healthScore(number), installDate(date)
+ * 字段：id(string), name(string), equipmentType(enum), status(enum), registerCode(string), manufacturer(string), installDate(date), lastInspectDate(date), nextInspectDate(date), location(string)
  */
 export const useEquipmentStore = defineStore('equipment', () => {
   const equipmentList = ref([])

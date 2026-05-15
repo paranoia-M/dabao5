@@ -6,16 +6,17 @@ const routes = [
     path: '/',
     name: 'Layout',
     component: () => import('@/layouts/Layout.vue'),
-    redirect: '/line-dashboard',
+    redirect: '/dashboard',
     children: [
-      { path: 'line-dashboard', name: 'LineDashboard', component: () => import('@/views/LineDashboard.vue'), meta: { title: '生产总览', module: '首页概览' } },
-      { path: 'line-monitor', name: 'LineMonitor', component: () => import('@/views/LineMonitor.vue'), meta: { title: '实时监控', module: '产线监控' } },
-      { path: 'alarm-history', name: 'AlarmHistory', component: () => import('@/views/AlarmHistory.vue'), meta: { title: '报警历史', module: '产线监控' } },
-      { path: 'inspection-tasks', name: 'InspectionTasks', component: () => import('@/views/InspectionTasks.vue'), meta: { title: '检测任务', module: '质量检测' } },
-      { path: 'inspection-standards', name: 'InspectionStandards', component: () => import('@/views/InspectionStandards.vue'), meta: { title: '检测标准', module: '质量检测' } },
-      { path: 'maintenance-schedule', name: 'MaintenanceSchedule', component: () => import('@/views/MaintenanceSchedule.vue'), meta: { title: '维护计划', module: '维护管理' } },
-      { path: 'maintenance-orders', name: 'MaintenanceOrders', component: () => import('@/views/MaintenanceOrders.vue'), meta: { title: '维护工单', module: '维护管理' } },
-      { path: 'report-center', name: 'ReportCenter', component: () => import('@/views/ReportCenter.vue'), meta: { title: '报表中心', module: '报表分析' } },
+      { path: 'dashboard', name: 'Dashboard', component: () => import('@/views/Dashboard.vue'), meta: { title: '数据概览', module: '工作台' } },
+      { path: 'equipment-ledger', name: 'EquipmentLedger', component: () => import('@/views/EquipmentLedger.vue'), meta: { title: '设备台账', module: '设备管理' } },
+      { path: 'equipment-profile', name: 'EquipmentProfile', component: () => import('@/views/EquipmentProfile.vue'), meta: { title: '设备详情', module: '设备管理' } },
+      { path: 'inspection-task', name: 'InspectionTask', component: () => import('@/views/InspectionTask.vue'), meta: { title: '排查任务', module: '隐患排查' } },
+      { path: 'hazard-record', name: 'HazardRecord', component: () => import('@/views/HazardRecord.vue'), meta: { title: '隐患记录', module: '隐患排查' } },
+      { path: 'rectification-management', name: 'RectificationManagement', component: () => import('@/views/RectificationManagement.vue'), meta: { title: '整改管理', module: '隐患排查' } },
+      { path: 'risk-analysis', name: 'RiskAnalysis', component: () => import('@/views/RiskAnalysis.vue'), meta: { title: '风险分析', module: '风险评估' } },
+      { path: 'risk-checklist', name: 'RiskChecklist', component: () => import('@/views/RiskChecklist.vue'), meta: { title: '风险清单', module: '风险评估' } },
+      { path: 'report-archive', name: 'ReportArchive', component: () => import('@/views/ReportArchive.vue'), meta: { title: '报告台账', module: '报告管理' } },
     ]
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFound.vue') }
@@ -27,7 +28,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  if (to.meta && to.meta.title) document.title = to.meta.title + ' · 食品生产线智能监控软件'
+  if (to.meta && to.meta.title) document.title = to.meta.title + ' · 特种设备安全隐患排查评估软件'
   next()
 })
 

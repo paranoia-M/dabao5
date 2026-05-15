@@ -1,0 +1,191 @@
+.page-equipment_profile {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 24px;
+  min-height: 100vh;
+  background: #f5f7fa;
+
+  .profile-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .profile-main {
+    flex: 2;
+    min-width: 0; // 防止 flex 子项溢出
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .profile-sidebar {
+    flex: 1;
+    min-width: 0;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  // 设备信息卡
+  .info-card {
+    --el-card-padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+
+      .info-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .device-name {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 320px;
+      }
+
+      .info-header-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+    }
+
+    .info-descriptions {
+      :deep(.el-descriptions__body) {
+        background: #fff;
+      }
+      :deep(.el-descriptions__cell) {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+    }
+
+    .urgent {
+      color: #dc2626;
+      font-weight: 600;
+    }
+  }
+
+  // 时间线区域
+  .timeline-section {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 16px;
+        background: var(--page-primary, #374151);
+        border-radius: 2px;
+      }
+    }
+
+    .timeline-svg-wrapper {
+      width: 100%;
+      min-height: 200px;
+      svg {
+        overflow: visible;
+      }
+    }
+  }
+
+  // 侧边栏隐患卡
+  .hazard-card {
+    --el-card-padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      .el-input,
+      .el-select,
+      .el-date-picker {
+        width: 100%;
+      }
+    }
+
+    .pagination {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  // 编辑器弹窗自适应
+  .el-dialog {
+    .el-form {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  }
+
+  // 隐患详情照片网格
+  .photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    .photo-item {
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .page-equipment_profile {
+    .profile-layout {
+      flex-direction: column;
+    }
+    .profile-sidebar {
+      max-width: 100%;
+    }
+    .info-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}

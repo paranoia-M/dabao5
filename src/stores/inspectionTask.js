@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 /**
- * 检测任务（InspectionTask）store —— 跨菜单数据流通，所有页面通过本 store 读写数据
- * 字段：id(string), batchNo(string), taskType(enum), planTime(datetime), executor(string), status(enum), result(enum), detail(string), remark(string)
+ * 排查任务（InspectionTask）store —— 跨菜单数据流通，所有页面通过本 store 读写数据
+ * 字段：id(string), title(string), description(string), taskType(enum), status(enum), startDate(date), endDate(date), assignee(string), createdBy(string), createTime(datetime)
  */
 export const useInspectionTaskStore = defineStore('inspectionTask', () => {
   const inspectionTaskList = ref([])

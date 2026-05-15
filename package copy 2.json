@@ -1,5 +1,5 @@
 {
-  "name" : "食品质量安全检测分析平台",
+  "name" : "特种设备安全隐患排查评估软件",
   "version" : "0.1.0",
   "private" : true,
   "type" : "module",
@@ -20,6 +20,8 @@
     "echarts" : "^5.5.1",
     "vue-echarts" : "^7.0.3",
     "axios" : "^1.7.9"
+  ,
+    "gantt-elastic": "latest"
   },
   "devDependencies" : {
     "@vitejs/plugin-vue" : "^5.2.1",

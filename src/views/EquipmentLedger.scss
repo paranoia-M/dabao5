@@ -1,0 +1,210 @@
+.page-equipment_ledger {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 24px;
+  background: var(--page-bg, #f5f7fa);
+  min-height: calc(100vh - 60px);
+  --page-primary: #4B5563;
+  --card-bg: rgba(255,255,255,0.75);
+  --border-glass: 1px solid rgba(255,255,255,0.3);
+  --shadow-glass: 0 8px 32px rgba(0,0,0,0.08);
+  --radius-glass: 16px;
+
+  // Glass card mixin
+  .glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: var(--border-glass);
+    border-radius: var(--radius-glass);
+    box-shadow: var(--shadow-glass);
+  }
+
+  // Main flex layout
+  .main-content {
+    display: flex;
+    gap: 24px;
+    height: 100%;
+  }
+
+  // Left tree
+  .left-filter {
+    width: 220px;
+    flex-shrink: 0;
+    padding: 16px 12px;
+    .filter-title {
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--page-primary);
+      padding-left: 8px;
+      border-left: 4px solid var(--page-primary);
+    }
+  }
+
+  // Center table area
+  .center-table {
+    flex: 1;
+    min-width: 0; // Flex overflow fix
+
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      .filter-input {
+        max-width: 220px;
+        width: 100%;
+      }
+    }
+
+    .equipment-table {
+      border-radius: 8px;
+      overflow: hidden;
+      :deep(.el-table__body tr:hover td) {
+        background-color: rgba(75, 85, 99, 0.04);
+      }
+      :deep(.el-table__body tr.el-table__row--striped td) {
+        background-color: rgba(0,0,0,0.02);
+      }
+      .device-name {
+        font-weight: 500;
+        color: var(--page-primary);
+      }
+    }
+
+    .pagination-bar {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  // Right structure
+  .right-structure {
+    flex: 0 0 40%;
+    min-width: 320px;
+    max-width: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    .empty-tip {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+    }
+    .structure-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      .structure-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--page-primary);
+        margin-bottom: 12px;
+        padding-left: 12px;
+        border-left: 4px solid var(--page-primary);
+      }
+      .svg-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .device-svg {
+          max-height: 500px;
+          .part {
+            transition: fill 0.2s, stroke 0.2s;
+            stroke-width: 2;
+            stroke: #999;
+            fill: #e5e7eb;
+          }
+          .part.has-hazard {
+            fill: #fecaca;
+            stroke: #f56565;
+            cursor: pointer;
+          }
+          .part.no-hazard {
+            fill: #d1fae5;
+            stroke: #34d399;
+            cursor: pointer;
+          }
+          .part-main { fill: #fde68a; stroke: #d97706; }
+          .part-drum { fill: #fcd34d; stroke: #f59e0b; }
+          .part-burner { fill: #fb923c; stroke: #ea580c; }
+          .part-chimney { fill: #94a3b8; stroke: #64748b; }
+          .part-shaft { fill: #e2e8f0; stroke: #94a3b8; }
+          .part-car { fill: #bfdbfe; stroke: #3b82f6; }
+          .part-guide { fill: #cbd5e1; stroke: #64748b; }
+          .part-roof { fill: #fde68a; stroke: #d97706; }
+          .part-sheave { fill: #9ca3af; stroke: #6b7280; }
+          .part-beam { fill: #fde68a; stroke: #d97706; }
+          .part-leg { fill: #d1d5db; stroke: #9ca3af; }
+          .part-trolley { fill: #fcd34d; stroke: #f59e0b; }
+          .part-hoist { fill: none; stroke: #6b7280; stroke-width: 5; }
+          .part-hook { fill: none; stroke: #6b7280; stroke-width: 4; }
+          .part-vessel { fill: #fde68a; stroke: #d97706; }
+          .part-head { fill: #fcd34d; stroke: #f59e0b; }
+          .part-manhole { fill: #9ca3af; stroke: #6b7280; }
+          .part-body { fill: #fde68a; stroke: #d97706; }
+          .part-fork { fill: #94a3b8; stroke: #64748b; }
+          .part-wheel { fill: #9ca3af; stroke: #6b7280; stroke-width: 3; }
+          .part-mast { fill: #bfdbfe; stroke: #3b82f6; }
+          .part-cable { fill: none; stroke: #9ca3af; stroke-width: 4; stroke-dasharray: 8,4; }
+          .part-car { fill: #fde68a; stroke: #d97706; }
+          .part-hanger { fill: none; stroke: #6b7280; stroke-width: 4; }
+          .part-rim { fill: none; stroke: #9ca3af; stroke-width: 8; }
+          .part-spoke { fill: none; stroke: #6b7280; stroke-width: 5; }
+          .part-hub { fill: #6b7280; }
+          .part-carriage { fill: #fde68a; stroke: #d97706; }
+          .part-generic { fill: #e5e7eb; stroke: #9ca3af; }
+          .part-generic-top { fill: #fde68a; stroke: #d97706; }
+          .part-generic-base { fill: #9ca3af; stroke: #6b7280; }
+        }
+      }
+      .hazard-indicator {
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
+
+  // Dialog common style
+  .form-dialog {
+    :deep(.el-dialog__body) {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  }
+
+  // Responsive: 当窄屏时右侧收起
+  @media (max-width: 1200px) {
+    .right-structure {
+      flex: 0 0 35%;
+      min-width: 280px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .main-content {
+      flex-direction: column;
+    }
+    .left-filter {
+      width: 100%;
+      flex-shrink: 1;
+    }
+    .right-structure {
+      flex: 1;
+      max-width: 100%;
+      min-width: 0;
+    }
+  }
+}

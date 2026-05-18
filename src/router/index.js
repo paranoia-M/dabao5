@@ -8,15 +8,14 @@ const routes = [
     component: () => import('@/layouts/Layout.vue'),
     redirect: '/dashboard',
     children: [
-      { path: 'dashboard', name: 'Dashboard', component: () => import('@/views/Dashboard.vue'), meta: { title: '数据概览', module: '工作台' } },
-      { path: 'equipment-ledger', name: 'EquipmentLedger', component: () => import('@/views/EquipmentLedger.vue'), meta: { title: '设备台账', module: '设备管理' } },
-      { path: 'equipment-profile', name: 'EquipmentProfile', component: () => import('@/views/EquipmentProfile.vue'), meta: { title: '设备详情', module: '设备管理' } },
-      { path: 'inspection-task', name: 'InspectionTask', component: () => import('@/views/InspectionTask.vue'), meta: { title: '排查任务', module: '隐患排查' } },
-      { path: 'hazard-record', name: 'HazardRecord', component: () => import('@/views/HazardRecord.vue'), meta: { title: '隐患记录', module: '隐患排查' } },
-      { path: 'rectification-management', name: 'RectificationManagement', component: () => import('@/views/RectificationManagement.vue'), meta: { title: '整改管理', module: '隐患排查' } },
-      { path: 'risk-analysis', name: 'RiskAnalysis', component: () => import('@/views/RiskAnalysis.vue'), meta: { title: '风险分析', module: '风险评估' } },
-      { path: 'risk-checklist', name: 'RiskChecklist', component: () => import('@/views/RiskChecklist.vue'), meta: { title: '风险清单', module: '风险评估' } },
-      { path: 'report-archive', name: 'ReportArchive', component: () => import('@/views/ReportArchive.vue'), meta: { title: '报告台账', module: '报告管理' } },
+      { path: 'dashboard', name: 'Dashboard', component: () => import('@/views/Dashboard.vue'), meta: { title: '数据概览', module: '首页' } },
+      { path: 'dormitory-list', name: 'DormitoryList', component: () => import('@/views/DormitoryList.vue'), meta: { title: '宿舍列表', module: '宿舍管理' } },
+      { path: 'room-occupancy', name: 'RoomOccupancy', component: () => import('@/views/RoomOccupancy.vue'), meta: { title: '住宿管理', module: '宿舍管理' } },
+      { path: 'repair-order', name: 'RepairOrder', component: () => import('@/views/RepairOrder.vue'), meta: { title: '维修工单', module: '维修管理' } },
+      { path: 'repair-task', name: 'RepairTask', component: () => import('@/views/RepairTask.vue'), meta: { title: '维修任务', module: '维修管理' } },
+      { path: 'repair-center', name: 'RepairCenter', component: () => import('@/views/RepairCenter.vue'), meta: { title: '报修中心', module: '报修服务' } },
+      { path: 'dormitory-block', name: 'DormitoryBlock', component: () => import('@/views/DormitoryBlock.vue'), meta: { title: '楼栋配置', module: '配置管理' } },
+      { path: 'room-category', name: 'RoomCategory', component: () => import('@/views/RoomCategory.vue'), meta: { title: '房间类型配置', module: '配置管理' } },
     ]
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFound.vue') }
@@ -28,7 +27,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  if (to.meta && to.meta.title) document.title = to.meta.title + ' · 特种设备安全隐患排查评估软件'
+  if (to.meta && to.meta.title) document.title = to.meta.title + ' · 宿舍信息管理与维修登记系统'
   next()
 })
 

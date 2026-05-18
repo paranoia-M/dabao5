@@ -4,46 +4,43 @@
   --app-success: #10B981;
   --app-warning: #F59E0B;
   --app-danger: #EF4444;
-  --app-radius: 2px;
+  --app-radius: 6px;
   --app-spacing: 16px;
-  --app-font: 'Source Han Sans CN', 'Inter', system-ui, sans-serif;
+  --app-font: 'HarmonyOS Sans SC', 'Inter', system-ui, sans-serif;
   --app-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   --app-motion: 240ms;
-  --app-bg: #F5F7FA;
-  --app-sidebar-bg: #F1F5F9;
-  --app-sidebar-text: #1F2937;
+  --app-bg: #F4F6F8;
+  --app-sidebar-bg: #1F2937;
+  --app-sidebar-text: #E5E7EB;
   --app-header-bg: #FFFFFF;
   --el-color-primary: #059669;
   --el-color-success: #10B981;
   --el-color-warning: #F59E0B;
   --el-color-danger: #EF4444;
-  --el-border-radius-base: 2px;
+  --el-border-radius-base: 6px;
 }
 
 .page-dashboard {
   --page-primary: #2563EB;
 }
-.page-equipment_ledger {
+.page-dormitory-list {
   --page-primary: #4B5563;
 }
-.page-equipment_profile {
-  --page-primary: #374151;
+.page-room-occupancy {
+  --page-primary: #6B7280;
 }
-.page-inspection_task {
-  --page-primary: #1E3A5F;
+.page-repair-order {
+  --page-primary: #DC2626;
 }
-.page-hazard_record {
+.page-repair-task {
+  --page-primary: #EF4444;
+}
+.page-repair-center {
+  --page-primary: #0284C7;
+}
+.page-dormitory-block {
   --page-primary: #52525B;
 }
-.page-rectification_management {
-  --page-primary: #EA580C;
-}
-.page-risk_analysis {
-  --page-primary: #475569;
-}
-.page-risk_checklist {
-  --page-primary: #059669;
-}
-.page-report_archive {
-  --page-primary: #0284C7;
+.page-room-category {
+  --page-primary: #3F3F46;
 }

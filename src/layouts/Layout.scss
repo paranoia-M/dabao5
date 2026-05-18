@@ -1,104 +1,218 @@
+// Layout.scss
+$primary: #059669;
+$primary-dark: darken($primary, 12%);
+$primary-light: lighten($primary, 35%);
+$text-color: #1f2937;
+$bg-light: #f8fafc;
+
 .app-layout {
   display: flex;
-  flex-direction: column;
   height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
+  overflow: hidden;
 
-  .top-banner {
+  .layout-aside {
+    width: 260px;
+    min-width: 260px;
+    background: linear-gradient(180deg, $primary-dark 0%, $primary 100%);
     display: flex;
-    align-items: center;
-    padding: 0 24px;
-    height: 64px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+
+    // 装饰叶片纹样
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 80% 20%, transparent 20%, rgba(255,255,255,0.04) 20%),
+                  radial-gradient(circle at 60% 40%, transparent 30%, rgba(255,255,255,0.04) 30%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 80px;
+      left: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      .brand-icon {
-        font-size: 24px;
-      }
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       .brand-title {
-        font-size: 18px;
+        color: #fff;
+        font-size: 22px;
         font-weight: 600;
-        letter-spacing: 1px;
+        margin: 0;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
       }
     }
 
-    .search-bar {
+    // 菜单区域
+    :deep(.el-menu) {
+      border-right: none;
+      background: transparent;
       flex: 1;
-      display: flex;
-      justify-content: center;
+      padding-top: 8px;
 
-      .search-input {
-        width: 320px;
+      .el-sub-menu__title {
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 600;
+        font-size: 15px;
+        height: 48px;
+        line-height: 48px;
+        padding-left: 24px;
+        transition: background 0.2s;
 
-        :deep(.el-input__wrapper) {
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .module-title {
+          letter-spacing: 1px;
+        }
+      }
+
+      .el-sub-menu .el-menu {
+        background: transparent;
+        padding-left: 0;
+      }
+
+      .el-menu-item {
+        color: rgba(255, 255, 255, 0.78);
+        height: 42px;
+        line-height: 42px;
+        padding-left: 48px;
+        font-size: 14px;
+        border-radius: 0 20px 20px 0;
+        margin: 2px 0;
+        transition: all 0.2s;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+          padding-left: 52px;
+        }
+
+        &.is-active {
           background: rgba(255, 255, 255, 0.15);
-          box-shadow: none;
-          border-radius: 20px;
+          color: #fff;
+          font-weight: 600;
+          padding-left: 52px;
+          position: relative;
 
-          input {
-            background: transparent;
-            color: #fff;
-
-            &::placeholder {
-              color: rgba(255, 255, 255, 0.6);
-            }
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 24px;
+            background: #fff;
+            border-radius: 0 4px 4px 0;
           }
         }
       }
     }
 
-    .user-area {
-      .el-button {
+    .aside-footer {
+      padding: 16px 20px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+      .logout-btn {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         color: #fff;
+        font-weight: 500;
+        letter-spacing: 1px;
+        backdrop-filter: blur(4px);
+        transition: all 0.3s;
 
         &:hover {
-          color: #059669;
+          background: rgba(255, 255, 255, 0.22);
+          border-color: rgba(255, 255, 255, 0.35);
         }
       }
     }
   }
 
-  .layout-body {
+  .layout-main {
     flex: 1;
     display: flex;
+    flex-direction: column;
+    background: $bg-light;
     overflow: hidden;
 
-    .app-aside {
-      width: 220px;
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 12px 0;
+    .main-header {
+      background: #fff;
+      padding: 16px 28px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
 
-      .app-menu {
-        border-right: none;
+      .page-indicator {
+        display: flex;
+        align-items: center;
 
-        .el-sub-menu__title,
-        .el-menu-item {
-          &:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .page-name {
+          font-size: 20px;
+          font-weight: 600;
+          color: $text-color;
+          position: relative;
+          padding-left: 16px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 22px;
+            background: $primary;
+            border-radius: 3px;
           }
         }
 
-        .el-menu-item.is-active {
-          background: rgba(5, 150, 105, 0.2) !important;
-          border-right: 3px solid #059669;
+        .module-name {
+          font-size: 14px;
+          color: #6b7280;
+          margin-left: 8px;
         }
       }
     }
 
-    .app-main {
+    .main-content {
       flex: 1;
-      padding: 20px;
+      padding: 24px 28px;
       overflow-y: auto;
     }
   }
+}
+
+// 滚动条美化
+.main-content::-webkit-scrollbar {
+  width: 6px;
+}
+.main-content::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+.main-content::-webkit-scrollbar-track {
+  background: transparent;
 }

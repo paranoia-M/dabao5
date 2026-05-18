@@ -1,40 +1,44 @@
 <template>
   <div class="page-login">
-    <div class="login-bg-grid"></div>
-    <div class="login-container">
-      <div class="login-brand">
-        <div class="brand-icon">
-          <svg viewBox="0 0 48 48" class="brand-svg">
-            <path d="M24 4L4 44h40L24 4z" fill="none" stroke="#059669" stroke-width="2"/>
-            <circle cx="24" cy="28" r="4" fill="#059669"/>
-          </svg>
+    <div class="login-left">
+      <div class="brand">
+        <div class="book">
+          <div class="book-page left-page"></div>
+          <div class="book-spine"></div>
+          <div class="book-page right-page"></div>
         </div>
-        <h1 class="brand-title">特种设备安全隐患<br/>排查评估系统</h1>
-        <p class="brand-subtitle">守护安全 · 防患未然</p>
+        <h1 class="brand-title">宿舍信息管理</h1>
+        <p class="brand-subtitle">维修登记 · 智能无纸化</p>
+        <div class="brand-decoration">
+          <span class="char">📖</span>
+          <span class="char">✏️</span>
+          <span class="char">📚</span>
+        </div>
       </div>
-      <div class="login-card glass">
-        <h2 class="login-card-title">账户登录</h2>
-        <p class="login-card-desc">欢迎使用本系统，请登录以继续</p>
+    </div>
+    <div class="login-right">
+      <div class="login-card">
+        <h2 class="card-title">欢迎登录</h2>
+        <p class="card-desc">请使用学号/工号登录</p>
         <el-form
-          ref="formRef"
-          :model="formData"
-          :rules="formRules"
+          ref="loginFormRef"
+          :model="loginForm"
           class="login-form"
           @keyup.enter="handleLogin"
         >
           <el-form-item prop="username">
             <el-input
-              v-model="formData.username"
-              placeholder="请输入账号"
+              v-model="loginForm.username"
+              placeholder="用户名"
               :prefix-icon="User"
               size="large"
             />
           </el-form-item>
           <el-form-item prop="password">
             <el-input
-              v-model="formData.password"
+              v-model="loginForm.password"
               type="password"
-              placeholder="请输入密码"
+              placeholder="密码"
               :prefix-icon="Lock"
               show-password
               size="large"
@@ -47,8 +51,8 @@
             <el-button
               type="primary"
               size="large"
-              :loading="loading"
               class="login-btn"
+              :loading="loading"
               @click="handleLogin"
             >
               登 录
@@ -57,9 +61,10 @@
         </el-form>
         <div class="login-footer">
           <span>第三方登录</span>
-          <div class="social-icons">
-            <el-icon size="24"><svg-icon name="wechat" /></el-icon>
-            <el-icon size="24"><svg-icon name="dingtalk" /></el-icon>
+          <div class="third-icons">
+            <span class="third-icon">❖</span>
+            <span class="third-icon">⚙</span>
+            <span class="third-icon">✉</span>
           </div>
         </div>
       </div>
@@ -67,56 +72,36 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 
 const router = useRouter()
-
-const formRef = ref(null)
+const loginFormRef = ref()
 const loading = ref(false)
 const rememberMe = ref(false)
-
-const formData = reactive({
+const loginForm = reactive({
   username: '',
   password: ''
 })
 
-const validateUsername = (rule, value, callback) => {
-  if (!value) {
-    callback(new Error('账号不能为空'))
-  } else {
-    callback()
-  }
-}
-const validatePassword = (rule, value, callback) => {
-  if (!value) {
-    callback(new Error('密码不能为空'))
-  } else if (value.length < 6) {
-    callback(new Error('密码长度不能小于6位'))
-  } else {
-    callback()
-  }
-}
-
-const formRules = {
-  username: [{ validator: validateUsername, trigger: 'blur' }],
-  password: [{ validator: validatePassword, trigger: 'blur' }]
-}
-
 const handleLogin = () => {
-  formRef.value.validate((valid) => {
-    if (!valid) return
-    loading.value = true
-    // 模拟登录校验
-    setTimeout(() => {
-      loading.value = false
-      ElMessage.success('登录成功')
-      router.push('/')
-    }, 400)
-  })
+  if (!loginForm.username) {
+    ElMessage.warning('请输入用户名')
+    return
+  }
+  if (!loginForm.password || loginForm.password.length < 6) {
+    ElMessage.warning('密码至少6位')
+    return
+  }
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+    ElMessage.success('登录成功')
+    router.push('/')
+  }, 400)
 }
 </script>
 

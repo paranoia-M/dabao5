@@ -1,674 +1,497 @@
 <template>
   <div class="page-dashboard">
-    <!-- 顶部操作栏 -->
-    <div class="dashboard-actions">
-      <el-button type="primary" @click="handleAddTask">新增排查任务</el-button>
-      <el-button @click="handleExportReport" :loading="exportLoading">导出报表</el-button>
+    <!-- 顶部 KPI 条 -->
+    <div class="kpi-bar">
+      <div class="kpi-card" :class="{'zero': totalBlocks === 0}" @click="openDetail('blocks')" :style="totalBlocks === 0 ? 'cursor: not-allowed;' : ''">
+        <div class="kpi-label">楼栋总数</div>
+        <div class="kpi-value">{{ totalBlocks.toLocaleString() }}</div>
+        <div class="kpi-unit">栋</div>
+      </div>
+      <div class="kpi-card" :class="{'zero': totalRooms === 0}" @click="openDetail('rooms')">
+        <div class="kpi-label">房间总数</div>
+        <div class="kpi-value">{{ totalRooms.toLocaleString() }}</div>
+        <div class="kpi-unit">间</div>
+      </div>
+      <div class="kpi-card" :class="{'zero': totalResidents === 0}" @click="openDetail('residents')">
+        <div class="kpi-label">当前入住人数</div>
+        <div class="kpi-value">{{ totalResidents.toLocaleString() }}</div>
+        <div class="kpi-unit">人</div>
+        <div class="kpi-trend">
+          <span :class="occupancyRate >= 80 ? 'trend-up' : 'trend-down'">{{ occupancyRate.toFixed(1) }}%</span>
+          <span class="kpi-sub">入住率</span>
+        </div>
+      </div>
+      <div class="kpi-card" :class="{'zero': pendingRepairs === 0}" @click="openDetail('pending')">
+        <div class="kpi-label">待处理工单</div>
+        <div class="kpi-value">{{ pendingRepairs.toLocaleString() }}</div>
+        <div class="kpi-unit">单</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">维修完成率</div>
+        <div class="kpi-value">{{ repairCompletionRate.toFixed(1) }}%</div>
+        <div class="kpi-unit">已完成</div>
+        <div class="kpi-trend">
+          <span :class="repairCompletionRate >= 80 ? 'trend-up' : 'trend-down'">{{ completedRepairs.toLocaleString() }}</span>
+          <span class="kpi-sub">已完成单</span>
+        </div>
+      </div>
     </div>
 
-    <!-- 筛选区 -->
+    <!-- 筛选栏 -->
     <div class="filter-bar">
-      <el-input
-        v-model="keyword"
-        placeholder="搜索设备名称或隐患描述"
-        clearable
-        class="filter-input"
-      />
-      <el-select
-        v-model="typeFilter"
-        multiple
-        collapse-tags
-        placeholder="设备类型"
-        class="filter-select"
-      >
-        <el-option
-          v-for="t in deviceTypes"
-          :key="t"
-          :label="t"
-          :value="t"
+      <div class="filter-left">
+        <el-select v-model="statusFilter" placeholder="维修状态" style="width:140px;margin-right:12px;">
+          <el-option label="全部" value="全部" />
+          <el-option label="待派单" value="待派单" />
+          <el-option label="处理中" value="处理中" />
+          <el-option label="已完成" value="已完成" />
+        </el-select>
+        <el-date-picker
+          v-model="dateRange"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="YYYY-MM-DD"
+          :shortcuts="dateShortcuts"
+          style="width:240px;"
         />
-      </el-select>
-      <el-date-picker
-        v-model="timeRange"
-        type="daterange"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        class="filter-date"
-        :shortcuts="dateShortcuts"
-        value-format="YYYY-MM-DD"
-      />
-    </div>
-
-    <!-- KPI 卡片 -->
-    <div class="kpi-grid">
-      <div class="kpi-card" @click="showHazardDetailDialog">
-        <div class="kpi-icon" style="background: #e3f0ff;">
-          <el-icon><WarningFilled /></el-icon>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">{{ kpiTotalHazards.toLocaleString() }}</span>
-          <span class="kpi-label">隐患总数</span>
-        </div>
-        <div class="kpi-trend" v-if="kpiTotalHazards > 0">
-          <span class="trend-up">↑ 较上月 +{{ monthlyIncrease }}</span>
-        </div>
       </div>
-      <div class="kpi-card" @click="showPendingDialog">
-        <div class="kpi-icon" style="background: #fff0e6;">
-          <el-icon><CircleCloseFilled /></el-icon>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">{{ kpiPending.toLocaleString() }}</span>
-          <span class="kpi-label">待整改</span>
-        </div>
-      </div>
-      <div class="kpi-card" @click="handleOverdueJump">
-        <div class="kpi-icon" style="background: #ffe6e6;">
-          <el-icon><WarningFilled /></el-icon>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">{{ kpiOverdue.toLocaleString() }}</span>
-          <span class="kpi-label">超期未检</span>
-        </div>
-      </div>
-      <div class="kpi-card" @click="showRateDialog">
-        <div class="kpi-icon" style="background: #e6f7e6;">
-          <el-icon><Select /></el-icon>
-        </div>
-        <div class="kpi-info">
-          <span class="kpi-value">{{ rectificationRate }}%</span>
-          <span class="kpi-label">整改完成率</span>
-        </div>
+      <div class="filter-right">
+        <el-button @click="refresh" style="margin-right:8px;">刷新</el-button>
+        <el-button type="primary" @click="exportReport">导出报表</el-button>
       </div>
     </div>
 
-    <!-- 主舞台：左环图 + 右最近隐患 -->
-    <div class="main-stage">
-      <div class="stage-left">
-        <!-- 设备状态环图（招牌积木） -->
-        <div class="status-ring-wrapper">
-          <div class="status-ring" :style="ringStyle" @mouseenter="showRingTooltip = true" @mouseleave="showRingTooltip = false">
-            <div class="ring-center">
-              <span class="ring-total">{{ deviceTotal }}</span>
-              <span class="ring-unit">台</span>
-            </div>
+    <!-- 主舞台 -->
+    <div class="main-area">
+      <!-- 左面板：楼栋选择器 + 图表 -->
+      <div class="left-panel">
+        <!-- 楼栋选择器（招牌积木） -->
+        <div class="block-selector">
+          <div
+            v-for="(block, idx) in blockList"
+            :key="block.id"
+            class="block-item"
+            :class="{ active: selectedBlockId === block.id }"
+            :style="{ '--block-color': blockColors[idx % blockColors.length] }"
+            @click="selectBlock(block.id)"
+          >
+            <span class="block-name">{{ block.name }}</span>
+            <span class="block-room-count">{{ blockActualRoomCount(block.id) }} 间</span>
           </div>
-          <div class="ring-tooltip" v-if="showRingTooltip">
-            <div v-for="s in deviceStatusStats" :key="s.label" class="tooltip-item">
-              <span class="tooltip-dot" :style="{ background: s.color }"></span>
-              <span>{{ s.label }}: {{ s.count }}</span>
+        </div>
+        <!-- 图表区 -->
+        <div class="charts-row">
+          <div ref="barChartRef" class="chart-box"></div>
+          <div ref="pieChartRef" class="chart-box"></div>
+        </div>
+      </div>
+      <!-- 右面板：紧急工单 -->
+      <div class="right-panel">
+        <div class="panel-header">紧急工单</div>
+        <div v-if="urgentOrders.length > 0" class="urgent-list">
+          <div v-for="order in urgentOrders" :key="order.id" class="urgent-card" @click="viewOrderDetail(order.id)">
+            <div class="card-bar" :style="{ background: priorityColor(order.priority) }"></div>
+            <div class="card-body">
+              <div class="card-title ellipsis">{{ order.title }}</div>
+              <div class="card-meta">
+                <span class="meta-room">{{ getRoomNumber(order.roomId) }}</span>
+                <el-tag :type="order.priority === '紧急' ? 'danger' : 'warning'" size="small">{{ order.priority }}</el-tag>
+              </div>
+              <div class="card-time">{{ dayjs(order.createdAt).format('MM-DD HH:mm') }}</div>
             </div>
           </div>
         </div>
-        <div class="stage-title">设备状态分布</div>
+        <div v-else class="empty">无紧急工单</div>
       </div>
-      <div class="stage-right">
-        <div class="stage-title">最近隐患</div>
-        <div v-for="h in recentHazards" :key="h.id" class="hazard-item" @click="showHazardDetail(h)">
-          <div class="hazard-desc">{{ h.description }}</div>
-          <div class="hazard-meta">
-            <el-tag :type="riskTagType(h.riskLevel)" size="small">{{ h.riskLevel }}</el-tag>
-            <span class="hazard-date">{{ h.discoveredDate }}</span>
+    </div>
+
+    <!-- 底部最新工单动态 -->
+    <div class="latest-section">
+      <div class="section-title">最新工单动态</div>
+      <el-timeline v-if="latestOrders.length > 0">
+        <el-timeline-item
+          v-for="order in latestOrders"
+          :key="order.id"
+          :timestamp="dayjs(order.createdAt).format('YYYY-MM-DD HH:mm')"
+          :color="statusColor(order.status)"
+          placement="top"
+        >
+          <div class="timeline-content">
+            <span class="tl-title">{{ order.title }}</span>
+            <span class="tl-room">{{ getRoomNumber(order.roomId) }}</span>
+            <el-tag :type="order.priority === '紧急' ? 'danger' : (order.priority === '高' ? 'warning' : 'info')" size="small">{{ order.priority }}</el-tag>
+            <el-tag :type="statusTagType(order.status)" size="small">{{ order.status }}</el-tag>
           </div>
-        </div>
-        <div v-if="recentHazards.length === 0" class="empty-tip">暂无最近隐患</div>
-      </div>
+        </el-timeline-item>
+      </el-timeline>
+      <div v-else class="empty">暂无工单</div>
     </div>
 
-    <!-- ECharts 区域（最多2个图表） -->
-    <div class="charts-area">
-      <div class="chart-box" ref="pieChartRef"></div>
-      <div class="chart-box" ref="barChartRef"></div>
-    </div>
+    <!-- 统计数字详情弹窗 -->
+    <el-dialog v-model="detailDialog.visible" :title="detailDialog.title" width="60%" :close-on-click-modal="false">
+      <el-table :data="pageDetailList" stripe highlight-current-row v-loading="detailLoading" @row-click="handleRowClick">
+        <!-- 根据type动态列 -->
+        <el-table-column v-if="detailDialog.type === 'blocks'" prop="name" label="楼栋名称" />
+        <el-table-column v-if="detailDialog.type === 'blocks'" prop="code" label="编号" />
+        <el-table-column v-if="detailDialog.type === 'blocks'" prop="floorCount" label="楼层数" />
+        <el-table-column v-if="detailDialog.type === 'blocks'" prop="roomCount" label="房间数" />
 
-    <!-- 待办任务列表 + 导出记录 -->
-    <div class="bottom-section">
-      <div class="todo-section">
-        <div class="section-header">
-          <h3>待办任务（{{ todoTasks.length }}）</h3>
-        </div>
-        <el-table :data="todoTasks" stripe style="width: 100%" @row-click="handleTodoRowClick">
-          <el-table-column prop="description" label="任务名称" min-width="180">
-            <template #default="{ row }">
-              <span class="ellipsis-text">{{ row.description }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="equipmentName" label="设备名称" min-width="120" />
-          <el-table-column label="状态" width="100">
-            <template #default="{ row }">
-              <el-tag :type="row.status === '待整改' ? 'danger' : 'warning'" size="small">{{ row.status }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="rectificationDeadline" label="截止日期" width="120" />
-          <el-table-column label="操作" width="80" fixed="right">
-            <template #default="{ row }">
-              <el-button link type="primary" @click.stop="showHazardDetail(row)">处理</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div v-if="todoTasks.length === 0" class="empty-tip">暂无待办任务</div>
-      </div>
-      <div class="export-section">
-        <div class="section-header">
-          <h3>最近导出报表</h3>
-        </div>
-        <div v-for="r in recentReports" :key="r.id" class="export-item">
-          <span class="export-title">{{ r.title }}</span>
-          <span class="export-time">{{ r.createTime }}</span>
-        </div>
-        <div v-if="recentReports.length === 0" class="empty-tip">暂无导出记录</div>
-      </div>
-    </div>
+        <el-table-column v-if="detailDialog.type === 'rooms'" prop="roomNumber" label="房间号" />
+        <el-table-column v-if="detailDialog.type === 'rooms'" prop="blockName" label="所属楼栋" />
+        <el-table-column v-if="detailDialog.type === 'rooms'" prop="capacity" label="容量" />
+        <el-table-column v-if="detailDialog.type === 'rooms'" prop="currentOccupancy" label="当前入住" />
+        <el-table-column v-if="detailDialog.type === 'rooms'" prop="status" label="状态" />
 
-    <!-- 新增排查任务弹窗 -->
-    <el-dialog v-model="addTaskVisible" title="新增排查任务" width="min(640px,92vw)" @close="resetAddForm">
-      <el-form :model="addForm" ref="addFormRef" label-width="100px">
-        <el-form-item label="选择设备" prop="equipmentIds" :rules="[{ required: true, message: '请至少选择一个设备' }]">
-          <el-select v-model="addForm.equipmentIds" multiple filterable placeholder="搜索设备" style="width:100%">
-            <el-option v-for="eq in equipmentStore.equipmentList" :key="eq.id" :label="eq.name" :value="eq.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="检查类型" prop="taskType" :rules="[{ required: true, message: '请选择检查类型' }]">
-          <el-select v-model="addForm.taskType" placeholder="检查类型">
-            <el-option label="日常检查" value="日常检查" />
-            <el-option label="专项检查" value="专项检查" />
-            <el-option label="季度检查" value="季度检查" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="检查人员" prop="assignee" :rules="[{ required: true, message: '请选择检查人员' }]">
-          <el-select v-model="addForm.assignee" multiple filterable placeholder="检查人员" style="width:100%">
-            <el-option label="张伟" value="张伟" />
-            <el-option label="李娜" value="李娜" />
-            <el-option label="王芳" value="王芳" />
-            <el-option label="刘洋" value="刘洋" />
-            <el-option label="陈静" value="陈静" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开始日期" prop="startDate" :rules="[{ required: true, message: '请选择开始日期' }]">
-          <el-date-picker v-model="addForm.startDate" type="date" placeholder="选择日期" value-format="YYYY-MM-DD" style="width:100%" />
-        </el-form-item>
-        <el-form-item label="结束日期" prop="endDate" :rules="[
-          { required: true, message: '请选择结束日期' },
-          { validator: (rule, value, callback) => { if (value && addForm.startDate && value < addForm.startDate) { callback(new Error('结束日期不能早于开始日期')) } else { callback() } } }
-        ]">
-          <el-date-picker v-model="addForm.endDate" type="date" placeholder="选择日期" value-format="YYYY-MM-DD" style="width:100%" />
-        </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="addForm.remarks" type="textarea" :rows="3" placeholder="可选备注" />
-        </el-form-item>
-      </el-form>
+        <el-table-column v-if="detailDialog.type === 'residents'" prop="userName" label="姓名" />
+        <el-table-column v-if="detailDialog.type === 'residents'" prop="roomNumber" label="房间号" />
+        <el-table-column v-if="detailDialog.type === 'residents'" prop="bedNumber" label="床位号" />
+        <el-table-column v-if="detailDialog.type === 'residents'" prop="moveInDate" label="入住日期" />
+
+        <el-table-column v-if="detailDialog.type === 'pending'" prop="title" label="工单标题" min-width="150" />
+        <el-table-column v-if="detailDialog.type === 'pending'" prop="reporter" label="报修人" />
+        <el-table-column v-if="detailDialog.type === 'pending'" prop="room" label="房间" />
+        <el-table-column v-if="detailDialog.type === 'pending'" prop="priority" label="紧急程度" width="80" />
+        <el-table-column v-if="detailDialog.type === 'pending'" prop="status" label="状态" width="80" />
+        <el-table-column v-if="detailDialog.type === 'pending'" prop="createdAt" label="提交时间" width="120" />
+        <el-table-column v-if="detailDialog.type === 'pending'" label="操作" width="80">
+          <template #default="{ row }">
+            <el-button link type="primary" size="small" @click.stop="viewOrderDetail(row.id)">查看</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="margin-top:16px;text-align:right;">
+        <el-pagination
+          v-if="detailTotal > detailPageSize"
+          v-model:current-page="detailPage"
+          :page-size="detailPageSize"
+          :total="detailTotal"
+          layout="prev, pager, next"
+        />
+      </div>
       <template #footer>
-        <el-button @click="addTaskVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmAddTask" :loading="addTaskLoading">确认创建</el-button>
+        <el-button @click="detailDialog.visible = false">关闭</el-button>
       </template>
     </el-dialog>
 
-    <!-- 隐患总数详情弹窗 -->
-    <el-dialog v-model="hazardDetailVisible" title="隐患分类明细" width="min(600px,92vw)">
-      <el-table :data="hazardTypeStats" stripe @row-click="handleHazardTypeClick">
-        <el-table-column prop="type" label="隐患类型" />
-        <el-table-column prop="count" label="数量" width="100" />
-      </el-table>
-    </el-dialog>
-
-    <!-- 待整改隐患详情弹窗 -->
-    <el-dialog v-model="pendingDialogVisible" title="待整改隐患列表" width="min(800px,92vw)">
-      <el-table :data="pendingHazards" stripe @row-click="showHazardDetail">
-        <el-table-column prop="description" label="隐患描述" min-width="200" />
-        <el-table-column prop="equipmentName" label="设备" width="120" />
-        <el-table-column prop="riskLevel" label="风险等级" width="120">
-          <template #default="{ row }">
-            <el-tag :type="riskTagType(row.riskLevel)" size="small">{{ row.riskLevel }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="rectificationDeadline" label="整改截止" width="120" />
-      </el-table>
-    </el-dialog>
-
-    <!-- 整改完成率详情弹窗 -->
-    <el-dialog v-model="rateDialogVisible" title="整改完成情况" width="min(500px,92vw)">
-      <div class="rate-stat">
-        <div>已完成：{{ rateCompleted }}</div>
-        <div>未完成：{{ ratePending }}</div>
+    <!-- 工单详情查看弹窗 -->
+    <el-dialog v-model="viewDialog.visible" title="工单详情" width="50%">
+      <div v-if="viewOrder" class="order-detail">
+        <div class="detail-row"><label>工单标题：</label><span>{{ viewOrder.title }}</span></div>
+        <div class="detail-row"><label>描述：</label><span>{{ viewOrder.description }}</span></div>
+        <div class="detail-row"><label>报修人：</label><span>{{ userName(viewOrder.userId) }}</span></div>
+        <div class="detail-row"><label>房间：</label><span>{{ getRoomNumber(viewOrder.roomId) }}</span></div>
+        <div class="detail-row"><label>状态：</label><el-tag :type="statusTagType(viewOrder.status)">{{ viewOrder.status }}</el-tag></div>
+        <div class="detail-row"><label>优先级：</label><el-tag :type="viewOrder.priority === '紧急' ? 'danger' : 'warning'">{{ viewOrder.priority }}</el-tag></div>
+        <div class="detail-row"><label>维修人员：</label><span>{{ workerName(viewOrder.assignedUserId) }}</span></div>
+        <div class="detail-row"><label>创建时间：</label><span>{{ dayjs(viewOrder.createdAt).format('YYYY-MM-DD HH:mm') }}</span></div>
+        <div class="detail-row" v-if="viewOrder.completedAt"><label>完成时间：</label><span>{{ dayjs(viewOrder.completedAt).format('YYYY-MM-DD HH:mm') }}</span></div>
       </div>
-    </el-dialog>
-
-    <!-- 隐患明细弹窗 -->
-    <el-dialog v-model="hazardDetailDialogVisible" title="隐患详情" width="min(600px,92vw)">
-      <el-descriptions :column="2" border>
-        <el-descriptions-item label="隐患描述">{{ selectedHazard?.description }}</el-descriptions-item>
-        <el-descriptions-item label="风险等级">
-          <el-tag :type="riskTagType(selectedHazard?.riskLevel)" size="small">{{ selectedHazard?.riskLevel }}</el-tag>
-        </el-descriptions-item>
-        <el-descriptions-item label="隐患类型">{{ selectedHazard?.hazardType }}</el-descriptions-item>
-        <el-descriptions-item label="严重程度">{{ selectedHazard?.severity }}</el-descriptions-item>
-        <el-descriptions-item label="发现日期">{{ selectedHazard?.discoveredDate }}</el-descriptions-item>
-        <el-descriptions-item label="负责人">{{ selectedHazard?.assignedTo }}</el-descriptions-item>
-        <el-descriptions-item label="整改截止">{{ selectedHazard?.rectificationDeadline }}</el-descriptions-item>
-        <el-descriptions-item label="状态">
-          <el-tag :type="selectedHazard?.status === '待整改' ? 'danger' : 'warning'" size="small">{{ selectedHazard?.status }}</el-tag>
-        </el-descriptions-item>
-      </el-descriptions>
+      <template #footer>
+        <el-button @click="viewDialog.visible = false">关闭</el-button>
+      </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { WarningFilled, CircleCloseFilled, Select } from '@element-plus/icons-vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import dayjs from 'dayjs'
 import * as echarts from 'echarts'
+import { ElMessage } from 'element-plus'
+import { useDormitoryBlockStore } from '@/stores/dormitoryBlock'
+import { useDormitoryRoomStore } from '@/stores/dormitoryRoom'
+import { useResidenceStore } from '@/stores/residence'
+import { useRepairOrderStore } from '@/stores/repairOrder'
+import { useUserStore } from '@/stores/user'
 
-// stores
-import { useEquipmentStore } from '@/stores/equipment'
-import { useHazardRecordStore } from '@/stores/hazardRecord'
-import { useInspectionTaskStore } from '@/stores/inspectionTask'
-import { useTaskEquipmentStore } from '@/stores/taskEquipment'
-import { useRiskAssessmentStore } from '@/stores/riskAssessment'
-import { useRectificationStore } from '@/stores/rectification'
-import { useReportStore } from '@/stores/report'
+// ---------- stores ----------
+const blockStore = useDormitoryBlockStore()
+const roomStore = useDormitoryRoomStore()
+const residenceStore = useResidenceStore()
+const repairStore = useRepairOrderStore()
+const userStore = useUserStore()
 
-const equipmentStore = useEquipmentStore()
-const hazardRecordStore = useHazardRecordStore()
-const inspectionTaskStore = useInspectionTaskStore()
-const taskEquipmentStore = useTaskEquipmentStore()
-const riskAssessmentStore = useRiskAssessmentStore()
-const rectificationStore = useRectificationStore()
-const reportStore = useReportStore()
+// ---------- 基础数据 ----------
+const blockList = computed(() => blockStore.dormitoryBlockList || [])
+const roomList = computed(() => roomStore.dormitoryRoomList || [])
+const residenceList = computed(() => residenceStore.residenceList || [])
+const repairList = computed(() => repairStore.repairOrderList || [])
 
-// 筛选数据
-const keyword = ref('')
-const typeFilter = ref([])
-const timeRange = ref([]) // 初始无限制
-const dateShortcuts = [
-  { text: '近7天', value: () => {
-    const end = new Date()
-    const start = new Date(end.getTime() - 6 * 24 * 60 * 60 * 1000)
-    return [start, end]
-  }},
-  { text: '近30天', value: () => {
-    const end = new Date()
-    const start = new Date(end.getTime() - 29 * 24 * 60 * 60 * 1000)
-    return [start, end]
-  }},
-  { text: '本月', value: () => {
-    const now = new Date()
-    const start = new Date(now.getFullYear(), now.getMonth(), 1)
-    return [start, now]
-  }}
-]
-
-// 设备类型列表
-const deviceTypes = computed(() => {
-  const types = new Set(equipmentStore.equipmentList.map(e => e.equipmentType))
-  return Array.from(types)
+// ---------- KPI ----------
+const totalBlocks = computed(() => blockList.value.length)
+const totalRooms = computed(() => roomList.value.length)
+const totalResidents = computed(() => residenceList.value.filter(r => r.status === '在住').length)
+const pendingRepairs = computed(() =>
+  repairList.value.filter(r => !['已完成','已驳回','已取消'].includes(r.status)).length
+)
+const completedRepairs = computed(() => repairList.value.filter(r => r.status === '已完成').length)
+const repairCompletionRate = computed(() => {
+  const total = repairList.value.length
+  return total > 0 ? (completedRepairs.value / total) * 100 : 0
+})
+const occupancyRate = computed(() => {
+  const totalCapacity = roomList.value.reduce((s, r) => s + r.capacity, 0)
+  const totalOccupancy = roomList.value.reduce((s, r) => s + r.currentOccupancy, 0)
+  return totalCapacity > 0 ? (totalOccupancy / totalCapacity) * 100 : 0
 })
 
-// 根据筛选条件过滤设备
-const filteredEquipmentList = computed(() => {
-  let list = equipmentStore.equipmentList
-  if (keyword.value) {
-    const kw = keyword.value.toLowerCase()
-    list = list.filter(e => e.name.toLowerCase().includes(kw) || e.registerCode?.toLowerCase().includes(kw))
+// ---------- 筛选 ----------
+const statusFilter = ref('全部')
+const dateRange = ref([]) // 空数组表示不限日期
+
+const dateShortcuts = [
+  { text: '近7天', value: () => [dayjs().subtract(7, 'day').startOf('day').toDate(), dayjs().endOf('day').toDate()] },
+  { text: '本月', value: () => [dayjs().startOf('month').toDate(), dayjs().endOf('month').toDate()] },
+  { text: '全部', value: () => [] },
+]
+
+const filteredRepairs = computed(() => {
+  let list = repairList.value
+  if (statusFilter.value !== '全部') {
+    if (statusFilter.value === '待派单') list = list.filter(r => r.status === '待审核')
+    else if (statusFilter.value === '处理中') list = list.filter(r => r.status === '已受理' || r.status === '处理中')
+    else if (statusFilter.value === '已完成') list = list.filter(r => r.status === '已完成')
   }
-  if (typeFilter.value.length > 0) {
-    list = list.filter(e => typeFilter.value.includes(e.equipmentType))
+  if (dateRange.value && dateRange.value.length === 2 && dateRange.value[0] && dateRange.value[1]) {
+    const start = dayjs(dateRange.value[0]).startOf('day')
+    const end = dayjs(dateRange.value[1]).endOf('day')
+    list = list.filter(r => {
+      const t = dayjs(r.createdAt)
+      return t.isAfter(start) && t.isBefore(end)
+    })
   }
   return list
 })
 
-// 根据设备过滤隐患
-const filteredHazardRecords = computed(() => {
-  const eqIds = new Set(filteredEquipmentList.value.map(e => e.id))
-  let hazs = hazardRecordStore.hazardRecordList.filter(h => eqIds.has(h.equipmentId))
-  if (timeRange.value && timeRange.value.length === 2) {
-    const [start, end] = timeRange.value
-    hazs = hazs.filter(h => {
-      const d = new Date(h.discoveredDate)
-      return d >= new Date(start) && d <= new Date(end)
-    })
-  }
-  // 关键词搜索隐患描述
-  if (keyword.value) {
-    const kw = keyword.value.toLowerCase()
-    hazs = hazs.filter(h => h.description.toLowerCase().includes(kw))
-  }
-  return hazs
-})
+// ---------- 楼栋选择器 ----------
+const selectedBlockId = ref(null)
+const blockColors = ['#2563EB', '#0D9488', '#D97706', '#DC2626', '#7C3AED', '#0891B2', '#84CC16', '#F97316']
+const selectBlock = (id) => {
+  selectedBlockId.value = selectedBlockId.value === id ? null : id
+  initCharts()
+}
+const blockActualRoomCount = (blockId) => roomList.value.filter(r => r.blockId === blockId).length
 
-// 设备名称映射
-const equipmentNameMap = computed(() => {
+// ---------- 图表数据 ----------
+const barData = computed(() => {
+  let blocks = blockList.value
+  if (selectedBlockId.value) blocks = blocks.filter(b => b.id === selectedBlockId.value)
+  return blocks.map(b => {
+    const rooms = roomList.value.filter(r => r.blockId === b.id)
+    const occupants = rooms.reduce((s, r) => s + r.currentOccupancy, 0)
+    return { name: b.name, value: occupants }
+  })
+})
+const pieData = computed(() => {
+  let orders = filteredRepairs.value
+  if (selectedBlockId.value) {
+    const roomIds = roomList.value.filter(r => r.blockId === selectedBlockId.value).map(r => r.id)
+    orders = orders.filter(r => roomIds.includes(r.roomId))
+  }
   const map = {}
-  equipmentStore.equipmentList.forEach(e => { map[e.id] = e.name })
-  return map
+  orders.forEach(r => { map[r.status] = (map[r.status] || 0) + 1 })
+  return Object.entries(map).map(([name, value]) => ({ name, value }))
 })
 
-// 最近隐患（按发现日期倒序取5条）
-const recentHazards = computed(() => {
-  const sorted = [...filteredHazardRecords.value].sort((a, b) => new Date(b.discoveredDate) - new Date(a.discoveredDate))
-  return sorted.slice(0, 5)
-})
-
-// KPI 计算
-const kpiTotalHazards = computed(() => filteredHazardRecords.value.length)
-const kpiPending = computed(() => filteredHazardRecords.value.filter(h => h.status === '待整改').length)
-// 超期未检设备
-const kpiOverdue = computed(() => {
-  return filteredEquipmentList.value.filter(e => e.status === '超期未检').length
-})
-// 整改完成率：从rectificationStore统计
-const rectificationRate = computed(() => {
-  const all = rectificationStore.rectificationList.length
-  if (all === 0) return 0
-  const completed = rectificationStore.rectificationList.filter(r => r.status === '已完成').length
-  return Math.round((completed / all) * 100)
-})
-// 隐患总数卡片中的增长
-const monthlyIncrease = computed(() => {
-  const now = new Date()
-  const startThis = new Date(now.getFullYear(), now.getMonth(), 1)
-  const startLast = new Date(now.getFullYear(), now.getMonth() - 1, 1)
-  const thisCount = filteredHazardRecords.value.filter(h => new Date(h.discoveredDate) >= startThis).length
-  const lastCount = filteredHazardRecords.value.filter(h => new Date(h.discoveredDate) >= startLast && new Date(h.discoveredDate) < startThis).length
-  return thisCount - lastCount
-})
-
-// 设备状态统计（用于环图）
-const deviceStatusStats = computed(() => {
-  const statusMap = {}
-  filteredEquipmentList.value.forEach(e => {
-    const s = e.status || '未知'
-    statusMap[s] = (statusMap[s] || 0) + 1
-  })
-  const colors = {
-    '正常': '#67c23a',
-    '待检验': '#e6a23c',
-    '超期未检': '#f56c6c',
-    '停用': '#909399',
-    '报废': '#000'
-  }
-  return Object.entries(statusMap).map(([label, count]) => ({
-    label,
-    count,
-    color: colors[label] || '#909399'
-  }))
-})
-const deviceTotal = computed(() => filteredEquipmentList.value.length)
-const ringStyle = computed(() => {
-  const stats = deviceStatusStats.value
-  if (stats.length === 0) return {}
-  const total = stats.reduce((sum, s) => sum + s.count, 0)
-  if (total === 0) return {}
-  let conic = 'conic-gradient('
-  let start = 0
-  stats.forEach((s, i) => {
-    const deg = (s.count / total) * 360
-    const end = start + deg
-    conic += `${s.color} ${start}deg ${end}deg${i < stats.length - 1 ? ', ' : ''}`
-    start = end
-  })
-  conic += ')'
-  return { background: conic }
-})
-const showRingTooltip = ref(false)
-
-// ECharts 图表
-const pieChartRef = ref(null)
+// ---------- ECharts ----------
 const barChartRef = ref(null)
-let pieChart = null
+const pieChartRef = ref(null)
 let barChart = null
+let pieChart = null
 
-const initCharts = () => {
-  if (pieChartRef.value) {
-    pieChart = echarts.init(pieChartRef.value)
-    updatePieChart()
-  }
-  if (barChartRef.value) {
-    barChart = echarts.init(barChartRef.value)
-    updateBarChart()
-  }
-}
-
-const updatePieChart = () => {
-  if (!pieChart) return
-  const riskData = {}
-  filteredHazardRecords.value.forEach(h => {
-    const level = h.riskLevel
-    riskData[level] = (riskData[level] || 0) + 1
-  })
-  const seriesData = Object.entries(riskData).map(([name, value]) => ({ name, value }))
-  pieChart.setOption({
-    title: { text: '风险等级分布', left: 'center', textStyle: { fontSize: 14 } },
-    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-    series: [{
-      type: 'pie',
-      radius: ['40%', '70%'],
-      data: seriesData,
-      label: { show: true, formatter: '{b}\n{d}%' },
-      color: ['#f56c6c', '#e6a23c', '#f0c040', '#67c23a'] // 红橙黄绿
-    }]
-  })
-}
-
-const updateBarChart = () => {
-  if (!barChart) return
-  const monthData = {}
-  filteredHazardRecords.value.forEach(h => {
-    const month = h.discoveredDate ? h.discoveredDate.substring(0, 7) : '未知'
-    monthData[month] = (monthData[month] || 0) + 1
-  })
-  const sortedMonths = Object.keys(monthData).sort()
-  const values = sortedMonths.map(m => monthData[m])
-  barChart.setOption({
-    title: { text: '月度隐患趋势', left: 'center', textStyle: { fontSize: 14 } },
-    tooltip: { trigger: 'axis' },
-    xAxis: { type: 'category', data: sortedMonths },
-    yAxis: { type: 'value' },
-    series: [{
-      type: 'bar',
-      data: values,
-      itemStyle: { color: '#2563EB' }
-    }]
-  })
-}
-
-watch([filteredHazardRecords, keyword, typeFilter, timeRange], () => {
-  updatePieChart()
-  updateBarChart()
-})
-
-// 待办任务列表（过滤状态）
-const todoTasks = computed(() => {
-  return filteredHazardRecords.value
-    .filter(h => h.status === '待整改' || h.status === '待复查')
-    .map(h => ({
-      ...h,
-      equipmentName: equipmentNameMap.value[h.equipmentId] || '未知设备'
-    }))
-})
-
-// 最近导出报表
-const recentReports = computed(() => {
-  return reportStore.reportList.slice(-5).reverse()
-})
-
-// 新增排查任务
-const addTaskVisible = ref(false)
-const addTaskLoading = ref(false)
-const addFormRef = ref(null)
-const addForm = ref({
-  equipmentIds: [],
-  taskType: '',
-  assignee: [],
-  startDate: '',
-  endDate: '',
-  remarks: ''
-})
-
-const resetAddForm = () => {
-  addForm.value = {
-    equipmentIds: [],
-    taskType: '',
-    assignee: [],
-    startDate: '',
-    endDate: '',
-    remarks: ''
-  }
-}
-
-const handleAddTask = () => {
-  addTaskVisible.value = true
-}
-
-const confirmAddTask = async () => {
-  if (!addFormRef.value) return
-  try {
-    await addFormRef.value.validate()
-    addTaskLoading.value = true
-    // 生成任务ID
-    const newId = 'task_' + Date.now()
-    const taskData = {
-      id: newId,
-      title: addForm.value.taskType + '排查任务',
-      description: addForm.value.remarks || '',
-      taskType: addForm.value.taskType,
-      status: '已发布',
-      startDate: addForm.value.startDate,
-      endDate: addForm.value.endDate,
-      assignee: addForm.value.assignee.join(','),
-      createdBy: '系统管理员',
-      createTime: new Date().toISOString().slice(0, 19).replace('T', ' ')
-    }
-    inspectionTaskStore.add(taskData)
-    // 关联设备
-    addForm.value.equipmentIds.forEach(eqId => {
-      taskEquipmentStore.add({
-        id: 'te_' + Date.now() + Math.random(),
-        taskId: newId,
-        equipmentId: eqId
-      })
-    })
-    ElMessage.success('创建成功')
-    addTaskVisible.value = false
-    resetAddForm()
-  } catch (e) {
-    if (e.message) ElMessage.warning(e.message)
-  } finally {
-    addTaskLoading.value = false
-  }
-}
-
-// 导出报表
-const exportLoading = ref(false)
-const handleExportReport = async () => {
-  if (filteredHazardRecords.value.length === 0 && filteredEquipmentList.value.length === 0) {
-    ElMessage.warning('当前筛选条件下无数据，无法导出')
-    return
-  }
-  exportLoading.value = true
-  // 模拟生成报表记录
-  const newReport = {
-    id: 'report_' + Date.now(),
-    title: `隐患排查概览报表_${new Date().toLocaleDateString()}`,
-    reportType: '综合报告',
-    generationMethod: '手动',
-    status: '草稿',
-    relatedEntityType: '系统概览',
-    relatedEntityId: '',
-    content: {
-      summary: `导出时间：${new Date().toLocaleString()}，隐患总数：${kpiTotalHazards.value}，待整改：${kpiPending.value}`,
-      findings: [],
-      score: 0
-    },
-    createTime: new Date().toLocaleString(),
-    auditBy: '',
-    auditTime: ''
-  }
-  reportStore.add(newReport)
-  ElMessage.success('报表已生成，请在下方查看')
-  exportLoading.value = false
-}
-
-// 隐患详情弹窗
-const hazardDetailDialogVisible = ref(false)
-const selectedHazard = ref(null)
-const showHazardDetail = (hazard) => {
-  selectedHazard.value = hazard
-  hazardDetailDialogVisible.value = true
-}
-
-// 隐患分类明细弹窗
-const hazardDetailVisible = ref(false)
-const hazardTypeStats = computed(() => {
-  const map = {}
-  filteredHazardRecords.value.forEach(h => {
-    map[h.hazardType] = (map[h.hazardType] || 0) + 1
-  })
-  return Object.entries(map).map(([type, count]) => ({ type, count }))
-})
-const showHazardDetailDialog = () => {
-  if (hazardTypeStats.value.length === 0) {
-    ElMessage.info('暂无隐患数据')
-    return
-  }
-  hazardDetailVisible.value = true
-}
-const handleHazardTypeClick = (row) => {
-  ElMessage.info(`点击了${row.type}，可跳转至隐患列表（模拟）`)
-}
-
-// 待整改隐患弹窗
-const pendingDialogVisible = ref(false)
-const pendingHazards = computed(() => {
-  return filteredHazardRecords.value
-    .filter(h => h.status === '待整改')
-    .map(h => ({ ...h, equipmentName: equipmentNameMap.value[h.equipmentId] || '未知' }))
-})
-const showPendingDialog = () => {
-  if (pendingHazards.value.length === 0) {
-    ElMessage.info('暂无待整改隐患')
-    return
-  }
-  pendingDialogVisible.value = true
-}
-
-// 超期未检测跳转
-const handleOverdueJump = () => {
-  ElMessage.info('跳转至设备台账页面（模拟）')
-}
-
-// 整改完成率弹窗
-const rateDialogVisible = ref(false)
-const rateCompleted = computed(() => rectificationStore.rectificationList.filter(r => r.status === '已完成').length)
-const ratePending = computed(() => rectificationStore.rectificationList.filter(r => r.status !== '已完成').length)
-const showRateDialog = () => {
-  rateDialogVisible.value = true
-}
-
-// 待办任务行点击
-const handleTodoRowClick = (row) => {
-  showHazardDetail(row)
-}
-
-// 工具函数
-const riskTagType = (level) => {
-  if (level.includes('红色')) return 'danger'
-  if (level.includes('橙色')) return 'warning'
-  if (level.includes('黄色')) return 'info'
-  return 'success'
-}
-
-// 生命周期
-onMounted(() => {
+function initCharts() {
   nextTick(() => {
-    initCharts()
+    if (barChartRef.value) {
+      if (!barChart) barChart = echarts.init(barChartRef.value)
+      const xData = barData.value.map(d => d.name)
+      const yData = barData.value.map(d => d.value)
+      barChart.setOption({
+        title: { text: '各楼栋入住人数', textStyle: { fontSize: 14 } },
+        tooltip: { trigger: 'axis' },
+        xAxis: { type: 'category', data: xData, axisLabel: { rotate: 30, fontSize: 11 } },
+        yAxis: { type: 'value' },
+        series: [{ type: 'bar', data: yData, itemStyle: { color: '#2563EB', borderRadius: [4,4,0,0] } }],
+        grid: { left: '10%', right: '5%', top: 40, bottom: 40 },
+      })
+    }
+    if (pieChartRef.value) {
+      if (!pieChart) pieChart = echarts.init(pieChartRef.value)
+      pieChart.setOption({
+        title: { text: '工单状态分布', textStyle: { fontSize: 14 } },
+        tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+        series: [{
+          type: 'pie',
+          radius: ['35%', '65%'],
+          data: pieData.value,
+          label: { show: true, formatter: '{b}\n{d}%' },
+          itemStyle: { borderRadius: 4 },
+        }],
+      })
+    }
   })
+}
+
+onMounted(initCharts)
+watch([barData, pieData, statusFilter, dateRange, selectedBlockId], () => { initCharts() })
+
+// ---------- 紧急工单 ----------
+const urgentOrders = computed(() => {
+  return filteredRepairs.value
+    .filter(r => r.priority === '高' || r.priority === '紧急')
+    .slice(0, 5)
 })
-onUnmounted(() => {
-  if (pieChart) pieChart.dispose()
-  if (barChart) barChart.dispose()
+
+// ---------- 最新工单 ----------
+const latestOrders = computed(() => {
+  return [...filteredRepairs.value]
+    .sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix())
+    .slice(0, 5)
 })
+
+// ---------- 工具函数 ----------
+function userName(uid) {
+  const u = userStore.userList.find(x => x.id === uid)
+  return u ? u.name : '未知'
+}
+function workerName(uid) {
+  if (!uid) return '未分配'
+  const u = userStore.userList.find(x => x.id === uid)
+  return u ? u.name : '未知'
+}
+function getRoomNumber(roomId) {
+  const r = roomStore.dormitoryRoomList.find(x => x.id === roomId)
+  return r ? r.roomNumber : '未知'
+}
+function getBlockName(roomId) {
+  const r = roomStore.dormitoryRoomList.find(x => x.id === roomId)
+  if (!r) return ''
+  const b = blockStore.dormitoryBlockList.find(x => x.id === r.blockId)
+  return b ? b.name : ''
+}
+function priorityColor(p) {
+  if (p === '紧急') return '#DC2626'
+  if (p === '高') return '#F97316'
+  if (p === '中') return '#EAB308'
+  return '#6B7280'
+}
+function statusColor(s) {
+  if (s === '已完成') return '#10B981'
+  if (s === '处理中' || s === '已受理') return '#3B82F6'
+  if (s === '待审核') return '#F59E0B'
+  if (s === '已驳回' || s === '已取消') return '#9CA3AF'
+  return '#6B7280'
+}
+function statusTagType(s) {
+  if (s === '已完成') return 'success'
+  if (s === '处理中' || s === '已受理') return 'primary'
+  if (s === '待审核') return 'warning'
+  if (s === '已驳回' || s === '已取消') return 'info'
+  return 'info'
+}
+
+// ---------- 弹出详情 ----------
+const detailDialog = ref({ visible: false, title: '', type: '' })
+const detailPage = ref(1)
+const detailPageSize = 10
+const detailTotal = ref(0)
+const detailList = ref([])
+const detailLoading = ref(false)
+
+function openDetail(type) {
+  let title = ''
+  let list = []
+  detailLoading.value = true
+  if (type === 'blocks') {
+    title = '楼栋列表'
+    list = blockList.value.map(b => ({
+      name: b.name,
+      code: b.code,
+      floorCount: b.floorCount,
+      roomCount: blockActualRoomCount(b.id),
+    }))
+  } else if (type === 'rooms') {
+    title = '房间列表'
+    list = roomList.value.map(r => ({
+      roomNumber: r.roomNumber,
+      blockName: getBlockName(r.id),
+      capacity: r.capacity,
+      currentOccupancy: r.currentOccupancy,
+      status: r.status,
+    }))
+  } else if (type === 'residents') {
+    title = '在住人员列表'
+    list = residenceList.value
+      .filter(r => r.status === '在住')
+      .map(r => ({
+        userName: userName(r.userId),
+        roomNumber: getRoomNumber(r.roomId),
+        bedNumber: r.bedNumber,
+        moveInDate: r.moveInDate,
+      }))
+  } else if (type === 'pending') {
+    title = '待处理工单列表'
+    list = repairList.value
+      .filter(r => !['已完成','已驳回','已取消'].includes(r.status))
+      .map(r => ({
+        id: r.id,
+        title: r.title,
+        reporter: userName(r.userId),
+        room: `${getRoomNumber(r.roomId)} (${getBlockName(r.roomId)})`,
+        priority: r.priority,
+        status: r.status,
+        createdAt: dayjs(r.createdAt).format('YYYY-MM-DD HH:mm'),
+      }))
+  } else {
+    detailLoading.value = false
+    return
+  }
+  if (list.length === 0) {
+    detailLoading.value = false
+    // 轻微视觉提示：不做任何事，相当于点击无效
+    return
+  }
+  detailList.value = list
+  detailTotal.value = list.length
+  detailPage.value = 1
+  detailDialog.value = { visible: true, title: title + '详情', type }
+  detailLoading.value = false
+}
+
+const pageDetailList = computed(() => {
+  const start = (detailPage.value - 1) * detailPageSize
+  return detailList.value.slice(start, start + detailPageSize)
+})
+
+function handleRowClick(row) {
+  // 可选：点击行触发详情，但pending类型已有查看按钮
+}
+
+// ---------- 工单详情查看 ----------
+const viewDialog = ref({ visible: false })
+const viewOrder = ref(null)
+
+function viewOrderDetail(orderId) {
+  const order = repairStore.repairOrderList.find(r => r.id === orderId)
+  if (!order) return
+  viewOrder.value = order
+  viewDialog.value = { visible: true }
+}
+
+// ---------- 操作 ----------
+function refresh() {
+  ElMessage.info('数据已刷新')
+  // 重置图表位置
+  initCharts()
+}
+
+function exportReport() {
+  ElMessage.success('正在导出报表...')
+  setTimeout(() => {
+    ElMessage.success('报表导出成功')
+  }, 1200)
+}
 </script>
 
 <style scoped lang="scss">

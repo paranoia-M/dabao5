@@ -1,5 +1,5 @@
 # 创建一个新 tag，例如 1.0.0 版本
-git tag v106
+git tag v107
 
 # 将这个 tag 推送到 GitHub
-git push origin v106
+git push origin v107

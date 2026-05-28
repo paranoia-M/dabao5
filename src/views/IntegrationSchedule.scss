@@ -1,0 +1,408 @@
+.page-integration_schedule {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  padding: 16px 24px;
+
+  // --page-primary
+  --page-primary: #D97706;
+  --app-primary: #EA580C;
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 240px;
+      :deep(.el-input__wrapper) {
+        background: #2d2d44;
+        box-shadow: none;
+        border: 1px solid #3d3d5a;
+      }
+      :deep(.el-input__inner) {
+        color: #e0e0e0;
+      }
+    }
+
+    .status-select {
+      width: 140px;
+      :deep(.el-input__wrapper) {
+        background: #2d2d44;
+        box-shadow: none;
+        border: 1px solid #3d3d5a;
+      }
+    }
+
+    .date-picker {
+      width: 300px;
+      :deep(.el-input__wrapper) {
+        background: #2d2d44;
+        box-shadow: none;
+        border: 1px solid #3d3d5a;
+      }
+    }
+
+    .view-switch {
+      :deep(.el-radio-button__inner) {
+        background: #2d2d44;
+        color: #aaa;
+        border-color: #3d3d5a;
+      }
+      :deep(.el-radio-button.is-active .el-radio-button__inner) {
+        background: var(--page-primary);
+        color: #fff;
+        border-color: var(--page-primary);
+      }
+    }
+
+    .actions {
+      margin-left: auto;
+      .el-button {
+        background: var(--page-primary);
+        border-color: var(--page-primary);
+        color: #fff;
+      }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    gap: 16px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  // 左侧计划列表
+  .plans-sidebar {
+    width: 260px;
+    min-width: 0;
+    background: #2d2d44;
+    border-radius: 8px;
+    padding: 12px;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    .plan-item {
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      border-left: 3px solid transparent;
+
+      &:hover {
+        background: #3a3a55;
+      }
+      &.active {
+        background: #3a3a55;
+        border-left-color: var(--page-primary);
+        box-shadow: 0 0 0 1px var(--page-primary) inset;
+      }
+
+      .plan-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f0f0f0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 4px;
+      }
+      .plan-meta {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        .cron-badge {
+          font-size: 11px;
+          color: #a0a0b0;
+        }
+      }
+    }
+  }
+
+  // 中央甘特图
+  .gantt-container {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: #2d2d44;
+    border-radius: 8px;
+    padding: 12px;
+    overflow: auto;
+
+    .gantt-header {
+      overflow: hidden;
+      .gantt-timescale {
+        display: flex;
+        height: 40px;
+        margin-bottom: 4px;
+        .time-cell {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-right: 1px solid #3d3d5a;
+          .time-label {
+            font-size: 12px;
+            color: #a0a0b0;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    .gantt-body {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+
+      .gantt-row {
+        position: relative;
+        height: 48px;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        transition: background 0.2s;
+
+        .gantt-row-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: transparent;
+        }
+
+        &:hover {
+          background: #3a3a55;
+        }
+        &.active {
+          background: #3a3a55;
+        }
+
+        .dependencies-svg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+        }
+
+        .gantt-bar {
+          position: absolute;
+          height: 32px;
+          top: 8px;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          padding-left: 8px;
+          cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+          z-index: 2;
+
+          .bar-label {
+            font-size: 12px;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+          }
+        }
+
+        .no-bar {
+          width: 100%;
+          text-align: center;
+          font-size: 12px;
+          color: #555;
+          height: 100%;
+          line-height: 48px;
+          border: 1px dashed #3d3d5a;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  // 右侧详情面板
+  .detail-panel {
+    width: 380px;
+    min-width: 0;
+    background: #2d2d44;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      .panel-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #f0f0f0;
+        border-left: 4px solid var(--page-primary);
+        padding-left: 10px;
+      }
+    }
+
+    .panel-body {
+      flex: 1;
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+        .info-item {
+          background: #3a3a55;
+          padding: 8px 10px;
+          border-radius: 6px;
+          label {
+            display: block;
+            font-size: 12px;
+            color: #a0a0b0;
+            margin-bottom: 4px;
+          }
+          span {
+            font-size: 14px;
+            color: #e0e0e0;
+          }
+        }
+      }
+      .section-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f0f0f0;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #3d3d5a;
+        padding-bottom: 8px;
+      }
+      .empty-placeholder {
+        text-align: center;
+        color: #555;
+        padding: 20px 0;
+      }
+    }
+  }
+
+  // 弹窗内表单
+  .plan-form {
+    .asset-select {
+      width: 100%;
+    }
+  }
+
+  // 手动执行结果弹窗
+  .trigger-info {
+    text-align: center;
+    .trigger-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 16px;
+      color: #e0e0e0;
+    }
+  }
+
+  // 日志抽屉
+  .log-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #1a1a2e;
+    padding: 12px;
+    border-radius: 6px;
+    color: #a0a0b0;
+    font-size: 13px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  // 全局覆盖 Element Plus 弹窗样式
+  :deep(.el-dialog) {
+    background: #2d2d44;
+    .el-dialog__title {
+      color: #f0f0f0;
+    }
+    .el-dialog__body {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .el-form-item__label {
+      color: #c0c0d0;
+    }
+    .el-input__wrapper,
+    .el-textarea__inner {
+      background: #1a1a2e;
+      box-shadow: none;
+      border: 1px solid #3d3d5a;
+    }
+    .el-input__inner,
+    .el-textarea__inner {
+      color: #e0e0e0;
+    }
+    .el-select-dropdown {
+      background: #2d2d44;
+      border-color: #3d3d5a;
+    }
+    .el-select-dropdown__item {
+      color: #e0e0e0;
+    }
+    .el-select-dropdown__item.hover {
+      background: #3a3a55;
+    }
+  }
+
+  :deep(.el-drawer) {
+    background: #2d2d44;
+    .el-drawer__header {
+      color: #f0f0f0;
+    }
+    .el-drawer__body {
+      color: #e0e0e0;
+    }
+  }
+
+  // 表格样式
+  :deep(.el-table) {
+    background: transparent;
+    --el-table-bg-color: transparent;
+    --el-table-tr-bg-color: transparent;
+    --el-table-header-bg-color: #3a3a55;
+    --el-table-header-text-color: #c0c0d0;
+    --el-table-row-hover-bg-color: #3a3a55;
+    --el-table-border-color: #3d3d5a;
+    --el-table-text-color: #e0e0e0;
+    th.el-table__cell {
+      background-color: #3a3a55 !important;
+    }
+    td.el-table__cell {
+      background-color: transparent;
+    }
+  }
+
+  // 空状态
+  :deep(.el-empty) {
+    .el-empty__description p {
+      color: #555;
+    }
+  }
+}

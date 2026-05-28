@@ -8,14 +8,14 @@ const routes = [
     component: () => import('@/layouts/Layout.vue'),
     redirect: '/dashboard',
     children: [
-      { path: 'dashboard', name: 'Dashboard', component: () => import('@/views/Dashboard.vue'), meta: { title: '首页概览', module: '工作台' } },
-      { path: 'asset-catalog', name: 'AssetCatalog', component: () => import('@/views/AssetCatalog.vue'), meta: { title: '资产目录', module: '数据资产' } },
-      { path: 'asset-profile/:id', name: 'AssetProfile', component: () => import('@/views/AssetProfile.vue'), meta: { title: '资产详情', module: '数据资产' } },
-      { path: 'quality-monitor', name: 'QualityMonitor', component: () => import('@/views/QualityMonitor.vue'), meta: { title: '质量监控', module: '数据治理' } },
-      { path: 'standard-config', name: 'StandardConfig', component: () => import('@/views/StandardConfig.vue'), meta: { title: '标准配置', module: '数据治理' } },
-      { path: 'integration-schedule', name: 'IntegrationSchedule', component: () => import('@/views/IntegrationSchedule.vue'), meta: { title: '集成计划', module: '数据开发' } },
-      { path: 'api-register', name: 'ApiRegister', component: () => import('@/views/ApiRegister.vue'), meta: { title: 'API注册', module: '数据服务' } },
-      { path: 'grant-approval', name: 'GrantApproval', component: () => import('@/views/GrantApproval.vue'), meta: { title: '授权审批', module: '数据服务' } },
+      { path: 'dashboard', name: 'Dashboard', component: () => import('@/views/Dashboard.vue'), meta: { title: '数据概览仪表盘', module: '首页概览' } },
+      { path: 'model-library', name: 'ModelLibrary', component: () => import('@/views/ModelLibrary.vue'), meta: { title: '模型库', module: '模型管理' } },
+      { path: 'model-view', name: 'ModelView', component: () => import('@/views/ModelView.vue'), meta: { title: '模型详情', module: '模型管理' } },
+      { path: 'share-approval', name: 'ShareApproval', component: () => import('@/views/ShareApproval.vue'), meta: { title: '共享审批', module: '共享协作' } },
+      { path: 'team-members', name: 'TeamMembers', component: () => import('@/views/TeamMembers.vue'), meta: { title: '团队管理', module: '共享协作' } },
+      { path: 'my-assets', name: 'MyAssets', component: () => import('@/views/MyAssets.vue'), meta: { title: '我的资产', module: '个人工作台' } },
+      { path: 'usage-statistics', name: 'UsageStatistics', component: () => import('@/views/UsageStatistics.vue'), meta: { title: '使用统计', module: '个人工作台' } },
+      { path: 'model-category', name: 'ModelCategory', component: () => import('@/views/ModelCategory.vue'), meta: { title: '模型分类', module: '系统配置' } },
     ]
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFound.vue') }
@@ -27,7 +27,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  if (to.meta && to.meta.title) document.title = to.meta.title + ' · 企业智能数据管理综合服务平台'
+  if (to.meta && to.meta.title) document.title = to.meta.title + ' · 三维模型资产库管理与共享平台'
   next()
 })
 

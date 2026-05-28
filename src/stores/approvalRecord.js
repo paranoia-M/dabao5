@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 
 /**
  * 审批记录（ApprovalRecord）store —— 跨菜单数据流通，所有页面通过本 store 读写数据
- * 字段：id(string), bizType(enum), bizId(string), approverId(string), action(enum), comment(string), createdAt(datetime)
+ * 字段：id(string), shareRequestId(string), approverId(string), action(enum), comment(string), createdAt(datetime)
  */
 export const useApprovalRecordStore = defineStore('approvalRecord', () => {
   const approvalRecordList = ref([])

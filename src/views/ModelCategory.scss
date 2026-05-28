@@ -1,0 +1,314 @@
+.page-model_category {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 20px;
+  --page-primary: #52525B;
+  --app-primary: #409EFF;
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+
+    .filter-area {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      .search-input {
+        width: 240px;
+      }
+
+      .status-select {
+        width: 130px;
+      }
+    }
+  }
+
+  .main-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+
+    .tree-panel {
+      flex: 0 0 30%;
+      min-width: 240px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 16px;
+
+      .panel-header {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #eee;
+        letter-spacing: 0.3px;
+      }
+
+      .el-tree {
+        background: transparent;
+      }
+
+      .custom-tree-node {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 0;
+
+        .status-tag {
+          flex-shrink: 0;
+        }
+
+        .node-label {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 13px;
+        }
+
+        .info-icon {
+          font-size: 16px;
+          color: var(--page-primary);
+          cursor: pointer;
+          opacity: 0.6;
+          transition: opacity 0.2s;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .detail-panel {
+      flex: 1;
+      min-width: 0;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 16px;
+
+      .panel-header {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        letter-spacing: 0.3px;
+
+        .header-actions {
+          display: flex;
+          gap: 8px;
+        }
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 20px;
+        margin-bottom: 20px;
+
+        .field-row {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+
+          .label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+          }
+
+          .value {
+            font-size: 14px;
+            color: #333;
+            word-break: break-word;
+          }
+
+          &.full-row {
+            grid-column: 1 / -1;
+          }
+        }
+      }
+
+      .subtree-section {
+        margin-bottom: 20px;
+
+        .subtree-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #444;
+          margin-bottom: 10px;
+          padding-left: 8px;
+          border-left: 3px solid var(--page-primary);
+        }
+
+        .svg-tree-container {
+          width: 100%;
+          overflow-x: auto;
+          border: 1px solid #eee;
+          border-radius: 6px;
+          padding: 8px;
+          min-height: 100px;
+
+          svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 400px;
+          }
+        }
+      }
+
+      .related-models {
+        margin-top: 8px;
+
+        :deep(.el-table) {
+          border-radius: 6px;
+          overflow: hidden;
+
+          .el-table__header th {
+            background: #f5f7fa;
+            color: #555;
+            font-weight: 600;
+            font-size: 13px;
+          }
+
+          .el-table__row {
+            transition: background 0.2s;
+            &:hover {
+              background: #f0f2f5 !important;
+            }
+          }
+
+          // 状态色条
+          .status-row-draft td:first-child .cell {
+            border-left: 3px solid #909399;
+            padding-left: 11px;
+          }
+          .status-row-pending td:first-child .cell {
+            border-left: 3px solid #e6a23c;
+            padding-left: 11px;
+          }
+          .status-row-published td:first-child .cell {
+            border-left: 3px solid #67c23a;
+            padding-left: 11px;
+          }
+          .status-row-archived td:first-child .cell {
+            border-left: 3px solid #909399;
+            padding-left: 11px;
+          }
+          .status-row-deleted td:first-child .cell {
+            border-left: 3px solid #f56c6c;
+            padding-left: 11px;
+          }
+        }
+      }
+    }
+
+    .empty-panel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+  }
+
+  // Dialog / Drawer 内样式
+  :deep(.el-dialog) {
+    border-radius: 8px;
+
+    .el-dialog__body {
+      padding: 20px 24px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .el-form-item {
+      margin-bottom: 18px;
+    }
+
+    .el-tree-select {
+      width: 100%;
+    }
+  }
+
+  :deep(.el-drawer) {
+    .el-drawer__body {
+      padding: 20px;
+    }
+
+    .drawer-content {
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 20px;
+        margin-bottom: 24px;
+
+        .field-row {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+
+          .label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+          }
+
+          .value {
+            font-size: 14px;
+            color: #333;
+          }
+
+          &.full-row {
+            grid-column: 1 / -1;
+          }
+        }
+      }
+
+      .subtree-section {
+        .subtree-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #444;
+          margin-bottom: 10px;
+          padding-left: 8px;
+          border-left: 3px solid var(--page-primary);
+        }
+
+        .svg-tree-container {
+          border: 1px solid #eee;
+          border-radius: 6px;
+          padding: 8px;
+          overflow-x: auto;
+
+          svg {
+            display: block;
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+
+  // 全局字号
+  .el-empty {
+    padding: 40px 0;
+  }
+
+  // 状态标签
+  .el-tag.el-tag--small {
+    font-size: 12px;
+  }
+}

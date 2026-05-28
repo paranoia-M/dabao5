@@ -1,0 +1,142 @@
+.page-model_library {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background: #f5f7fa;
+  min-height: 100vh;
+  padding: 20px;
+
+  --page-primary: #0F766E;
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+
+    .filter-item {
+      min-width: 140px;
+      flex: 0 0 auto;
+    }
+    .el-button {
+      min-width: 80px;
+    }
+  }
+
+  .main-content {
+    display: flex;
+    gap: 20px;
+
+    .tree-panel {
+      flex: 0 0 280px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 160px);
+      overflow: hidden;
+
+      .tree-header {
+        padding: 12px 16px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        background: rgba(15, 118, 110, 0.05);
+        border-left: 4px solid var(--page-primary);
+      }
+
+      .tree-body {
+        flex: 1;
+        overflow: auto;
+        padding: 12px 8px;
+
+        .tree-svg {
+          display: block;
+          width: 100%;
+          height: auto;
+
+          .tree-node {
+            cursor: pointer;
+            transition: opacity 0.2s;
+            &:hover rect {
+              opacity: 0.9;
+            }
+            &.node-selected rect {
+              stroke: #f5a623;
+              stroke-width: 2;
+            }
+          }
+        }
+      }
+    }
+
+    .table-panel {
+      flex: 1;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+
+      .el-table {
+        flex: 1;
+      }
+
+      .pagination-wrapper {
+        padding: 16px;
+        display: flex;
+        justify-content: flex-end;
+        border-top: 1px solid #eee;
+      }
+    }
+  }
+
+  // 详情抽屉
+  .detail-content {
+    display: flex;
+    gap: 20px;
+    .detail-left {
+      flex: 1;
+      .info-block {
+        .info-row {
+          margin-bottom: 8px;
+          font-size: 14px;
+          line-height: 1.6;
+          .label {
+            color: #888;
+            display: inline-block;
+            width: 70px;
+            text-align: right;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+    .detail-right {
+      flex: 1;
+      .version-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        padding-left: 8px;
+        border-left: 3px solid var(--page-primary);
+      }
+    }
+  }
+
+  // 弹窗表单
+  .el-form {
+    .el-upload__tip {
+      font-size: 12px;
+      color: #999;
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 
 /**
  * 导出记录（ExportRecord）store —— 跨菜单数据流通，所有页面通过本 store 读写数据
- * 字段：id(string), userId(string), module(string), fileName(string), fileSize(number), status(enum), createdAt(datetime)
+ * 字段：id(string), userId(string), module(enum), format(enum), status(enum), filePath(string), createdAt(datetime)
  */
 export const useExportRecordStore = defineStore('exportRecord', () => {
   const exportRecordList = ref([])

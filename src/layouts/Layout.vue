@@ -1,62 +1,46 @@
 <template>
   <div class="app-layout">
-    <el-container class="app-layout__container">
-      <el-header class="app-layout__header">
-        <div class="header-left">
-          <span class="header-title">企业智能数据管理综合服务平台</span>
+    <el-container>
+      <el-aside width="280px" class="app-sidebar">
+        <div class="brand">
+          <div class="brand-icon"></div>
+          <span class="brand-title">3D资产库</span>
         </div>
-        <div class="header-center">
-          <el-input
-            v-model="searchQuery"
-            placeholder="搜索数据资产、API..."
-            class="header-search"
-            clearable
-          >
-            <template #prefix>
-              <el-icon><Search /></el-icon>
-            </template>
-          </el-input>
-        </div>
-        <div class="header-right">
-          <span class="header-user">
-            <el-icon><User /></el-icon>
-            管理员
-          </span>
-          <el-button type="text" class="header-logout" @click="handleLogout">退出登录</el-button>
-        </div>
-      </el-header>
+        <el-menu
+          :default-active="route.path"
+          :router="false"
+          class="app-menu"
+          background-color="#ffffff"
+          text-color="#333"
+          active-text-color="#0F766E"
+          @select="handleMenuSelect"
+        >
+          <template v-for="group in MENU" :key="group.moduleName">
+            <el-sub-menu :index="group.moduleName">
+              <template #title>
+                <span class="menu-group-title">{{ group.moduleName }}</span>
+              </template>
+              <el-menu-item
+                v-for="item in group.items"
+                :key="item.path"
+                :index="item.path"
+              >
+                {{ item.name }}
+              </el-menu-item>
+            </el-sub-menu>
+          </template>
+        </el-menu>
+      </el-aside>
       <el-container>
-        <el-aside class="app-layout__aside" width="240px">
-          <el-menu
-            :default-active="activeMenu"
-            class="app-layout__menu"
-            background-color="#1d1e1f"
-            text-color="#ffffff"
-            active-text-color="#EA580C"
-            @select="handleMenuSelect"
-          >
-            <template v-for="mod in MENU" :key="mod.moduleName">
-              <el-sub-menu :index="mod.moduleName">
-                <template #title>
-                  <el-icon v-if="mod.moduleName === '工作台'"><HomeFilled /></el-icon>
-                  <el-icon v-if="mod.moduleName === '数据资产'"><DataAnalysis /></el-icon>
-                  <el-icon v-if="mod.moduleName === '数据治理'"><Monitor /></el-icon>
-                  <el-icon v-if="mod.moduleName === '数据开发'"><Connection /></el-icon>
-                  <el-icon v-if="mod.moduleName === '数据服务'"><Setting /></el-icon>
-                  <span>{{ mod.moduleName }}</span>
-                </template>
-                <el-menu-item
-                  v-for="item in mod.items"
-                  :key="item.name"
-                  :index="item.name"
-                >
-                  {{ item.name }}
-                </el-menu-item>
-              </el-sub-menu>
-            </template>
-          </el-menu>
-        </el-aside>
-        <el-main class="app-layout__main">
+        <el-header class="app-header">
+          <div class="header-left">
+            <span class="header-title">三维模型资产库管理与共享平台</span>
+          </div>
+          <div class="header-right">
+            <el-button type="text" @click="handleLogout">退出登录</el-button>
+          </div>
+        </el-header>
+        <el-main class="app-main">
           <router-view />
         </el-main>
       </el-container>
@@ -67,63 +51,33 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import {
-  ElContainer, ElHeader, ElAside, ElMain,
-  ElMenu, ElSubMenu, ElMenuItem,
-  ElInput, ElButton, ElIcon
-} from 'element-plus'
-import {
-  Search, User,
-  HomeFilled, DataAnalysis, Monitor, Connection, Setting
-} from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
 
 const MENU = [
-  { moduleName: '工作台', items: [
-    { name: '首页概览', path: '/dashboard' },
+  { moduleName: '首页概览', items: [
+    { name: '数据概览仪表盘', path: '/dashboard' },
   ]},
-  { moduleName: '数据资产', items: [
-    { name: '资产目录', path: '/asset-catalog' },
+  { moduleName: '模型管理', items: [
+    { name: '模型库', path: '/model-library' },
+    { name: '模型详情', path: '/model-view' },
   ]},
-  { moduleName: '数据治理', items: [
-    { name: '质量监控', path: '/quality-monitor' },
-    { name: '标准配置', path: '/standard-config' },
+  { moduleName: '共享协作', items: [
+    { name: '共享审批', path: '/share-approval' },
+    { name: '团队管理', path: '/team-members' },
   ]},
-  { moduleName: '数据开发', items: [
-    { name: '集成计划', path: '/integration-schedule' },
+  { moduleName: '个人工作台', items: [
+    { name: '我的资产', path: '/my-assets' },
+    { name: '使用统计', path: '/usage-statistics' },
   ]},
-  { moduleName: '数据服务', items: [
-    { name: 'API注册', path: '/api-register' },
-    { name: '授权审批', path: '/grant-approval' },
+  { moduleName: '系统配置', items: [
+    { name: '模型分类', path: '/model-category' },
   ]},
 ]
 
-const searchQuery = ref('')
-
-const activeMenu = computed(() => {
-  const path = route.path
-  for (const mod of MENU) {
-    for (const item of mod.items) {
-      const prefix = item.path.includes(':id') ? item.path.split(':')[0] : item.path
-      if (path === item.path || (item.path.includes(':id') && path.startsWith(prefix))) {
-        return item.name
-      }
-    }
-  }
-  return ''
-})
-
 function handleMenuSelect(index) {
-  for (const mod of MENU) {
-    for (const item of mod.items) {
-      if (item.name === index) {
-        router.push(item.path)
-        return
-      }
-    }
-  }
+  router.push(index)
 }
 
 function handleLogout() {

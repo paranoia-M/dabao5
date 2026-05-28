@@ -3,2327 +3,1363 @@
  * 修改本文件后，需先清除 localStorage 才能生效。
  */
 const SEED = {
-  "sheji-user" : [ {
-    "id" : "user_1000",
-    "username" : "admin_zhang",
-    "realName" : "张明强",
-    "email" : "zhangmingqiang@dataplatform.com",
-    "phone" : "13800001111",
-    "role" : "系统管理员",
-    "status" : "启用"
+  "sheji-model" : [ {
+    "id" : "model_1000",
+    "name" : "高层办公塔楼结构模型",
+    "code" : "BLD-2026-001",
+    "categoryId" : "modelcategory_1002",
+    "format" : "FBX",
+    "status" : "草稿",
+    "tags" : [ "建筑", "结构" ],
+    "description" : "某高层办公塔楼的完整结构模型，包含梁柱节点及楼板，适用于建筑结构分析。",
+    "fileSize" : 45.2,
+    "uploaderId" : "",
+    "createdAt" : "2026-03-15 09:30:00",
+    "updatedAt" : "2026-03-15 09:30:00"
   }, {
-    "id" : "user_1001",
-    "username" : "liwei_data",
-    "realName" : "李伟",
-    "email" : "liwei@dataplatform.com",
-    "phone" : "13900002222",
-    "role" : "数据管理员",
-    "status" : "启用"
+    "id" : "model_1001",
+    "name" : "现代办公椅人体工学模型",
+    "code" : "FUR-2026-015",
+    "categoryId" : "modelcategory_1010",
+    "format" : "OBJ",
+    "status" : "审核中",
+    "tags" : [ "家具", "椅子" ],
+    "description" : "符合人体工学的可调节办公椅模型，包含气压杆和扶手细节，可用于室内设计。",
+    "fileSize" : 12.5,
+    "uploaderId" : "",
+    "createdAt" : "2026-03-20 14:20:00",
+    "updatedAt" : "2026-04-10 10:15:00"
   }, {
-    "id" : "user_1002",
-    "username" : "wangfang",
-    "realName" : "王芳",
-    "email" : "wangfang@dataplatform.com",
-    "phone" : "13700003333",
-    "role" : "普通员工",
-    "status" : "启用"
+    "id" : "model_1002",
+    "name" : "中世纪骑士全身角色模型",
+    "code" : "CHAR-2026-032",
+    "categoryId" : "modelcategory_1010",
+    "format" : "glTF",
+    "status" : "已发布",
+    "tags" : [ "角色", "游戏" ],
+    "description" : "高精度中世纪骑士模型，含盔甲和武器，PBR材质，适用于游戏引擎。",
+    "fileSize" : 256.8,
+    "uploaderId" : "",
+    "createdAt" : "2026-04-01 11:00:00",
+    "updatedAt" : "2026-04-28 16:45:00"
   }, {
-    "id" : "user_1003",
-    "username" : "zhaolei_analyst",
-    "realName" : "赵磊",
-    "email" : "zhaolei@dataplatform.com",
-    "phone" : "13600004444",
-    "role" : "数据分析师",
-    "status" : "启用"
+    "id" : "model_1003",
+    "name" : "汽车发动机曲轴连杆总成",
+    "code" : "MECH-2026-007",
+    "categoryId" : "modelcategory_1002",
+    "format" : "3DS",
+    "status" : "已归档",
+    "tags" : [ "机械", "零件" ],
+    "description" : "发动机曲轴连杆机构详细模型，含活塞、缸体、油路，用于机械设计验证。",
+    "fileSize" : 320.1,
+    "uploaderId" : "",
+    "createdAt" : "2026-02-28 08:10:00",
+    "updatedAt" : "2026-05-15 09:30:00"
   }, {
-    "id" : "user_1004",
-    "username" : "chenyi_report",
-    "realName" : "陈怡",
-    "email" : "chenyi@dataplatform.com",
-    "phone" : "13500005555",
-    "role" : "报表查看员",
-    "status" : "禁用"
+    "id" : "model_1004",
+    "name" : "钛合金髋关节植入物模型",
+    "code" : "MED-2026-004",
+    "categoryId" : "modelcategory_1006",
+    "format" : "STL",
+    "status" : "已删除",
+    "tags" : [ "医疗", "植入物" ],
+    "description" : "钛合金髋关节植入物STL模型，可直接用于3D打印，表面纹理优化。",
+    "fileSize" : 98.7,
+    "uploaderId" : "",
+    "createdAt" : "2026-03-10 10:00:00",
+    "updatedAt" : "2026-05-20 14:00:00"
   }, {
-    "id" : "user_1005",
-    "username" : "sunpeng_audit",
-    "realName" : "孙鹏",
-    "email" : "sunpeng@dataplatform.com",
-    "phone" : "13400006666",
-    "role" : "系统审计员",
-    "status" : "启用"
+    "id" : "model_1005",
+    "name" : "山地城市地形高程模型",
+    "code" : "TER-2026-001",
+    "categoryId" : "modelcategory_1004",
+    "format" : "其他",
+    "status" : "已发布",
+    "tags" : [ "地形", "环境" ],
+    "description" : "某山地城市1:1000比例地形高程模型，含等高线和地表纹理，用于城市规划。",
+    "fileSize" : 480.3,
+    "uploaderId" : "",
+    "createdAt" : "2026-04-05 13:00:00",
+    "updatedAt" : "2026-04-20 10:00:00"
   }, {
-    "id" : "user_1006",
-    "username" : "zhoujing_pm",
-    "realName" : "周静",
-    "email" : "zhoujing@dataplatform.com",
-    "phone" : "13300007777",
-    "role" : "项目经理",
-    "status" : "启用"
+    "id" : "model_1006",
+    "name" : "智能手机外壳结构模型",
+    "code" : "ELE-2026-008",
+    "categoryId" : "modelcategory_1005",
+    "format" : "FBX",
+    "status" : "审核中",
+    "tags" : [ "电子", "产品" ],
+    "description" : "全面屏智能手机外壳模型，含按键开口和摄像头凸起，用于模具设计。",
+    "fileSize" : 67.2,
+    "uploaderId" : "",
+    "createdAt" : "2026-05-01 09:00:00",
+    "updatedAt" : "2026-05-22 16:30:00"
   }, {
-    "id" : "user_1007",
-    "username" : "longtao_ops",
-    "realName" : "龙涛",
-    "email" : "longtao@dataplatform.com",
-    "phone" : "13200008888",
-    "role" : "运维工程师",
-    "status" : "禁用"
+    "id" : "model_1007",
+    "name" : "抽象几何体公共艺术装置",
+    "code" : "ART-2026-003",
+    "categoryId" : "modelcategory_1007",
+    "format" : "OBJ",
+    "status" : "草稿",
+    "tags" : [ "艺术", "雕塑" ],
+    "description" : "大型抽象几何体组合雕塑模型，用rhino参数化设计，表面有穿孔纹理。",
+    "fileSize" : 203.4,
+    "uploaderId" : "",
+    "createdAt" : "2026-05-18 10:30:00",
+    "updatedAt" : "2026-05-20 11:45:00"
   } ],
-  "sheji-dataAsset" : [ {
-    "id" : "dataasset_1000",
-    "name" : "客户主数据表",
-    "code" : "CUST_MASTER",
-    "domain" : "客户域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1005",
-    "status" : "已发布",
-    "description" : "企业客户核心信息表，包含客户编码、名称、信用等级、联系方式，数据来源CRM系统每日同步更新。"
+  "sheji-modelVersion" : [ {
+    "id" : "modelversion_1000",
+    "modelId" : "model_1005",
+    "versionNumber" : "v1.0",
+    "filePath" : "/assets/models/building/skyscraper_base.fbx",
+    "fileSize" : 2.5,
+    "notes" : "初始基础模型版本，包含建筑主体框架和核心筒结构，用于前期方案展示。",
+    "uploaderId" : "张伟",
+    "createdAt" : "2026-02-28 09:15:00",
+    "isCurrent" : true
   }, {
-    "id" : "dataasset_1001",
-    "name" : "月度销售业绩报表",
-    "code" : "SALES_MONTHLY",
-    "domain" : "销售域",
-    "sourceType" : "文件",
-    "ownerId" : "user_1005",
-    "status" : "待审核",
-    "description" : "每月财务生成的销售业绩Excel文件，含各区销售额、回款率及同比环比分析，用于管理层决策。"
+    "id" : "modelversion_1001",
+    "modelId" : "model_1004",
+    "versionNumber" : "v1.1",
+    "filePath" : "/assets/models/building/skyscraper_detail.fbx",
+    "fileSize" : 8.1,
+    "notes" : "在v1.0基础上增加了外墙幕墙和窗户细节，细化楼层分隔，面数增加约30%。",
+    "uploaderId" : "李娜",
+    "createdAt" : "2026-03-05 14:30:00",
+    "isCurrent" : false
   }, {
-    "id" : "dataasset_1002",
-    "name" : "供应商准入审核接口",
-    "code" : "SUPPLIER_AUDIT_API",
-    "domain" : "采购域",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1005",
-    "status" : "待审核",
-    "description" : "向采购系统提供供应商工商资质核验、历史合作记录查询的RESTful接口，响应时间<200ms。"
+    "id" : "modelversion_1002",
+    "modelId" : "model_1002",
+    "versionNumber" : "v1.2",
+    "filePath" : "/assets/models/building/skyscraper_interior.fbx",
+    "fileSize" : 15.3,
+    "notes" : "新增内部楼层布局和电梯井结构，丰富了室内空间，便于后期室内设计对接。",
+    "uploaderId" : "王强",
+    "createdAt" : "2026-03-12 10:00:00",
+    "isCurrent" : false
   }, {
-    "id" : "dataasset_1003",
-    "name" : "员工劳动合同台账",
-    "code" : "EMP_CONTRACT",
-    "domain" : "人力资源域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1000",
-    "status" : "草稿",
-    "description" : "存储全体员工劳动合同签订日期、到期日、续签记录，数据源于EHR系统，用于合同到期预警。"
+    "id" : "modelversion_1003",
+    "modelId" : "model_1007",
+    "versionNumber" : "v2.0",
+    "filePath" : "/assets/models/building/skyscraper_v2.fbx",
+    "fileSize" : 45.6,
+    "notes" : "重构模型拓扑，使用SubD技术优化布线，整体面数降低20%但保留主要细节，适用于实时渲染。",
+    "uploaderId" : "张伟",
+    "createdAt" : "2026-03-25 16:45:00",
+    "isCurrent" : true
   }, {
-    "id" : "dataasset_1004",
-    "name" : "信贷风险评分模型输出",
-    "code" : "CREDIT_RISK_SCORE",
-    "domain" : "风控域",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1002",
-    "status" : "已发布",
-    "description" : "实时计算个人信贷申请的风险评分，调用量日均10万次，返回0-100分及违约概率预测。"
+    "id" : "modelversion_1004",
+    "modelId" : "model_1000",
+    "versionNumber" : "v2.1",
+    "filePath" : "/assets/models/building/skyscraper_v2_lod.fbx",
+    "fileSize" : 88.2,
+    "notes" : "基于v2.0生成LOD0-LOD2三套级别细节，优化性能，用于不同视距下的渲染。",
+    "uploaderId" : "赵敏",
+    "createdAt" : "2026-04-02 11:20:00",
+    "isCurrent" : false
   }, {
-    "id" : "dataasset_1005",
-    "name" : "仓储库存快照文件",
-    "code" : "INV_SNAPSHOT",
-    "domain" : "运营域",
-    "sourceType" : "文件",
-    "ownerId" : "user_1003",
-    "status" : "已下架",
-    "description" : "每日凌晨生成的仓库库存快照CSV，包含SKU、库位、可用量，替换为实时接口后已下架。"
+    "id" : "modelversion_1005",
+    "modelId" : "model_1002",
+    "versionNumber" : "v2.1.1",
+    "filePath" : "/assets/models/building/skyscraper_v2_lod_fix.fbx",
+    "fileSize" : 120.5,
+    "notes" : "修复v2.1中LOD1过渡区域破面问题，补充UV贴图坐标，提高材质兼容性。",
+    "uploaderId" : "陈晓",
+    "createdAt" : "2026-04-10 08:00:00",
+    "isCurrent" : false
   }, {
-    "id" : "dataasset_1006",
-    "name" : "订单交易流水表",
-    "code" : "ORDER_TRANS",
-    "domain" : "销售域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1007",
-    "status" : "草稿",
-    "description" : "记录每一笔订单的交易明细，包括商品ID、数量、金额、支付时间，分表存储按日归档。"
+    "id" : "modelversion_1006",
+    "modelId" : "model_1006",
+    "versionNumber" : "v3.0-beta",
+    "filePath" : "/assets/models/building/skyscraper_v3_beta.fbx",
+    "fileSize" : 200.0,
+    "notes" : "尝试全新参数化建模流程，增加动态楼层数配置，beta版本用于内部测试结构稳定性。",
+    "uploaderId" : "刘洋",
+    "createdAt" : "2026-04-20 13:10:00",
+    "isCurrent" : false
   }, {
-    "id" : "dataasset_1007",
-    "name" : "项目周报收集接口",
-    "code" : "PROJ_WEEKLY_API",
-    "domain" : "研发域",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1005",
-    "status" : "待审核",
-    "description" : "项目管理平台定时调用，获取各项目组进度周报的JSON格式汇总数据，用于领导看板展示。"
+    "id" : "modelversion_1007",
+    "modelId" : "model_1005",
+    "versionNumber" : "v3.0",
+    "filePath" : "/assets/models/building/skyscraper_v3.fbx",
+    "fileSize" : 350.8,
+    "notes" : "正式发布v3.0，采用参数化工作流，支持楼层数调整，集成LOD系统和碰撞检测数据。",
+    "uploaderId" : "周杰",
+    "createdAt" : "2026-05-02 09:30:00",
+    "isCurrent" : true
   }, {
-    "id" : "dataasset_1008",
-    "name" : "物流运单状态表",
-    "code" : "LOGISTICS_TRACK",
-    "domain" : "物流域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1005",
-    "status" : "已发布",
-    "description" : "实时同步承运商回传的运单节点信息，包含揽收、中转、派送、签收状态，更新频率5分钟。"
+    "id" : "modelversion_1008",
+    "modelId" : "model_1000",
+    "versionNumber" : "v3.1",
+    "filePath" : "/assets/models/building/skyscraper_v3.1.fbx",
+    "fileSize" : 500.0,
+    "notes" : "优化材质系统，集成PBR材质库，增加AO贴图，提升渲染真实感。文件体积增大因包含多套贴图。",
+    "uploaderId" : "吴芳",
+    "createdAt" : "2026-05-10 15:00:00",
+    "isCurrent" : false
   }, {
-    "id" : "dataasset_1009",
-    "name" : "渠道合作伙伴评估报告",
-    "code" : "CHANNEL_EVAL",
-    "domain" : "渠道域",
-    "sourceType" : "文件",
-    "ownerId" : "user_1004",
-    "status" : "草稿",
-    "description" : "按季度生成的渠道伙伴绩效评估PDF报告，涵盖销售额达成率、客诉率、市场覆盖指标，尚未审批。"
+    "id" : "modelversion_1009",
+    "modelId" : "model_1005",
+    "versionNumber" : "v4.0",
+    "filePath" : "/assets/models/building/skyscraper_v4_clean.fbx",
+    "fileSize" : 12.0,
+    "notes" : "推翻重做的轻量化版本，使用低多边形风格，保留建筑轮廓，面向Web端展示优化。",
+    "uploaderId" : "孙涛",
+    "createdAt" : "2026-05-18 10:45:00",
+    "isCurrent" : true
   }, {
-    "id" : "dataasset_1010",
-    "name" : "财务总账科目余额表",
-    "code" : "GL_BALANCE",
-    "domain" : "财务域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1002",
-    "status" : "待审核",
-    "description" : "企业总账各科目月度余额汇总，来源财务系统，用于预算分析及会计对账。"
-  }, {
-    "id" : "dataasset_1011",
-    "name" : "舆情监控热点数据接口",
-    "code" : "PUBLIC_SENTIMENT",
-    "domain" : "运营域",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1007",
-    "status" : "待审核",
-    "description" : "爬虫系统采集主流社交平台关键词热度，对外提供实时舆情趋势JSON API，尚未上线。"
-  }, {
-    "id" : "dataasset_1012",
-    "name" : "设备运维工单记录表",
-    "code" : "MAINTENANCE_ORDER",
-    "domain" : "运营域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1000",
-    "status" : "已下架",
-    "description" : "记录生产车间设备报修与保养工单，包含故障现象、维修人员、耗时，因系统升级已停止更新。"
-  }, {
-    "id" : "dataasset_1013",
-    "name" : "年度培训计划文件",
-    "code" : "TRAINING_PLAN",
-    "domain" : "人力资源域",
-    "sourceType" : "文件",
-    "ownerId" : "user_1002",
-    "status" : "草稿",
-    "description" : "HR部门编制的年度员工培训计划Excel表，含课程名称、参训人员、预算，待部门审核。"
-  }, {
-    "id" : "dataasset_1014",
-    "name" : "用户行为埋点上报接口",
-    "code" : "USER_TRACKING_API",
-    "domain" : "数据域",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1006",
-    "status" : "草稿",
-    "description" : "前端SDK采集的用户点击、页面停留、转化事件，通过HTTP接口上报至数仓，日处理5亿条。"
-  }, {
-    "id" : "dataasset_1015",
-    "name" : "生产日报表（车间级）",
-    "code" : "PROD_DAILY",
-    "domain" : "生产域",
-    "sourceType" : "文件",
-    "ownerId" : "user_1005",
-    "status" : "已发布",
-    "description" : "各生产车间每日产量、合格率、设备利用率汇总Excel，车间主任填报后提交至调度中心。"
-  }, {
-    "id" : "dataasset_1016",
-    "name" : "审批流程配置表",
-    "code" : "WORKFLOW_CONFIG",
-    "domain" : "IT域",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1000",
-    "status" : "待审核",
-    "description" : "存储各类业务审批流程图和节点配置，用于低代码平台动态渲染，即将发布最新版本。"
-  }, {
-    "id" : "dataasset_1017",
-    "name" : "招投标结果公告接口",
-    "code" : "BID_RESULT_API",
-    "domain" : "采购域",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1005",
-    "status" : "已下架",
-    "description" : "对外公开招标结果查询接口，因政策变动停用，数据转为内部文件存档。"
-  }, {
-    "id" : "dataasset_1018",
-    "name" : "财务总账报表",
-    "code" : "FSS-2026",
-    "domain" : "财务管理",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1007",
-    "status" : "已发布",
-    "description" : "包含公司资产负债表和利润表的月度数据，每日凌晨从ERP系统同步至数据仓库，用于财务分析和合规披露。"
-  }, {
-    "id" : "dataasset_1019",
-    "name" : "客户投诉记录",
-    "code" : "CCM-2026",
-    "domain" : "客户服务",
-    "sourceType" : "文件",
-    "ownerId" : "user_1000",
-    "status" : "待审核",
-    "description" : "从客服系统导出的CSV格式投诉明细，包含客户编号、投诉日期和问题分类，需定期清洗加载至数据集市。"
-  }, {
-    "id" : "dataasset_1020",
-    "name" : "库存实时快照",
-    "code" : "WMS-API-2026",
-    "domain" : "仓储物流",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1005",
-    "status" : "已下架",
-    "description" : "通过WMS系统的REST接口获取的库存余量实时数据，因接口升级暂时下架，待重新对接后恢复上线。"
-  }, {
-    "id" : "dataasset_1021",
-    "name" : "员工考勤汇总",
-    "code" : "HR-MS2026",
-    "domain" : "人力资源",
-    "sourceType" : "数据库表",
-    "ownerId" : "user_1000",
-    "status" : "草稿",
-    "description" : "汇总每日打卡记录生成的月度考勤汇总表，目前正在校验数据准确性，尚未提交审核流程。"
-  }, {
-    "id" : "dataasset_1022",
-    "name" : "产品质检报告",
-    "code" : "QCR-2026-05",
-    "domain" : "质量管理",
-    "sourceType" : "文件",
-    "ownerId" : "user_1006",
-    "status" : "已发布",
-    "description" : "生产车间每周质检数据以PDF报告形式归档，包含批次合格率和关键缺陷分布图表，支持按月追溯。"
-  }, {
-    "id" : "dataasset_1023",
-    "name" : "销售订单流水",
-    "code" : "API-SO-2026",
-    "domain" : "销售管理",
-    "sourceType" : "API接口",
-    "ownerId" : "user_1005",
-    "status" : "待审核",
-    "description" : "从销售系统API实时推送的订单创建事件流，用于构建订单漏斗分析模型，数据量约每天5万条。"
+    "id" : "modelversion_1010",
+    "modelId" : "model_1007",
+    "versionNumber" : "v4.1",
+    "filePath" : "/assets/models/building/skyscraper_v4_light.fbx",
+    "fileSize" : 65.4,
+    "notes" : "在v4.0基础上增加环境光遮蔽和细节纹理，平衡性能与画质，适合移动端AR体验。",
+    "uploaderId" : "郑雨",
+    "createdAt" : "2026-05-25 14:20:00",
+    "isCurrent" : false
   } ],
-  "sheji-dataAssetField" : [ {
-    "id" : "dataassetfield_1000",
-    "assetId" : "dataasset_1014",
-    "fieldName" : "客户ID",
-    "fieldType" : "string",
-    "description" : "客户唯一标识，由系统自动生成UUID，不可为空，用于全局唯一识别每个客户。",
-    "sensitivityLevel" : "机密",
-    "isPrimaryKey" : true,
-    "maxLength" : 36
+  "sheji-modelCategory" : [ {
+    "id" : "modelcategory_1000",
+    "name" : "模型总库",
+    "code" : "ROOT",
+    "parentId" : "",
+    "sortOrder" : 0,
+    "status" : "启用",
+    "description" : "平台所有三维模型的最顶层分类目录，涵盖建筑、机械、人物等所有子分类，方便统一管理与检索。"
   }, {
-    "id" : "dataassetfield_1001",
-    "assetId" : "dataasset_1020",
-    "fieldName" : "客户名称",
-    "fieldType" : "string",
-    "description" : "客户全称，最长支持100个汉字，用于展示和搜索，不可为空。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 100
+    "id" : "modelcategory_1001",
+    "name" : "建筑模型",
+    "code" : "CAT-001",
+    "parentId" : "modelcategory_1009",
+    "sortOrder" : 1,
+    "status" : "启用",
+    "description" : "包含各类建筑结构三维模型，如住宅、商业楼、工业厂房等，支持建筑可视化与模拟分析。"
   }, {
-    "id" : "dataassetfield_1002",
-    "assetId" : "dataasset_1015",
-    "fieldName" : "性别",
-    "fieldType" : "string",
-    "description" : "客户性别，可选值男/女/未知，默认未知，用于基础信息统计。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 4
+    "id" : "modelcategory_1002",
+    "name" : "机械装备模型",
+    "code" : "CAT-002",
+    "parentId" : "modelcategory_1007",
+    "sortOrder" : 2,
+    "status" : "启用",
+    "description" : "收录工业与民用机械设备的高精度模型，包括机床、发动机、机器人等，用于装配演示与培训。"
   }, {
-    "id" : "dataassetfield_1003",
-    "assetId" : "dataasset_1016",
-    "fieldName" : "出生日期",
-    "fieldType" : "date",
-    "description" : "客户出生日期，格式YYYY-MM-DD，用于年龄计算和营销分析。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 10
+    "id" : "modelcategory_1003",
+    "name" : "人物角色模型",
+    "code" : "CAT-003",
+    "parentId" : "modelcategory_1000",
+    "sortOrder" : 3,
+    "status" : "启用",
+    "description" : "涵盖静态与动画角色模型，包括写实类、卡通类人物，适用于游戏与影视场景。"
   }, {
-    "id" : "dataassetfield_1004",
-    "assetId" : "dataasset_1000",
-    "fieldName" : "手机号码",
-    "fieldType" : "string",
-    "description" : "客户手机号，用于登录和通知，需校验11位数字，不可为空。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : true,
-    "maxLength" : 11
+    "id" : "modelcategory_1004",
+    "name" : "交通工具模型",
+    "code" : "CAT-004",
+    "parentId" : "modelcategory_1000",
+    "sortOrder" : 4,
+    "status" : "禁用",
+    "description" : "提供汽车、船舶、飞机等交通工具的精细三维模型，满足交通模拟与展示需求。"
   }, {
-    "id" : "dataassetfield_1005",
-    "assetId" : "dataasset_1011",
-    "fieldName" : "电子邮箱",
-    "fieldType" : "string",
-    "description" : "客户邮箱地址，用于接收账单和营销邮件，最长50字符，可为空。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : true,
-    "maxLength" : 50
+    "id" : "modelcategory_1005",
+    "name" : "自然景观模型",
+    "code" : "CAT-005",
+    "parentId" : "modelcategory_1007",
+    "sortOrder" : 5,
+    "status" : "启用",
+    "description" : "收录山川、河流、森林、天空等自然元素三维模型，用于环境构建与虚拟现实项目。"
   }, {
-    "id" : "dataassetfield_1006",
-    "assetId" : "dataasset_1003",
-    "fieldName" : "注册时间",
-    "fieldType" : "datetime",
-    "description" : "客户注册时间，精确到秒，记录用户首次注册平台的时刻。",
-    "sensitivityLevel" : "机密",
-    "isPrimaryKey" : false,
-    "maxLength" : 19
+    "id" : "modelcategory_1006",
+    "name" : "电子数码模型",
+    "code" : "CAT-006",
+    "parentId" : "modelcategory_1008",
+    "sortOrder" : 6,
+    "status" : "启用",
+    "description" : "包含智能手机、电脑、相机等电子产品模型，高细节表现，适用于电商展示与产品设计。"
   }, {
-    "id" : "dataassetfield_1007",
-    "assetId" : "dataasset_1009",
-    "fieldName" : "最后登录时间",
-    "fieldType" : "datetime",
-    "description" : "客户最近一次登录平台的时间，用于判断活跃度和流失预警。",
-    "sensitivityLevel" : "机密",
-    "isPrimaryKey" : false,
-    "maxLength" : 19
+    "id" : "modelcategory_1007",
+    "name" : "室内家具模型",
+    "code" : "CAT-007",
+    "parentId" : "modelcategory_1010",
+    "sortOrder" : 7,
+    "status" : "禁用",
+    "description" : "提供现代及古典家具、灯具、装饰品等室内元素模型，助力室内设计与装修效果图制作。"
   }, {
-    "id" : "dataassetfield_1008",
-    "assetId" : "dataasset_1007",
-    "fieldName" : "账户状态",
-    "fieldType" : "string",
-    "description" : "账户当前状态，可选正常/冻结/注销，用于权限控制和业务阻断。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : false,
-    "maxLength" : 10
+    "id" : "modelcategory_1008",
+    "name" : "科幻奇幻模型",
+    "code" : "CAT-008",
+    "parentId" : "modelcategory_1000",
+    "sortOrder" : 8,
+    "status" : "启用",
+    "description" : "收录科幻飞船、外星生物、未来城市等奇幻风格模型，适合科幻题材创作与游戏开发。"
   }, {
-    "id" : "dataassetfield_1009",
-    "assetId" : "dataasset_1003",
-    "fieldName" : "信用额度",
-    "fieldType" : "decimal",
-    "description" : "系统授予的信用额度上限，单位元，保留两位小数，用于风险控制。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : false,
-    "maxLength" : 12
+    "id" : "modelcategory_1009",
+    "name" : "工艺装饰模型",
+    "code" : "CAT-009",
+    "parentId" : "modelcategory_1008",
+    "sortOrder" : 9,
+    "status" : "禁用",
+    "description" : "涵盖陶瓷、玻璃、木雕等工艺装饰品精细模型，用于展示与文物数字化存档。"
   }, {
-    "id" : "dataassetfield_1010",
-    "assetId" : "dataasset_1015",
-    "fieldName" : "累计消费金额",
-    "fieldType" : "decimal",
-    "description" : "该客户从开户以来所有成功交易的累计金额，单位元，保留两位小数。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : false,
-    "maxLength" : 15
-  }, {
-    "id" : "dataassetfield_1011",
-    "assetId" : "dataasset_1020",
-    "fieldName" : "是否为VIP",
-    "fieldType" : "boolean",
-    "description" : "标记客户是否为VIP会员，VIP享受专属折扣和服务，默认false。",
-    "sensitivityLevel" : "机密",
-    "isPrimaryKey" : false,
-    "maxLength" : 1
-  }, {
-    "id" : "dataassetfield_1012",
-    "assetId" : "dataasset_1010",
-    "fieldName" : "部门编号",
-    "fieldType" : "string",
-    "description" : "客户所属的部门编号，关联公司内部组织架构表，用于多维分析。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : true,
-    "maxLength" : 20
-  }, {
-    "id" : "dataassetfield_1013",
-    "assetId" : "dataasset_1018",
-    "fieldName" : "岗位名称",
-    "fieldType" : "string",
-    "description" : "客户在公司担任的岗位名称，用于客户画像和职位层级分析。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : true,
-    "maxLength" : 50
-  }, {
-    "id" : "dataassetfield_1014",
-    "assetId" : "dataasset_1006",
-    "fieldName" : "入职日期",
-    "fieldType" : "date",
-    "description" : "员工入职日期（如果客户是内部员工），格式YYYY-MM-DD，可辅助计算司龄。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 10
-  }, {
-    "id" : "dataassetfield_1015",
-    "assetId" : "dataasset_1002",
-    "fieldName" : "薪资级别",
-    "fieldType" : "string",
-    "description" : "薪资等级，分为初级、中级、高级、资深四个档位，用于薪酬结构分析。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : false,
-    "maxLength" : 10
-  }, {
-    "id" : "dataassetfield_1016",
-    "assetId" : "dataasset_1005",
-    "fieldName" : "绩效考核得分",
-    "fieldType" : "decimal",
-    "description" : "年度绩效考核综合评分，满分100分，保留一位小数，用于评估员工表现。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : false,
-    "maxLength" : 5
-  }, {
-    "id" : "dataassetfield_1017",
-    "assetId" : "dataasset_1008",
-    "fieldName" : "备注信息",
-    "fieldType" : "text",
-    "description" : "其他需要记录的补充信息，支持较长文本，无长度上限但建议控制在500字符内。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 500
-  }, {
-    "id" : "dataassetfield_1018",
-    "assetId" : "dataasset_1009",
-    "fieldName" : "记录编号",
-    "fieldType" : "string",
-    "description" : "每条数据记录的唯一标识，UUID格式，用于快速定位和去重。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : true,
-    "maxLength" : 36
-  }, {
-    "id" : "dataassetfield_1019",
-    "assetId" : "dataasset_1015",
-    "fieldName" : "会员标识",
-    "fieldType" : "string",
-    "description" : "会员的业务编码，由字母和数字组成，与记录编号共同构成复合主键。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : true,
-    "maxLength" : 20
-  }, {
-    "id" : "dataassetfield_1020",
-    "assetId" : "dataasset_1013",
-    "fieldName" : "会员名称",
-    "fieldType" : "string",
-    "description" : "会员的显示名称，支持中文，可重复，前端展示时需脱敏处理。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : false,
-    "maxLength" : 50
-  }, {
-    "id" : "dataassetfield_1021",
-    "assetId" : "dataasset_1019",
-    "fieldName" : "手机号码",
-    "fieldType" : "string",
-    "description" : "会员手机号码，存储时采用SM4加密，查询时需通过脱敏函数处理。",
-    "sensitivityLevel" : "机密",
-    "isPrimaryKey" : true,
-    "maxLength" : 20
-  }, {
-    "id" : "dataassetfield_1022",
-    "assetId" : "dataasset_1016",
-    "fieldName" : "消费金额",
-    "fieldType" : "decimal",
-    "description" : "会员最近一次有效消费的金额，单位元，支持两位小数精度。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : false,
-    "maxLength" : 0
-  }, {
-    "id" : "dataassetfield_1023",
-    "assetId" : "dataasset_1009",
-    "fieldName" : "注册日期",
-    "fieldType" : "date",
-    "description" : "会员完成注册的具体日期，用于统计会员增长趋势和生命周期分析。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 0
-  }, {
-    "id" : "dataassetfield_1024",
-    "assetId" : "dataasset_1004",
-    "fieldName" : "是否启用",
-    "fieldType" : "boolean",
-    "description" : "标识会员账号当前是否处于启用状态，1表示启用，0表示禁用。",
-    "sensitivityLevel" : "内部",
-    "isPrimaryKey" : false,
-    "maxLength" : 0
-  }, {
-    "id" : "dataassetfield_1025",
-    "assetId" : "dataasset_1012",
-    "fieldName" : "所在省",
-    "fieldType" : "string",
-    "description" : "会员注册时填写的所在省份，用于区域分析和精准营销。",
-    "sensitivityLevel" : "公开",
-    "isPrimaryKey" : false,
-    "maxLength" : 20
-  }, {
-    "id" : "dataassetfield_1026",
-    "assetId" : "dataasset_1012",
-    "fieldName" : "邮箱",
-    "fieldType" : "string",
-    "description" : "会员电子邮箱地址，用于接收系统通知和密码重置链接，需校验格式。",
-    "sensitivityLevel" : "敏感",
-    "isPrimaryKey" : true,
-    "maxLength" : 100
-  }, {
-    "id" : "dataassetfield_1027",
-    "assetId" : "dataasset_1021",
-    "fieldName" : "信用等级",
-    "fieldType" : "string",
-    "description" : "基于会员消费行为和履约记录计算的信用评级，分为A/B/C/D四级。",
-    "sensitivityLevel" : "机密",
-    "isPrimaryKey" : false,
-    "maxLength" : 10
+    "id" : "modelcategory_1010",
+    "name" : "场景道具模型",
+    "code" : "CAT-010",
+    "parentId" : "modelcategory_1003",
+    "sortOrder" : 10,
+    "status" : "启用",
+    "description" : "包括道具、武器、工具等场景配套模型，丰富故事情节与场景布局。"
   } ],
-  "sheji-dataAssetFavorite" : [ {
-    "id" : "dataassetfavorite_1000",
-    "userId" : "user_1003",
-    "assetId" : "dataasset_1002",
-    "createdAt" : "2026-03-02 08:30:00"
+  "sheji-teamMember" : [ {
+    "id" : "teammember_1000",
+    "userId" : "U001",
+    "name" : "张伟",
+    "email" : "zhangwei@example.com",
+    "role" : "管理员",
+    "status" : "活跃",
+    "joinedAt" : "2026-02-28 09:00:00",
+    "contributionCount" : 120
   }, {
-    "id" : "dataassetfavorite_1001",
-    "userId" : "user_1006",
-    "assetId" : "dataasset_1004",
-    "createdAt" : "2026-03-06 10:15:00"
+    "id" : "teammember_1001",
+    "userId" : "U002",
+    "name" : "李娜",
+    "email" : "lina@example.com",
+    "role" : "编辑者",
+    "status" : "活跃",
+    "joinedAt" : "2026-03-07 10:30:00",
+    "contributionCount" : 85
   }, {
-    "id" : "dataassetfavorite_1002",
-    "userId" : "user_1003",
-    "assetId" : "dataasset_1021",
-    "createdAt" : "2026-03-10 14:00:00"
+    "id" : "teammember_1002",
+    "userId" : "U003",
+    "name" : "王强",
+    "email" : "wangqiang@example.com",
+    "role" : "查看者",
+    "status" : "已禁用",
+    "joinedAt" : "2026-03-14 14:15:00",
+    "contributionCount" : 200
   }, {
-    "id" : "dataassetfavorite_1003",
-    "userId" : "user_1003",
-    "assetId" : "dataasset_1021",
-    "createdAt" : "2026-03-14 16:45:00"
+    "id" : "teammember_1003",
+    "userId" : "U004",
+    "name" : "赵敏",
+    "email" : "zhaomin@example.com",
+    "role" : "管理员",
+    "status" : "待邀请",
+    "joinedAt" : "2026-03-21 08:45:00",
+    "contributionCount" : 5
   }, {
-    "id" : "dataassetfavorite_1004",
-    "userId" : "user_1007",
-    "assetId" : "dataasset_1021",
-    "createdAt" : "2026-03-18 19:20:00"
+    "id" : "teammember_1004",
+    "userId" : "U005",
+    "name" : "刘洋",
+    "email" : "liuyang@example.com",
+    "role" : "编辑者",
+    "status" : "活跃",
+    "joinedAt" : "2026-03-28 16:00:00",
+    "contributionCount" : 45
   }, {
-    "id" : "dataassetfavorite_1005",
-    "userId" : "user_1000",
-    "assetId" : "dataasset_1013",
-    "createdAt" : "2026-03-22 09:05:00"
+    "id" : "teammember_1005",
+    "userId" : "U006",
+    "name" : "陈静",
+    "email" : "chenjing@example.com",
+    "role" : "查看者",
+    "status" : "已禁用",
+    "joinedAt" : "2026-04-04 11:20:00",
+    "contributionCount" : 160
   }, {
-    "id" : "dataassetfavorite_1006",
-    "userId" : "user_1004",
-    "assetId" : "dataasset_1009",
-    "createdAt" : "2026-03-26 11:30:00"
+    "id" : "teammember_1006",
+    "userId" : "U007",
+    "name" : "杨磊",
+    "email" : "yanglei@example.com",
+    "role" : "管理员",
+    "status" : "待邀请",
+    "joinedAt" : "2026-04-11 13:10:00",
+    "contributionCount" : 98
   }, {
-    "id" : "dataassetfavorite_1007",
-    "userId" : "user_1001",
-    "assetId" : "dataasset_1001",
-    "createdAt" : "2026-03-30 13:55:00"
+    "id" : "teammember_1007",
+    "userId" : "U008",
+    "name" : "周婷",
+    "email" : "zhouting@example.com",
+    "role" : "编辑者",
+    "status" : "已禁用",
+    "joinedAt" : "2026-04-18 09:30:00",
+    "contributionCount" : 210
   }, {
-    "id" : "dataassetfavorite_1008",
-    "userId" : "user_1004",
-    "assetId" : "dataasset_1011",
-    "createdAt" : "2026-04-03 15:40:00"
+    "id" : "teammember_1008",
+    "userId" : "U009",
+    "name" : "吴涛",
+    "email" : "wutao@example.com",
+    "role" : "查看者",
+    "status" : "活跃",
+    "joinedAt" : "2026-04-25 15:40:00",
+    "contributionCount" : 32
   }, {
-    "id" : "dataassetfavorite_1009",
-    "userId" : "user_1004",
-    "assetId" : "dataasset_1012",
-    "createdAt" : "2026-04-07 17:10:00"
+    "id" : "teammember_1009",
+    "userId" : "U010",
+    "name" : "孙丽",
+    "email" : "sunli@example.com",
+    "role" : "管理员",
+    "status" : "待邀请",
+    "joinedAt" : "2026-05-02 10:00:00",
+    "contributionCount" : 175
   }, {
-    "id" : "dataassetfavorite_1010",
-    "userId" : "user_1006",
-    "assetId" : "dataasset_1016",
-    "createdAt" : "2026-04-11 08:00:00"
+    "id" : "teammember_1010",
+    "userId" : "U011",
+    "name" : "林峰",
+    "email" : "linfeng@example.com",
+    "role" : "编辑者",
+    "status" : "已禁用",
+    "joinedAt" : "2026-05-09 14:25:00",
+    "contributionCount" : 7
   }, {
-    "id" : "dataassetfavorite_1011",
-    "userId" : "user_1000",
-    "assetId" : "dataasset_1012",
-    "createdAt" : "2026-04-15 10:45:00"
-  }, {
-    "id" : "dataassetfavorite_1012",
-    "userId" : "user_1004",
-    "assetId" : "dataasset_1013",
-    "createdAt" : "2026-04-19 12:20:00"
-  }, {
-    "id" : "dataassetfavorite_1013",
-    "userId" : "user_1007",
-    "assetId" : "dataasset_1014",
-    "createdAt" : "2026-04-23 14:50:00"
-  }, {
-    "id" : "dataassetfavorite_1014",
-    "userId" : "user_1002",
-    "assetId" : "dataasset_1006",
-    "createdAt" : "2026-04-27 16:30:00"
-  }, {
-    "id" : "dataassetfavorite_1015",
-    "userId" : "user_1007",
-    "assetId" : "dataasset_1010",
-    "createdAt" : "2026-05-01 18:15:00"
-  }, {
-    "id" : "dataassetfavorite_1016",
-    "userId" : "user_1003",
-    "assetId" : "dataasset_1008",
-    "createdAt" : "2026-05-05 07:45:00"
-  }, {
-    "id" : "dataassetfavorite_1017",
-    "userId" : "user_1006",
-    "assetId" : "dataasset_1009",
-    "createdAt" : "2026-05-09 20:00:00"
-  }, {
-    "id" : "dataassetfavorite_1018",
-    "userId" : "user_1002",
-    "assetId" : "dataasset_1014",
+    "id" : "teammember_1011",
+    "userId" : "U012",
+    "name" : "黄娟",
+    "email" : "huangjuan@example.com",
+    "role" : "查看者",
+    "status" : "待邀请",
+    "joinedAt" : "2026-05-16 08:30:00",
+    "contributionCount" : 58
+  } ],
+  "sheji-shareRequest" : [ {
+    "id" : "sharerequest_1000",
+    "modelId" : "model_1003",
+    "applicantId" : "USER_LH",
+    "applicantName" : "刘宏",
+    "reason" : "需使用该建筑模型进行项目投标方案演示及效果图渲染，授权期3个月。",
+    "status" : "待审批",
+    "approverId" : "APPR_PENDING",
+    "approvedAt" : "2026-03-01 09:15:00",
     "createdAt" : "2026-03-01 09:15:00"
   }, {
-    "id" : "dataassetfavorite_1019",
-    "userId" : "user_1002",
-    "assetId" : "dataasset_1010",
-    "createdAt" : "2026-03-10 14:30:00"
-  }, {
-    "id" : "dataassetfavorite_1020",
-    "userId" : "user_1002",
-    "assetId" : "dataasset_1009",
-    "createdAt" : "2026-03-20 11:00:00"
-  }, {
-    "id" : "dataassetfavorite_1021",
-    "userId" : "user_1004",
-    "assetId" : "dataasset_1005",
-    "createdAt" : "2026-04-05 16:45:00"
-  }, {
-    "id" : "dataassetfavorite_1022",
-    "userId" : "user_1003",
-    "assetId" : "dataasset_1015",
-    "createdAt" : "2026-04-18 08:20:00"
-  }, {
-    "id" : "dataassetfavorite_1023",
-    "userId" : "user_1001",
-    "assetId" : "dataasset_1007",
-    "createdAt" : "2026-05-06 13:10:00"
-  }, {
-    "id" : "dataassetfavorite_1024",
-    "userId" : "user_1005",
-    "assetId" : "dataasset_1006",
-    "createdAt" : "2026-05-22 10:30:00"
-  } ],
-  "sheji-qualityRule" : [ {
-    "id" : "qualityrule_1000",
-    "name" : "客户信息完整性校验",
-    "ruleType" : "完整性",
-    "targetAssetId" : "dataasset_1003",
-    "status" : "启用",
-    "cronExpression" : "0 0 2 * * ?",
-    "description" : "检查客户信息表中姓名、身份证号、手机号字段是否为空，每天凌晨2点执行以确保数据完整。"
-  }, {
-    "id" : "qualityrule_1001",
-    "name" : "订单金额准确性校验",
-    "ruleType" : "准确性",
-    "targetAssetId" : "dataasset_1004",
-    "status" : "启用",
-    "cronExpression" : "0 0/30 * * * ?",
-    "description" : "校验订单表金额字段是否等于商品单价乘以数量，每30分钟扫描异常数据。"
-  }, {
-    "id" : "qualityrule_1002",
-    "name" : "跨系统用户一致性校验",
-    "ruleType" : "一致性",
-    "targetAssetId" : "dataasset_1019",
-    "status" : "停用",
-    "cronExpression" : "0 0 0 * * ?",
-    "description" : "比对CRM和ERP系统中用户信息，确保姓名、部门、角色字段一致，每天零点执行。"
-  }, {
-    "id" : "qualityrule_1003",
-    "name" : "报表数据及时性校验",
-    "ruleType" : "及时性",
-    "targetAssetId" : "dataasset_1019",
-    "status" : "启用",
-    "cronExpression" : "0 0 6 * * ?",
-    "description" : "检测昨日业务数据是否在每日6点前完成入仓，超时则告警以保障报表及时性。"
-  }, {
-    "id" : "qualityrule_1004",
-    "name" : "产品属性完整性校验",
-    "ruleType" : "完整性",
-    "targetAssetId" : "dataasset_1023",
-    "status" : "停用",
-    "cronExpression" : "0 0 4 * * ?",
-    "description" : "校验产品表中名称、规格、分类、图片URL等必填字段是否完整，每天凌晨4点执行。"
-  }, {
-    "id" : "qualityrule_1005",
-    "name" : "库存数量准确性校验",
-    "ruleType" : "准确性",
-    "targetAssetId" : "dataasset_1018",
-    "status" : "启用",
-    "cronExpression" : "0 0 1 * * ?",
-    "description" : "比对WMS系统库存与ERP账面库存数量是否一致，差异超过阈值时触发告警。"
-  }, {
-    "id" : "qualityrule_1006",
-    "name" : "主数据编码一致性校验",
-    "ruleType" : "一致性",
-    "targetAssetId" : "dataasset_1022",
-    "status" : "停用",
-    "cronExpression" : "0 0/15 * * * ?",
-    "description" : "检查不同系统间的物料编码、客户编码映射关系是否一致，每15分钟轮询一次。"
-  }, {
-    "id" : "qualityrule_1007",
-    "name" : "接口响应及时性校验",
-    "ruleType" : "及时性",
-    "targetAssetId" : "dataasset_1003",
-    "status" : "停用",
-    "cronExpression" : "0 */5 * * * ?",
-    "description" : "监控核心数据接口的响应时间是否超过2秒阈值，每5分钟触发一次检查。"
-  } ],
-  "sheji-detectionResult" : [ {
-    "id" : "detectionresult_1000",
-    "ruleId" : "qualityrule_1002",
-    "executionTime" : "2026-03-01 09:15:00",
-    "score" : 95,
-    "passed" : true,
-    "errorCount" : 0,
-    "errorDetails" : [ ],
-    "status" : "成功"
-  }, {
-    "id" : "detectionresult_1001",
-    "ruleId" : "qualityrule_1006",
-    "executionTime" : "2026-03-15 14:30:00",
-    "score" : 88,
-    "passed" : true,
-    "errorCount" : 0,
-    "errorDetails" : [ ],
-    "status" : "成功"
-  }, {
-    "id" : "detectionresult_1002",
-    "ruleId" : "qualityrule_1002",
-    "executionTime" : "2026-04-10 10:00:00",
-    "score" : 100,
-    "passed" : true,
-    "errorCount" : 0,
-    "errorDetails" : [ ],
-    "status" : "成功"
-  }, {
-    "id" : "detectionresult_1003",
-    "ruleId" : "qualityrule_1007",
-    "executionTime" : "2026-03-20 16:45:00",
-    "score" : 23,
-    "passed" : false,
-    "errorCount" : 2,
-    "errorDetails" : [ "字段 'customer_id' 存在空值（缺失 5 条记录）", "字段 'order_date' 格式不一致（混合 YYYY-MM-DD 和 MM/DD/YYYY）" ],
-    "status" : "失败"
-  }, {
-    "id" : "detectionresult_1004",
-    "ruleId" : "qualityrule_1005",
-    "executionTime" : "2026-04-05 08:20:00",
-    "score" : 15,
-    "passed" : false,
-    "errorCount" : 3,
-    "errorDetails" : [ "主键 'order_id' 存在重复值（3 条重复）", "字段 'amount' 包含非数字字符（如 '12.3a'）", "字段 'status' 值不在枚举范围（出现 'unknown'）" ],
-    "status" : "失败"
-  }, {
-    "id" : "detectionresult_1005",
-    "ruleId" : "qualityrule_1003",
-    "executionTime" : "2026-05-12 11:30:00",
-    "score" : 38,
-    "passed" : false,
-    "errorCount" : 1,
-    "errorDetails" : [ "数据表 'sales' 记录数超出阈值（实际 1200，上限 1000）" ],
-    "status" : "失败"
-  }, {
-    "id" : "detectionresult_1006",
-    "ruleId" : "qualityrule_1006",
-    "executionTime" : "2026-05-20 09:00:00",
-    "score" : 62,
-    "passed" : false,
-    "errorCount" : 0,
-    "errorDetails" : [ ],
-    "status" : "运行中"
-  }, {
-    "id" : "detectionresult_1007",
-    "ruleId" : "qualityrule_1006",
-    "executionTime" : "2026-05-28 14:10:00",
-    "score" : 75,
-    "passed" : false,
-    "errorCount" : 1,
-    "errorDetails" : [ "检测任务已执行 70%，部分分区还未完成扫描" ],
-    "status" : "运行中"
-  } ],
-  "sheji-dataStandard" : [ {
-    "id" : "datastandard_1000",
-    "standardCode" : "STD-202605-001",
-    "standardName" : "客户姓名规范",
-    "dataType" : "字符串",
-    "length" : 50,
-    "enumValues" : [ ],
-    "businessDomain" : "客户关系",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1001",
-    "standardCode" : "STD-202605-002",
-    "standardName" : "员工工号编码规则",
-    "dataType" : "字符串",
-    "length" : 20,
-    "enumValues" : [ ],
-    "businessDomain" : "人力资源",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1002",
-    "standardCode" : "STD-202605-003",
-    "standardName" : "订单金额精度标准",
-    "dataType" : "小数",
-    "length" : 12,
-    "enumValues" : [ ],
-    "businessDomain" : "供应链",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1003",
-    "standardCode" : "STD-202605-004",
-    "standardName" : "产品分类代码",
-    "dataType" : "枚举",
-    "length" : 30,
-    "enumValues" : [ "A类", "B类", "C类", "D类" ],
-    "businessDomain" : "生产制造",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1004",
-    "standardCode" : "STD-202605-005",
-    "standardName" : "供应商等级代码",
-    "dataType" : "枚举",
-    "length" : 10,
-    "enumValues" : [ "S级", "A级", "B级", "C级", "D级" ],
-    "businessDomain" : "供应链",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1005",
-    "standardCode" : "STD-202605-006",
-    "standardName" : "出生日期格式",
-    "dataType" : "日期",
-    "length" : 10,
-    "enumValues" : [ ],
-    "businessDomain" : "人力资源",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1006",
-    "standardCode" : "STD-202605-007",
-    "standardName" : "财务科目编码",
-    "dataType" : "字符串",
-    "length" : 30,
-    "enumValues" : [ ],
-    "businessDomain" : "财务",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1007",
-    "standardCode" : "STD-202605-008",
-    "standardName" : "是否启用标识",
-    "dataType" : "布尔",
-    "length" : 1,
-    "enumValues" : [ ],
-    "businessDomain" : "数据治理",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1008",
-    "standardCode" : "STD-202605-009",
-    "standardName" : "质量检测结果",
-    "dataType" : "枚举",
-    "length" : 10,
-    "enumValues" : [ "合格", "不合格", "待复检" ],
-    "businessDomain" : "质量",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1009",
-    "standardCode" : "STD-202605-010",
-    "standardName" : "研发项目编号",
-    "dataType" : "字符串",
-    "length" : 20,
-    "enumValues" : [ ],
-    "businessDomain" : "研发",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1010",
-    "standardCode" : "STD-202605-011",
-    "standardName" : "营销活动类型",
-    "dataType" : "枚举",
-    "length" : 20,
-    "enumValues" : [ "线上促销", "线下推广", "品牌合作", "会员活动" ],
-    "businessDomain" : "营销",
-    "status" : "已废弃"
-  }, {
-    "id" : "datastandard_1011",
-    "standardCode" : "STD-202605-012",
-    "standardName" : "IT设备资产编号",
-    "dataType" : "字符串",
-    "length" : 30,
-    "enumValues" : [ ],
-    "businessDomain" : "IT运维",
-    "status" : "已废弃"
-  }, {
-    "id" : "datastandard_1012",
-    "standardCode" : "STD-202605-013",
-    "standardName" : "客户风险评级",
-    "dataType" : "整数",
-    "length" : 4,
-    "enumValues" : [ ],
-    "businessDomain" : "风控",
-    "status" : "草稿"
-  }, {
-    "id" : "datastandard_1013",
-    "standardCode" : "STD-202605-014",
-    "standardName" : "税率标准值",
-    "dataType" : "小数",
-    "length" : 10,
-    "enumValues" : [ ],
-    "businessDomain" : "财务",
-    "status" : "草稿"
-  }, {
-    "id" : "datastandard_1014",
-    "standardCode" : "STD-202605-015",
-    "standardName" : "合同文本字段长度",
-    "dataType" : "文本",
-    "length" : 4000,
-    "enumValues" : [ ],
-    "businessDomain" : "法务",
-    "status" : "草稿"
-  }, {
-    "id" : "datastandard_1015",
-    "standardCode" : "STD-202605-016",
-    "standardName" : "产品批次号规则",
-    "dataType" : "字符串",
-    "length" : 40,
-    "enumValues" : [ ],
-    "businessDomain" : "生产制造",
-    "status" : "草稿"
-  }, {
-    "id" : "datastandard_1016",
-    "standardCode" : "STD-202605-017",
-    "standardName" : "员工状态标识",
-    "dataType" : "枚举",
-    "length" : 10,
-    "enumValues" : [ "在职", "离职", "退休", "停薪留职" ],
-    "businessDomain" : "人力资源",
-    "status" : "已废弃"
-  }, {
-    "id" : "datastandard_1017",
-    "standardCode" : "STD-202605-018",
-    "standardName" : "数据质量等级",
-    "dataType" : "枚举",
-    "length" : 10,
-    "enumValues" : [ "高", "中", "低" ],
-    "businessDomain" : "数据治理",
-    "status" : "草稿"
-  }, {
-    "id" : "datastandard_1018",
-    "standardCode" : "STD-FIN-006",
-    "standardName" : "财务科目编号标准-短整型",
-    "dataType" : "smallint",
-    "length" : 4,
-    "enumValues" : [ ],
-    "businessDomain" : "财务",
-    "status" : "草稿"
-  }, {
-    "id" : "datastandard_1019",
-    "standardCode" : "STD-HR-012",
-    "standardName" : "员工性别代码标准-VARCHAR",
-    "dataType" : "varchar",
-    "length" : 20,
-    "enumValues" : [ "男", "女" ],
-    "businessDomain" : "人力资源",
-    "status" : "已发布"
-  }, {
-    "id" : "datastandard_1020",
-    "standardCode" : "STD-SCM-009",
-    "standardName" : "供应商物资分类标准-DECIMAL",
-    "dataType" : "decimal",
-    "length" : 10,
-    "enumValues" : [ "A类", "B类", "C类" ],
-    "businessDomain" : "供应链",
-    "status" : "已废弃"
-  } ],
-  "sheji-integrationPlan" : [ {
-    "id" : "integrationplan_1000",
-    "name" : "月度销售订单ETL同步",
-    "taskType" : "ETL",
-    "cronExpression" : "0 0 2 1 * ?",
-    "dependencies" : [ ],
-    "retryPolicy" : {
-      "maxRetries" : 3,
-      "retryIntervalMinutes" : 5,
-      "exponentialBackoff" : true
-    },
-    "status" : "启用",
-    "description" : "每月1日凌晨2点从SAP ERP抽取销售订单数据，经过清洗转换后加载到企业数据仓库，用于月度经营分析。"
-  }, {
-    "id" : "integrationplan_1001",
-    "name" : "客户主数据同步至数仓",
-    "taskType" : "数据同步",
-    "cronExpression" : "0 30 8 * * MON-FRI",
-    "dependencies" : [ "月度销售订单ETL同步" ],
-    "retryPolicy" : {
-      "maxRetries" : 2,
-      "retryIntervalMinutes" : 10,
-      "exponentialBackoff" : false
-    },
-    "status" : "启用",
-    "description" : "每周一到周五8:30将CRM系统更新的客户主数据增量同步到数据仓库，保证客户信息实时一致。"
-  }, {
-    "id" : "integrationplan_1002",
-    "name" : "日志清洗归档任务",
-    "taskType" : "数据清洗",
-    "cronExpression" : "0 0/30 * * * ?",
-    "dependencies" : [ ],
-    "retryPolicy" : {
-      "maxRetries" : 5,
-      "retryIntervalMinutes" : 1,
-      "exponentialBackoff" : true
-    },
-    "status" : "启用",
-    "description" : "每30分钟对应用服务器产生的原始日志进行格式标准化、去重和敏感信息脱敏，并压缩归档至冷存储。"
-  }, {
-    "id" : "integrationplan_1003",
-    "name" : "库存变动实时同步",
-    "taskType" : "数据同步",
-    "cronExpression" : "0 0/5 * * * ?",
-    "dependencies" : [ "客户主数据同步至数仓" ],
-    "retryPolicy" : {
-      "maxRetries" : 4,
-      "retryIntervalMinutes" : 2,
-      "exponentialBackoff" : true
-    },
-    "status" : "启用",
-    "description" : "每5分钟从WMS系统同步库存变动数据至实时分析层，支撑库存看板与预警，延迟不超过1分钟。"
-  }, {
-    "id" : "integrationplan_1004",
-    "name" : "财务凭证ETL清洗转换",
-    "taskType" : "ETL",
-    "cronExpression" : "0 0 3 * * ?",
-    "dependencies" : [ "月度销售订单ETL同步", "客户主数据同步至数仓" ],
-    "retryPolicy" : {
-      "maxRetries" : 3,
-      "retryIntervalMinutes" : 15,
-      "exponentialBackoff" : false
-    },
-    "status" : "停用",
-    "description" : "每日凌晨3点抽取财务模块凭证数据，按照会计准则进行科目映射和金额校验，加载到总账分析表。"
-  }, {
-    "id" : "integrationplan_1005",
-    "name" : "设备运行数据清洗",
-    "taskType" : "数据清洗",
-    "cronExpression" : "0 0 0/2 * * ?",
-    "dependencies" : [ ],
-    "retryPolicy" : {
-      "maxRetries" : 6,
-      "retryIntervalMinutes" : 3,
-      "exponentialBackoff" : true
-    },
-    "status" : "启用",
-    "description" : "每2小时对IoT平台采集的设备振动、温度数据进行异常值过滤、缺失值插补和单位归一化处理。"
-  }, {
-    "id" : "integrationplan_1006",
-    "name" : "HR组织架构每日同步",
-    "taskType" : "数据同步",
-    "cronExpression" : "0 0 6 * * ?",
-    "dependencies" : [ ],
-    "retryPolicy" : {
-      "maxRetries" : 2,
-      "retryIntervalMinutes" : 20,
-      "exponentialBackoff" : false
-    },
-    "status" : "启用",
-    "description" : "每日6点从HRIS系统全量同步组织架构、岗位和人员信息至数据中台，确保权限系统和报表基础数据准确。"
-  }, {
-    "id" : "integrationplan_1007",
-    "name" : "产品质量检测数据ETL",
-    "taskType" : "ETL",
-    "cronExpression" : "0 30 1 * * ?",
-    "dependencies" : [ "日志清洗归档任务" ],
-    "retryPolicy" : {
-      "maxRetries" : 3,
-      "retryIntervalMinutes" : 8,
-      "exponentialBackoff" : true
-    },
-    "status" : "启用",
-    "description" : "每天凌晨1:30从MES系统抽取产品抽检结果、不合格记录，转换为质量分析标准格式，更新质量看板。"
-  }, {
-    "id" : "integrationplan_1008",
-    "name" : "电商订单数据清洗",
-    "taskType" : "数据清洗",
-    "cronExpression" : "0 0/15 * * * ?",
-    "dependencies" : [ "月度销售订单ETL同步" ],
-    "retryPolicy" : {
-      "maxRetries" : 4,
-      "retryIntervalMinutes" : 5,
-      "exponentialBackoff" : true
-    },
-    "status" : "停用",
-    "description" : "每15分钟清洗各电商平台订单数据，去除测试订单、合并重复订单、补全缺失的物流信息后入仓。"
-  }, {
-    "id" : "integrationplan_1009",
-    "name" : "供应商主数据同步",
-    "taskType" : "数据同步",
-    "cronExpression" : "0 0 0 1 * ?",
-    "dependencies" : [ ],
-    "retryPolicy" : {
-      "maxRetries" : 1,
-      "retryIntervalMinutes" : 30,
-      "exponentialBackoff" : false
-    },
-    "status" : "停用",
-    "description" : "每月1日零时从SCM系统全量同步供应商基本信息、资质文件和合作状态，更新供应商主数据表。"
-  }, {
-    "id" : "integrationplan_1010",
-    "name" : "生产报工数据ETL入库",
-    "taskType" : "ETL",
-    "cronExpression" : "0 0 23 * * ?",
-    "dependencies" : [ ],
-    "retryPolicy" : {
-      "maxRetries" : 3,
-      "retryIntervalMinutes" : 10,
-      "exponentialBackoff" : true
-    },
-    "status" : "停用",
-    "description" : "每晚23点从生产执行系统抽取当日员工报工记录，按工单和工序进行归集，加载到工时成本分析表。"
-  } ],
-  "sheji-executionLog" : [ {
-    "id" : "executionlog_1000",
-    "planId" : "integrationplan_1008",
-    "startTime" : "2026-03-02 08:30:00",
-    "endTime" : "2026-03-02 08:45:00",
-    "status" : "成功",
-    "logContent" : "成功完成从MySQL订单库到数据仓库的订单增量同步，本次抽取12,358条记录，目标表orders_snapshot写入12,358行，无错误，耗时15分12秒。"
-  }, {
-    "id" : "executionlog_1001",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-03-05 14:15:00",
-    "endTime" : "2026-03-05 14:30:00",
-    "status" : "失败",
-    "logContent" : "从ERP同步采购订单失败，失败原因：目标表'ods_purchase_orders'字段'remark'长度限制255，但源端提供字段长度800，触发数据截断异常，错误代码ORA-12899。"
-  }, {
-    "id" : "executionlog_1002",
-    "planId" : "integrationplan_1003",
-    "startTime" : "2026-03-10 09:00:00",
-    "endTime" : "2026-03-10 09:01:00",
-    "status" : "运行中",
-    "logContent" : "正在执行CRM客户数据清洗脚本，当前阶段：地址标准化校验，已处理12,000条记录中的5,340条，预计剩余8分钟。"
-  }, {
-    "id" : "executionlog_1003",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-03-15 10:30:00",
-    "endTime" : "2026-03-15 10:55:00",
-    "status" : "成功",
-    "logContent" : "成功完成财务凭证历史数据归档，将2024年凭证从生产库迁移至归档库，共迁移56,789条凭证分录，数据校验一致，耗时25分钟。"
-  }, {
-    "id" : "executionlog_1004",
-    "planId" : "integrationplan_1001",
-    "startTime" : "2026-03-20 16:45:00",
-    "endTime" : "2026-03-20 17:00:00",
-    "status" : "失败",
-    "logContent" : "从HR系统同步员工组织架构失败，失败原因：源端API返回HTTP 503服务不可用，重试3次后仍失败，已记录断点偏移量，待下一次调度自动续传。"
-  }, {
-    "id" : "executionlog_1005",
-    "planId" : "integrationplan_1005",
-    "startTime" : "2026-03-25 11:00:00",
-    "endTime" : "2026-03-25 11:01:00",
-    "status" : "运行中",
-    "logContent" : "正在执行ETL作业'数据质量检查'，当前阶段：空值率扫描，已检查表dim_customer（2,150万行）的35%分区，发现缺失率超过阈值的字段：email（12.3%）。"
-  }, {
-    "id" : "executionlog_1006",
-    "planId" : "integrationplan_1009",
-    "startTime" : "2026-04-02 08:00:00",
-    "endTime" : "2026-04-02 08:35:00",
-    "status" : "成功",
-    "logContent" : "成功完成从物流系统到数据湖的轨迹数据全量同步，共处理1,234,567条GPS记录，目标表ods_logistics_tracks写入1,234,567行，耗时35分钟，无错误。"
-  }, {
-    "id" : "executionlog_1007",
-    "planId" : "integrationplan_1001",
-    "startTime" : "2026-04-08 12:30:00",
-    "endTime" : "2026-04-08 12:50:00",
-    "status" : "失败",
-    "logContent" : "从OA系统同步审批流程数据失败，失败原因：源端数据库连接池耗尽，'max pool size'为50但当前活跃连接已达上限，等待超时60秒后放弃。"
-  }, {
-    "id" : "executionlog_1008",
-    "planId" : "integrationplan_1004",
-    "startTime" : "2026-04-15 14:20:00",
-    "endTime" : "2026-04-15 14:21:00",
-    "status" : "运行中",
-    "logContent" : "正在执行数据脱敏脚本对生产库客户手机号进行掩码处理，当前进度40%，已完成处理表3张（user_profile, order_contact, delivery_contact），预计剩余15分钟。"
-  }, {
-    "id" : "executionlog_1009",
-    "planId" : "integrationplan_1009",
-    "startTime" : "2026-04-20 09:15:00",
-    "endTime" : "2026-04-20 09:45:00",
-    "status" : "成功",
-    "logContent" : "成功完成数据仓库维度表全量刷新，更新dim_date增加2027-2028年日期，dim_product新增300个SKU，dim_store同步门店关停信息，操作逐表提交，耗时30分钟。"
-  }, {
-    "id" : "executionlog_1010",
-    "planId" : "integrationplan_1007",
-    "startTime" : "2026-04-25 10:10:00",
-    "endTime" : "2026-04-25 10:30:00",
-    "status" : "失败",
-    "logContent" : "从物联网平台同步设备告警数据失败，失败原因：源端数据格式变更，新增字段'alert_level'为枚举类型但未在映射中定义，导致解析器抛出SchemaMismatchException。"
-  }, {
-    "id" : "executionlog_1011",
-    "planId" : "integrationplan_1003",
-    "startTime" : "2026-05-02 15:00:00",
-    "endTime" : "2026-05-02 15:01:00",
-    "status" : "运行中",
-    "logContent" : "正在执行数据备份任务，源库：prod_db (MySQL 8.0)，目标：nas_backup，当前阶段：备份表inventory_warehouse（约800万行），已完成60%，磁盘写入速率120MB/s。"
-  }, {
-    "id" : "executionlog_1012",
-    "planId" : "integrationplan_1010",
-    "startTime" : "2026-05-08 11:30:00",
-    "endTime" : "2026-05-08 11:55:00",
-    "status" : "成功",
-    "logContent" : "成功完成从第三方支付系统到财务中台的交易对账，匹配成功18,923笔，异常2笔（金额不一致），已生成差异报表并发送至财务负责人邮箱。"
-  }, {
-    "id" : "executionlog_1013",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-05-12 13:45:00",
-    "endTime" : "2026-05-12 14:05:00",
-    "status" : "失败",
-    "logContent" : "从邮件系统同步附件数据失败，失败原因：邮件服务器磁盘空间满（剩余0%），无法读取附件内容，需管理员清理后再重新运行。"
-  }, {
-    "id" : "executionlog_1014",
-    "planId" : "integrationplan_1003",
-    "startTime" : "2026-05-18 16:00:00",
-    "endTime" : "2026-05-18 16:01:00",
-    "status" : "运行中",
-    "logContent" : "正在执行数据血缘解析任务，对新的ETL脚本（/etl/transform/daily_sales.py）进行静态分析，已解析26个节点中的18个，发现2个潜在的循环依赖。"
-  }, {
-    "id" : "executionlog_1015",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-05-22 09:30:00",
-    "endTime" : "2026-05-22 10:00:00",
-    "status" : "成功",
-    "logContent" : "成功完成实时数据流（Kafka topic：event_click）到时序数据库的归档，共消费并写入4,567,890条事件，平均延时120ms，无积压。"
-  }, {
-    "id" : "executionlog_1016",
-    "planId" : "integrationplan_1007",
-    "startTime" : "2026-05-25 10:00:00",
-    "endTime" : "2026-05-25 10:20:00",
-    "status" : "失败",
-    "logContent" : "从邮件系统同步附件数据失败，失败原因：邮件服务器磁盘空间满（剩余0%），无法读取附件内容，需管理员清理后再重新运行。"
-  }, {
-    "id" : "executionlog_1017",
-    "planId" : "integrationplan_1000",
-    "startTime" : "2026-05-28 08:00:00",
-    "endTime" : "2026-05-28 08:01:00",
-    "status" : "运行中",
-    "logContent" : "正在执行数据平台自检任务，包括元数据一致性检查、权限过期预警、存储水位线扫描，当前进度15%，已发现3张表元数据版本不一致。"
-  }, {
-    "id" : "executionlog_1018",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-03-01 09:15:30",
-    "endTime" : "2026-03-01 09:45:20",
-    "status" : "成功",
-    "logContent" : "数据源MYSQL_01增量抽取完成，共处理记录15,234条，耗时29分50秒，无异常。"
-  }, {
-    "id" : "executionlog_1019",
-    "planId" : "integrationplan_1009",
-    "startTime" : "2026-03-05 14:00:00",
-    "endTime" : "2026-03-05 14:35:10",
-    "status" : "失败",
-    "logContent" : "FTP文件读取失败：文件'import_20260305.csv'格式校验未通过，字段数不一致，请检查源文件。"
-  }, {
-    "id" : "executionlog_1020",
-    "planId" : "integrationplan_1009",
-    "startTime" : "2026-03-10 22:10:00",
-    "endTime" : "2026-03-10 23:59:59",
-    "status" : "运行中",
-    "logContent" : "大数据聚合任务正在执行中，当前处理进度35%，预计还需约8分钟完成。"
-  }, {
-    "id" : "executionlog_1021",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-03-18 08:30:00",
-    "endTime" : "2026-03-18 09:02:45",
-    "status" : "成功",
-    "logContent" : "数据清洗任务完成，过滤无效数据1,234条，标准化字段23个，输出至清洗库。"
-  }, {
-    "id" : "executionlog_1022",
-    "planId" : "integrationplan_1008",
-    "startTime" : "2026-03-25 16:45:00",
-    "endTime" : "2026-03-25 17:30:00",
-    "status" : "失败",
-    "logContent" : "API接口调用超时（请求URL:/api/v1/data/sync），重试3次均失败，原因：连接池耗尽。"
-  }, {
-    "id" : "executionlog_1023",
-    "planId" : "integrationplan_1002",
-    "startTime" : "2026-04-02 11:00:00",
-    "endTime" : "2026-04-02 23:59:59",
-    "status" : "运行中",
-    "logContent" : "实时流数据处理任务启动，Kafka消费组'plan-08'已连接到topic 'data-raw'。"
-  }, {
-    "id" : "executionlog_1024",
-    "planId" : "integrationplan_1001",
-    "startTime" : "2026-04-10 13:20:00",
-    "endTime" : "2026-04-10 14:08:30",
-    "status" : "成功",
-    "logContent" : "数据脱敏任务完成，对客户表'customer_info'中手机号、身份证号进行掩码处理，处理记录5,678条。"
-  }, {
-    "id" : "executionlog_1025",
-    "planId" : "integrationplan_1003",
-    "startTime" : "2026-04-18 09:00:00",
-    "endTime" : "2026-04-18 09:45:00",
-    "status" : "失败",
-    "logContent" : "数据质量检查发现重复数据：表'order_detail'存在3,456条完全重复记录，超出阈值，任务终止。"
-  }, {
-    "id" : "executionlog_1026",
-    "planId" : "integrationplan_1005",
-    "startTime" : "2026-04-25 17:30:00",
-    "endTime" : "2026-04-25 18:15:20",
-    "status" : "成功",
-    "logContent" : "数据归档任务完成，将2025年历史数据迁移至HDFS冷存储，归档表8个，释放空间约12GB。"
-  }, {
-    "id" : "executionlog_1027",
-    "planId" : "integrationplan_1010",
-    "startTime" : "2026-05-12 10:00:00",
-    "endTime" : "2026-05-12 10:25:00",
-    "status" : "失败",
-    "logContent" : "数据同步任务中断：目标数据库空间不足，剩余可用空间仅200MB，无法写入数据。"
-  }, {
-    "id" : "executionlog_1028",
-    "planId" : "integrationplan_1005",
-    "startTime" : "2026-05-20 15:00:00",
-    "endTime" : "2026-05-20 23:59:59",
-    "status" : "运行中",
-    "logContent" : "全量数据加载任务正在运行，已加载表12/25，当前进度48%，预计剩余时间约20分钟。"
-  }, {
-    "id" : "executionlog_1029",
-    "planId" : "integrationplan_1009",
-    "startTime" : "2026-05-28 08:00:00",
-    "endTime" : "2026-05-28 23:59:59",
-    "status" : "运行中",
-    "logContent" : "每日数据质量报告生成任务启动，正在采集8个数据源指标，预计午间完成。"
-  } ],
-  "sheji-apiDefinition" : [ {
-    "id" : "apidefinition_1000",
-    "name" : "获取数据资产列表",
-    "path" : "/api/v1/data-assets",
-    "method" : "GET",
-    "requestParams" : [ {
-      "name" : "page",
-      "type" : "integer",
-      "required" : false,
-      "description" : "当前页码，从1开始"
-    }, {
-      "name" : "size",
-      "type" : "integer",
-      "required" : false,
-      "description" : "每页条数，默认20"
-    }, {
-      "name" : "keyword",
-      "type" : "string",
-      "required" : false,
-      "description" : "搜索关键字，按资产名称或描述模糊匹配"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "状态码，200表示成功"
-        },
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object",
-            "properties" : {
-              "id" : "string",
-              "name" : "string",
-              "assetType" : "string",
-              "createdAt" : "string"
-            }
-          }
-        },
-        "total" : {
-          "type" : "integer",
-          "description" : "总记录数"
-        }
-      }
-    },
-    "status" : "已发布",
-    "version" : "1.0.0"
-  }, {
-    "id" : "apidefinition_1001",
-    "name" : "创建数据资产",
-    "path" : "/api/v1/data-assets",
-    "method" : "POST",
-    "requestParams" : [ {
-      "name" : "body",
-      "type" : "object",
-      "required" : true,
-      "description" : "数据资产创建信息，包含name、assetType、description、tags等字段"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "201创建成功"
-        },
-        "data" : {
-          "type" : "object",
-          "properties" : {
-            "id" : "string",
-            "name" : "string",
-            "assetType" : "string"
-          }
-        }
-      }
-    },
-    "status" : "待审核",
-    "version" : "1.1.0"
-  }, {
-    "id" : "apidefinition_1002",
-    "name" : "更新数据资产",
-    "path" : "/api/v1/data-assets/{id}",
-    "method" : "PUT",
-    "requestParams" : [ {
-      "name" : "id",
-      "type" : "string",
-      "required" : true,
-      "description" : "数据资产ID，路径参数"
-    }, {
-      "name" : "body",
-      "type" : "object",
-      "required" : true,
-      "description" : "待更新的资产字段，支持部分更新"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "200更新成功"
-        },
-        "data" : {
-          "type" : "object",
-          "properties" : {
-            "id" : "string",
-            "updatedAt" : "string"
-          }
-        }
-      }
-    },
-    "status" : "已发布",
-    "version" : "1.2.0"
-  }, {
-    "id" : "apidefinition_1003",
-    "name" : "删除数据资产",
-    "path" : "/api/v1/data-assets/{id}",
-    "method" : "DELETE",
-    "requestParams" : [ {
-      "name" : "id",
-      "type" : "string",
-      "required" : true,
-      "description" : "数据资产ID，路径参数"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "200删除成功"
-        },
-        "message" : {
-          "type" : "string",
-          "description" : "操作提示"
-        }
-      }
-    },
-    "status" : "已下架",
-    "version" : "1.0.0"
-  }, {
-    "id" : "apidefinition_1004",
-    "name" : "获取质量规则列表",
-    "path" : "/api/v1/data-quality/rules",
-    "method" : "GET",
-    "requestParams" : [ {
-      "name" : "page",
-      "type" : "integer",
-      "required" : false,
-      "description" : "页码"
-    }, {
-      "name" : "size",
-      "type" : "integer",
-      "required" : false,
-      "description" : "每页条数"
-    }, {
-      "name" : "ruleType",
-      "type" : "string",
-      "required" : false,
-      "description" : "规则类型：完整性/准确性/一致性/及时性"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer"
-        },
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object",
-            "properties" : {
-              "id" : "string",
-              "name" : "string",
-              "ruleType" : "string",
-              "status" : "string"
-            }
-          }
-        },
-        "total" : {
-          "type" : "integer"
-        }
-      }
-    },
-    "status" : "已发布",
-    "version" : "2.0.0"
-  }, {
-    "id" : "apidefinition_1005",
-    "name" : "创建质量规则",
-    "path" : "/api/v1/data-quality/rules",
-    "method" : "POST",
-    "requestParams" : [ {
-      "name" : "body",
-      "type" : "object",
-      "required" : true,
-      "description" : "规则配置，包含name、ruleType、targetTable、expression、severity等"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "201"
-        },
-        "data" : {
-          "type" : "object",
-          "properties" : {
-            "id" : "string",
-            "name" : "string"
-          }
-        }
-      }
-    },
-    "status" : "待审核",
-    "version" : "1.0.0"
-  }, {
-    "id" : "apidefinition_1006",
-    "name" : "更新质量规则",
-    "path" : "/api/v1/data-quality/rules/{id}",
-    "method" : "PUT",
-    "requestParams" : [ {
-      "name" : "id",
-      "type" : "string",
-      "required" : true,
-      "description" : "规则ID，路径参数"
-    }, {
-      "name" : "body",
-      "type" : "object",
-      "required" : true,
-      "description" : "需要更新的规则字段"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer"
-        },
-        "data" : {
-          "type" : "object",
-          "properties" : {
-            "id" : "string",
-            "updatedAt" : "string"
-          }
-        }
-      }
-    },
-    "status" : "草稿",
-    "version" : "1.0.0"
-  }, {
-    "id" : "apidefinition_1007",
-    "name" : "删除质量规则",
-    "path" : "/api/v1/data-quality/rules/{id}",
-    "method" : "DELETE",
-    "requestParams" : [ {
-      "name" : "id",
-      "type" : "string",
-      "required" : true,
-      "description" : "规则ID，路径参数"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "200"
-        },
-        "message" : {
-          "type" : "string",
-          "description" : "删除成功提示"
-        }
-      }
-    },
-    "status" : "已下架",
-    "version" : "1.0.0"
-  }, {
-    "id" : "apidefinition_1008",
-    "name" : "获取标签列表",
-    "path" : "/api/v1/data-catalog/tags",
-    "method" : "GET",
-    "requestParams" : [ {
-      "name" : "category",
-      "type" : "string",
-      "required" : false,
-      "description" : "标签分类：业务域/技术域/安全域"
-    }, {
-      "name" : "page",
-      "type" : "integer",
-      "required" : false,
-      "description" : "页码"
-    }, {
-      "name" : "size",
-      "type" : "integer",
-      "required" : false,
-      "description" : "每页条数"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer"
-        },
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object",
-            "properties" : {
-              "id" : "string",
-              "name" : "string",
-              "category" : "string",
-              "color" : "string"
-            }
-          }
-        },
-        "total" : {
-          "type" : "integer"
-        }
-      }
-    },
-    "status" : "待审核",
-    "version" : "1.2.0"
-  }, {
-    "id" : "apidefinition_1009",
-    "name" : "触发元数据同步",
-    "path" : "/api/v1/metadata/sync",
-    "method" : "POST",
-    "requestParams" : [ {
-      "name" : "body",
-      "type" : "object",
-      "required" : true,
-      "description" : "同步配置，包含sourceType（如Hive/MySQL/Spark）、connectionId、tableFilter等"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "202异步任务已提交"
-        },
-        "data" : {
-          "type" : "object",
-          "properties" : {
-            "taskId" : "string",
-            "status" : "string"
-          }
-        }
-      }
-    },
-    "status" : "草稿",
-    "version" : "1.0.0"
-  }, {
-    "id" : "apidefinition_1010",
-    "name" : "批量更新规则状态",
-    "path" : "/api/v1/data-quality/rules/{id}/status",
-    "method" : "PUT",
-    "requestParams" : [ {
-      "name" : "id",
-      "type" : "string",
-      "required" : true,
-      "description" : "规则ID，路径参数"
-    }, {
-      "name" : "body",
-      "type" : "object",
-      "required" : true,
-      "description" : "包含status字段：启用/禁用/归档"
-    } ],
-    "responseFormat" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "description" : "200"
-        },
-        "data" : {
-          "type" : "object",
-          "properties" : {
-            "id" : "string",
-            "status" : "string",
-            "updatedAt" : "string"
-          }
-        }
-      }
-    },
-    "status" : "草稿",
-    "version" : "1.1.0"
-  } ],
-  "sheji-grantApplication" : [ {
-    "id" : "grantapplication_1000",
-    "applicantId" : "user_1005",
-    "apiId" : "apidefinition_1004",
-    "reason" : "需要调用实时交易流水API用于风控模型训练，预计每天调用5000次。",
-    "status" : "待审批",
-    "createdAt" : "2026-03-05 09:15:00",
-    "updatedAt" : "2026-03-05 09:15:00"
-  }, {
-    "id" : "grantapplication_1001",
-    "applicantId" : "user_1000",
-    "apiId" : "apidefinition_1003",
-    "reason" : "集成供应链管理系统，需获取库存变动通知接口，便于实时更新库存状态。",
+    "id" : "sharerequest_1001",
+    "modelId" : "model_1004",
+    "applicantId" : "USER_CX",
+    "applicantName" : "陈晓",
+    "reason" : "申请将模型用于公司内部产品培训课件制作，该模型为公开资源。",
     "status" : "已通过",
-    "createdAt" : "2026-03-12 10:30:00",
-    "updatedAt" : "2026-03-14 14:22:00"
+    "approverId" : "APPR_001",
+    "approvedAt" : "2026-03-16 14:20:00",
+    "createdAt" : "2026-03-15 10:30:00"
   }, {
-    "id" : "grantapplication_1002",
-    "applicantId" : "user_1003",
-    "apiId" : "apidefinition_1009",
-    "reason" : "开发数据分析仪表盘，申请访问用户行为数据聚合API，需求较紧急。",
+    "id" : "sharerequest_1002",
+    "modelId" : "model_1006",
+    "applicantId" : "USER_ZG",
+    "applicantName" : "赵刚",
+    "reason" : "申请使用该模型进行个人作品集制作，但该模型涉及商业秘密暂不对外共享。",
     "status" : "已驳回",
-    "createdAt" : "2026-03-20 11:00:00",
-    "updatedAt" : "2026-03-22 16:45:00"
+    "approverId" : "APPR_002",
+    "approvedAt" : "2026-04-02 11:45:00",
+    "createdAt" : "2026-04-01 08:00:00"
   }, {
-    "id" : "grantapplication_1003",
-    "applicantId" : "user_1007",
-    "apiId" : "apidefinition_1001",
-    "reason" : "外部合作伙伴需通过接口获取订单状态，申请开放查询权限。",
+    "id" : "sharerequest_1003",
+    "modelId" : "model_1004",
+    "applicantId" : "USER_QJ",
+    "applicantName" : "钱静",
+    "reason" : "因项目调整已不再需要该模型，故撤销共享申请。",
     "status" : "已撤销",
-    "createdAt" : "2026-04-01 08:00:00",
-    "updatedAt" : "2026-04-03 09:30:00"
+    "approverId" : "APPR_003",
+    "approvedAt" : "2026-04-13 09:30:00",
+    "createdAt" : "2026-04-12 14:00:00"
   }, {
-    "id" : "grantapplication_1004",
-    "applicantId" : "user_1003",
-    "apiId" : "apidefinition_1007",
-    "reason" : "测试环境需要调用商品信息API进行自动化测试，测试周期两周。",
+    "id" : "sharerequest_1004",
+    "modelId" : "model_1001",
+    "applicantId" : "USER_SB",
+    "applicantName" : "孙斌",
+    "reason" : "需要下载该车辆模型用于自动驾驶仿真场景搭建与算法测试。",
     "status" : "待审批",
-    "createdAt" : "2026-04-10 13:20:00",
-    "updatedAt" : "2026-04-10 13:20:00"
+    "approverId" : "APPR_PENDING",
+    "approvedAt" : "2026-04-25 16:45:00",
+    "createdAt" : "2026-04-25 16:45:00"
   }, {
-    "id" : "grantapplication_1005",
-    "applicantId" : "user_1003",
-    "apiId" : "apidefinition_1009",
-    "reason" : "数据分析团队申请获取用户画像数据接口，用于精准营销模型优化。",
+    "id" : "sharerequest_1005",
+    "modelId" : "model_1005",
+    "applicantId" : "USER_LM",
+    "applicantName" : "李敏",
+    "reason" : "用于博物馆数字化展览，需将该文物模型嵌入到Web3D虚拟展厅中。",
     "status" : "已通过",
-    "createdAt" : "2026-04-18 09:45:00",
-    "updatedAt" : "2026-04-20 11:00:00"
+    "approverId" : "APPR_004",
+    "approvedAt" : "2026-05-08 10:15:00",
+    "createdAt" : "2026-05-06 09:00:00"
   }, {
-    "id" : "grantapplication_1006",
-    "applicantId" : "user_1003",
-    "apiId" : "apidefinition_1008",
-    "reason" : "申请调用物流轨迹跟踪API，以提供客户实时物流信息查询服务。",
+    "id" : "sharerequest_1006",
+    "modelId" : "model_1002",
+    "applicantId" : "USER_ZM",
+    "applicantName" : "周明",
+    "reason" : "该模型为机密军事设备模型，根据管理规定禁止向非授权人员共享。",
     "status" : "已驳回",
-    "createdAt" : "2026-04-25 10:00:00",
-    "updatedAt" : "2026-04-27 15:30:00"
+    "approverId" : "APPR_005",
+    "approvedAt" : "2026-05-16 15:00:00",
+    "createdAt" : "2026-05-15 11:30:00"
   }, {
-    "id" : "grantapplication_1007",
-    "applicantId" : "user_1001",
-    "apiId" : "apidefinition_1000",
-    "reason" : "移动端APP需要调用用户登录验证接口，日均请求量预计1万次。",
-    "status" : "待审批",
-    "createdAt" : "2026-05-06 14:00:00",
-    "updatedAt" : "2026-05-06 14:00:00"
-  }, {
-    "id" : "grantapplication_1008",
-    "applicantId" : "user_1004",
-    "apiId" : "apidefinition_1004",
-    "reason" : "新上线的促销活动需实时获取商品库存数据，申请调用库存查询API。",
-    "status" : "已通过",
-    "createdAt" : "2026-05-15 08:30:00",
-    "updatedAt" : "2026-05-17 10:15:00"
-  }, {
-    "id" : "grantapplication_1009",
-    "applicantId" : "user_1004",
-    "apiId" : "apidefinition_1007",
-    "reason" : "项目结束，不再需要调用用户行为分析API，撤销之前申请。",
+    "id" : "sharerequest_1007",
+    "modelId" : "model_1006",
+    "applicantId" : "USER_WY",
+    "applicantName" : "吴燕",
+    "reason" : "申请后已从其他渠道获取同类模型，无需再共享此资源。",
     "status" : "已撤销",
-    "createdAt" : "2026-05-20 09:00:00",
-    "updatedAt" : "2026-05-22 11:45:00"
+    "approverId" : "APPR_006",
+    "approvedAt" : "2026-05-23 10:00:00",
+    "createdAt" : "2026-05-22 09:30:00"
   } ],
   "sheji-approvalRecord" : [ {
     "id" : "approvalrecord_1000",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-20260301-001",
-    "approverId" : "user_1003",
+    "shareRequestId" : "sharerequest_1006",
+    "approverId" : "A001",
     "action" : "通过",
-    "comment" : "数据资产元数据完整，字段描述清晰，同意发布至数据资产目录。",
-    "createdAt" : "2026-02-28 09:15:00"
+    "comment" : "该室外建筑模型LOD1.0版本纹理清晰，面数控制合理，满足共享入库标准，准予发布。",
+    "createdAt" : "2026-03-02 09:15:30"
   }, {
     "id" : "approvalrecord_1001",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-20260305-002",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1005",
+    "approverId" : "A002",
     "action" : "驳回",
-    "comment" : "敏感字段分级未标注，缺少数据安全等级，请补充后重新提交。",
-    "createdAt" : "2026-03-03 14:20:30"
+    "comment" : "车辆模型未做材质简化处理，包含大量高精度贴图与冗余顶点，需重新优化至LOD2.0再提交。",
+    "createdAt" : "2026-03-07 14:22:05"
   }, {
     "id" : "approvalrecord_1002",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-20260310-003",
-    "approverId" : "user_1007",
+    "shareRequestId" : "sharerequest_1000",
+    "approverId" : "A003",
     "action" : "通过",
-    "comment" : "资产说明详细，样例数据已脱敏，同意入库并开放查询。",
-    "createdAt" : "2026-03-08 11:05:45"
+    "comment" : "室内家具系列模型结构完整，文件夹命名规范，已通过自动碰撞检测，审批通过。",
+    "createdAt" : "2026-03-12 10:30:00"
   }, {
     "id" : "approvalrecord_1003",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-20260315-004",
-    "approverId" : "user_1003",
+    "shareRequestId" : "sharerequest_1007",
+    "approverId" : "A004",
     "action" : "驳回",
-    "comment" : "数据血缘图谱缺失，无法验证数据来源可靠性，暂不通过。",
-    "createdAt" : "2026-03-12 16:40:12"
+    "comment" : "植物模型缺少四季变种文件，且叶片数量超限（单株>5000面），需按要求精简并提供三个季节变体。",
+    "createdAt" : "2026-03-17 16:48:12"
   }, {
     "id" : "approvalrecord_1004",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-20260320-005",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1003",
+    "approverId" : "A005",
     "action" : "通过",
-    "comment" : "质检报告附件齐全，数据质量评分98分，同意发布。",
-    "createdAt" : "2026-03-18 10:30:00"
+    "comment" : "工业设备装配体模型层次结构清晰，每个零件均标注了材质与尺寸，符合资产库上架规范。",
+    "createdAt" : "2026-03-22 08:55:40"
   }, {
     "id" : "approvalrecord_1005",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-20260325-006",
-    "approverId" : "user_1003",
+    "shareRequestId" : "sharerequest_1002",
+    "approverId" : "A001",
     "action" : "驳回",
-    "comment" : "目录分类选择错误，本应归入业务域而非技术域，请修正。",
-    "createdAt" : "2026-03-22 09:00:25"
+    "comment" : "角色动画模型绑定权重异常，部分顶点受多个骨骼影响超过4个，必须重新蒙皮后再申请。",
+    "createdAt" : "2026-03-27 11:10:25"
   }, {
     "id" : "approvalrecord_1006",
-    "bizType" : "API发布",
-    "bizId" : "API-20260401-001",
-    "approverId" : "user_1007",
+    "shareRequestId" : "sharerequest_1004",
+    "approverId" : "A002",
     "action" : "通过",
-    "comment" : "接口文档规范，请求/响应参数完整，安全鉴权方案合理，同意发布。",
-    "createdAt" : "2026-03-28 14:55:10"
+    "comment" : "地形场景模型贴图分辨率合理（2K），碰撞体自动生成无异常，审批通过。",
+    "createdAt" : "2026-04-01 13:20:50"
   }, {
     "id" : "approvalrecord_1007",
-    "bizType" : "API发布",
-    "bizId" : "API-20260405-002",
-    "approverId" : "user_1007",
+    "shareRequestId" : "sharerequest_1004",
+    "approverId" : "A003",
     "action" : "驳回",
-    "comment" : "未提供流量限制策略，高并发场景可能影响系统稳定性，驳回。",
-    "createdAt" : "2026-04-02 11:20:33"
+    "comment" : "古建筑模型轴心未归零，导致旋转操作时偏移严重；且缺少结构分解说明文档，需补充后重新提交。",
+    "createdAt" : "2026-04-06 15:05:33"
   }, {
     "id" : "approvalrecord_1008",
-    "bizType" : "API发布",
-    "bizId" : "API-20260410-003",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1000",
+    "approverId" : "A004",
     "action" : "通过",
-    "comment" : "测试覆盖率90%以上，压测报告通过，同意上线。",
-    "createdAt" : "2026-04-07 16:10:00"
+    "comment" : "城市道路模型分段明确，交通标识牌与路灯等附属物均独立成组，便于后续引用，审核通过。",
+    "createdAt" : "2026-04-11 09:37:18"
   }, {
     "id" : "approvalrecord_1009",
-    "bizType" : "API发布",
-    "bizId" : "API-20260415-004",
-    "approverId" : "user_1002",
+    "shareRequestId" : "sharerequest_1007",
+    "approverId" : "A005",
     "action" : "驳回",
-    "comment" : "响应字段存在JSON循环引用，需修复后重新审查。",
-    "createdAt" : "2026-04-12 08:45:50"
+    "comment" : "飞行器模型面数超标（原三角面120万），且未提供LOD递减版本，按规定资产最高面数不得超过50万，请优化。",
+    "createdAt" : "2026-04-16 10:42:08"
   }, {
     "id" : "approvalrecord_1010",
-    "bizType" : "API发布",
-    "bizId" : "API-20260420-005",
-    "approverId" : "user_1000",
+    "shareRequestId" : "sharerequest_1004",
+    "approverId" : "A001",
     "action" : "通过",
-    "comment" : "API版本号规范，已与消费者确认向下兼容，同意发布。",
-    "createdAt" : "2026-04-17 13:30:22"
+    "comment" : "人体解剖模型（教学版）骨骼与肌肉分层准确，颜色标识符符合医学通用规范，准予入库。",
+    "createdAt" : "2026-04-21 14:55:44"
   }, {
     "id" : "approvalrecord_1011",
-    "bizType" : "API发布",
-    "bizId" : "API-20260425-006",
-    "approverId" : "user_1001",
+    "shareRequestId" : "sharerequest_1000",
+    "approverId" : "A002",
     "action" : "驳回",
-    "comment" : "缺少错误码枚举定义，调用方无法处理异常情况，请补充。",
-    "createdAt" : "2026-04-22 10:05:14"
+    "comment" : "潜艇模型内部结构缺失管路系统，且水位线以下部分未做防水曲面处理，需完善细节再次送审。",
+    "createdAt" : "2026-04-26 08:30:12"
   }, {
     "id" : "approvalrecord_1012",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-20260501-001",
-    "approverId" : "user_1005",
+    "shareRequestId" : "sharerequest_1005",
+    "approverId" : "A003",
     "action" : "通过",
-    "comment" : "申请理由充分，数据使用范围合理，同意授予三个月访问权限。",
-    "createdAt" : "2026-04-27 15:40:00"
+    "comment" : "桥梁结构模型（斜拉桥）缆索系统参数化正确，承重仿真数据已附图表，审核通过。",
+    "createdAt" : "2026-05-01 11:22:35"
   }, {
     "id" : "approvalrecord_1013",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-20260505-002",
-    "approverId" : "user_1007",
+    "shareRequestId" : "sharerequest_1000",
+    "approverId" : "A004",
     "action" : "驳回",
-    "comment" : "申请表中数据用途填写模糊，无法评估风险，建议细化后重提。",
-    "createdAt" : "2026-05-02 09:10:35"
+    "comment" : "科幻武器模型材质使用了NVIDIA独占光线追踪特性，通用性不足，建议改用标准PBR材质管线。",
+    "createdAt" : "2026-05-06 16:10:50"
   }, {
     "id" : "approvalrecord_1014",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-20260510-003",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1003",
+    "approverId" : "A005",
     "action" : "通过",
-    "comment" : "合规审查通过，数据访问范围仅限生产报表，同意授权。",
-    "createdAt" : "2026-05-07 17:25:48"
+    "comment" : "虚拟现实场景模型（VR展厅）光照烘焙已完成，三角面总数为32万，运行流畅，审批通过。",
+    "createdAt" : "2026-05-11 09:05:27"
   }, {
     "id" : "approvalrecord_1015",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-20260515-004",
-    "approverId" : "user_1000",
+    "shareRequestId" : "sharerequest_1006",
+    "approverId" : "A001",
     "action" : "驳回",
-    "comment" : "申请者部门非目标数据所属领域，需提供跨部门协作证明。",
-    "createdAt" : "2026-05-12 11:50:00"
+    "comment" : "人物服装模型物理模拟参数未设置，且缝线细节使用了NURBS曲面，需转换为多边形并添加动态参数。",
+    "createdAt" : "2026-05-16 13:45:19"
   }, {
     "id" : "approvalrecord_1016",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-20260520-005",
-    "approverId" : "user_1000",
+    "shareRequestId" : "sharerequest_1006",
+    "approverId" : "A002",
     "action" : "通过",
-    "comment" : "数据脱敏策略已签署，最小化授权原则满足要求，同意。",
-    "createdAt" : "2026-05-17 14:00:20"
+    "comment" : "星空环境背景模型包含完整银河系恒星分布数据（简化版），文件大小合规，准予共享。",
+    "createdAt" : "2026-05-21 10:25:03"
   }, {
     "id" : "approvalrecord_1017",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-20260525-006",
-    "approverId" : "user_1004",
+    "shareRequestId" : "sharerequest_1006",
+    "approverId" : "A003",
     "action" : "驳回",
-    "comment" : "授权有效期过长（两年），按制度最长一年，请调整。",
-    "createdAt" : "2026-05-22 08:30:10"
+    "comment" : "骨骼绑定辅助工具模型未附带使用教程视频链接，且插件依赖版本未标注，不符合资产上架要求。",
+    "createdAt" : "2026-05-27 15:30:48"
   }, {
     "id" : "approvalrecord_1018",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-2026-003",
-    "approverId" : "user_1001",
+    "shareRequestId" : "sharerequest_1003",
+    "approverId" : "李明",
     "action" : "通过",
-    "comment" : "新上线客户行为分析数据集，包含用户点击流与转化漏斗数据，数据质量通过校验，同意发布。",
-    "createdAt" : "2026-03-01 09:30:00"
+    "comment" : "模型纹理清晰，LOD等级符合标准，授权范围明确，批准共享至外部合作团队。",
+    "createdAt" : "2026-05-15 09:30:00"
   }, {
     "id" : "approvalrecord_1019",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-2026-007",
-    "approverId" : "user_1005",
+    "shareRequestId" : "sharerequest_1006",
+    "approverId" : "王芳",
     "action" : "驳回",
-    "comment" : "提交的资产目录元数据不完整，缺少数据字典和字段级血缘关系，要求补充后重新提交。",
-    "createdAt" : "2026-03-10 14:15:00"
+    "comment" : "该模型未附带材质贴图源文件，无法确认版权归属，需补充原始资产包后再提交。",
+    "createdAt" : "2026-05-10 14:15:00"
   }, {
     "id" : "approvalrecord_1020",
-    "bizType" : "资产发布",
-    "bizId" : "ASSET-2026-012",
-    "approverId" : "user_1003",
+    "shareRequestId" : "sharerequest_1003",
+    "approverId" : "张伟",
     "action" : "通过",
-    "comment" : "公司2025年度财务汇总数据表，已完成脱敏处理，符合数据安全规范，准予发布。",
-    "createdAt" : "2026-03-20 11:00:00"
+    "comment" : "三维模型面数控制在合理范围，烘焙贴图完整，已通过自动校验，同意共享。",
+    "createdAt" : "2026-05-03 11:45:00"
   }, {
     "id" : "approvalrecord_1021",
-    "bizType" : "API发布",
-    "bizId" : "API-2026-005",
-    "approverId" : "user_1007",
-    "action" : "通过",
-    "comment" : "订单查询API v2.0版本，新增批量查询和模糊匹配功能，压力测试通过，同意上线。",
-    "createdAt" : "2026-04-01 16:45:00"
+    "shareRequestId" : "sharerequest_1003",
+    "approverId" : "刘娜",
+    "action" : "驳回",
+    "comment" : "模型文件命名不规范，缺少元数据描述字段（版本号、创建人），请按资产库命名规范修改。",
+    "createdAt" : "2026-04-28 16:20:00"
   }, {
     "id" : "approvalrecord_1022",
-    "bizType" : "API发布",
-    "bizId" : "API-2026-009",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1007",
+    "approverId" : "陈强",
     "action" : "通过",
-    "comment" : "用户画像API接口，支持实时查询标签信息，文档齐全，性能达标，批准发布。",
-    "createdAt" : "2026-04-10 08:20:00"
+    "comment" : "模型在渲染测试中表现良好，材质参数调节合理，符合项目A-03阶段复用要求。",
+    "createdAt" : "2026-04-22 10:00:00"
   }, {
     "id" : "approvalrecord_1023",
-    "bizType" : "API发布",
-    "bizId" : "API-2026-014",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1007",
+    "approverId" : "杨洋",
     "action" : "驳回",
-    "comment" : "API安全认证方案尚未评审，未配置OAuth2.0鉴权，存在安全风险，暂不通过。",
-    "createdAt" : "2026-04-20 10:30:00"
+    "comment" : "请求共享的模型数量超过单次限制（上限10个），请分批提交或调整共享范围。",
+    "createdAt" : "2026-04-15 17:30:00"
   }, {
     "id" : "approvalrecord_1024",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-2026-002",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1000",
+    "approverId" : "赵敏",
     "action" : "通过",
-    "comment" : "市场部申请访问客户投诉数据集用于满意度分析，权限范围合理，申请通过。",
-    "createdAt" : "2026-05-01 13:00:00"
+    "comment" : "模型已通过碰撞检测，拓扑结构规范，动画绑定完整，批准对设计部门开放下载。",
+    "createdAt" : "2026-04-08 08:45:00"
   }, {
     "id" : "approvalrecord_1025",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-2026-006",
-    "approverId" : "user_1001",
-    "action" : "通过",
-    "comment" : "研发部申请临时权限用于数据质量稽核项目，限时30天，已审批通过。",
-    "createdAt" : "2026-05-10 15:30:00"
+    "shareRequestId" : "sharerequest_1005",
+    "approverId" : "黄磊",
+    "action" : "驳回",
+    "comment" : "模型贴图分辨率高达8K，不适合实时渲染场景，建议压缩至2K后重新申请共享。",
+    "createdAt" : "2026-04-01 13:10:00"
   }, {
     "id" : "approvalrecord_1026",
-    "bizType" : "授权申请",
-    "bizId" : "AUTH-2026-011",
-    "approverId" : "user_1006",
+    "shareRequestId" : "sharerequest_1004",
+    "approverId" : "吴倩",
+    "action" : "通过",
+    "comment" : "该模型为公共区域高精度扫描资产，已脱敏处理，许可协议为CC-BY，可对外开放共享。",
+    "createdAt" : "2026-03-25 15:55:00"
+  }, {
+    "id" : "approvalrecord_1027",
+    "shareRequestId" : "sharerequest_1007",
+    "approverId" : "周杰",
     "action" : "驳回",
-    "comment" : "申请人对数据资产的数据权限超出岗位职责范围，且缺少直属上级的签字确认，驳回此申请。",
-    "createdAt" : "2026-05-20 09:45:00"
-  } ],
-  "sheji-dashboardConfig" : [ {
-    "id" : "dashboardconfig_1000",
-    "userId" : "user_1001",
-    "cardType" : "资产总量",
-    "position" : 1,
-    "timeRange" : "本月",
-    "settings" : {
-      "title" : "总资产概览",
-      "showChart" : true,
-      "chartType" : "bar",
-      "dataSource" : "asset_summary"
-    }
-  }, {
-    "id" : "dashboardconfig_1001",
-    "userId" : "user_1001",
-    "cardType" : "增长率",
-    "position" : 2,
-    "timeRange" : "本年",
-    "settings" : {
-      "title" : "月增长率趋势",
-      "showChart" : true,
-      "chartType" : "line",
-      "dataSource" : "growth_monthly"
-    }
-  }, {
-    "id" : "dashboardconfig_1002",
-    "userId" : "user_1006",
-    "cardType" : "质量评分",
-    "position" : 3,
-    "timeRange" : "今日",
-    "settings" : {
-      "title" : "今日质量评分",
-      "showChart" : false,
-      "scoreThreshold" : 85
-    }
-  }, {
-    "id" : "dashboardconfig_1003",
-    "userId" : "user_1001",
-    "cardType" : "任务成功率",
-    "position" : 4,
-    "timeRange" : "本周",
-    "settings" : {
-      "title" : "任务成功率",
-      "showChart" : true,
-      "chartType" : "pie",
-      "dataSource" : "task_success"
-    }
-  }, {
-    "id" : "dashboardconfig_1004",
-    "userId" : "user_1003",
-    "cardType" : "服务调用趋势",
-    "position" : 5,
-    "timeRange" : "本月",
-    "settings" : {
-      "title" : "服务调用量",
-      "showChart" : true,
-      "chartType" : "area",
-      "dataSource" : "api_call_hourly"
-    }
-  }, {
-    "id" : "dashboardconfig_1005",
-    "userId" : "user_1002",
-    "cardType" : "资产总量",
-    "position" : 6,
-    "timeRange" : "本年",
-    "settings" : {
-      "title" : "资产分类分布",
-      "showChart" : true,
-      "chartType" : "doughnut",
-      "dataSource" : "asset_category"
-    }
-  }, {
-    "id" : "dashboardconfig_1006",
-    "userId" : "user_1001",
-    "cardType" : "增长率",
-    "position" : 7,
-    "timeRange" : "今日",
-    "settings" : {
-      "title" : "日环比增长率",
-      "showChart" : true,
-      "chartType" : "indicator",
-      "format" : "percent"
-    }
-  }, {
-    "id" : "dashboardconfig_1007",
-    "userId" : "user_1007",
-    "cardType" : "质量评分",
-    "position" : 8,
-    "timeRange" : "本周",
-    "settings" : {
-      "title" : "部门质量排名",
-      "showChart" : true,
-      "chartType" : "table",
-      "columns" : [ "部门", "得分", "等级" ]
-    }
-  }, {
-    "id" : "dashboardconfig_1008",
-    "userId" : "user_1007",
-    "cardType" : "任务成功率",
-    "position" : 9,
-    "timeRange" : "本月",
-    "settings" : {
-      "title" : "任务失败原因分布",
-      "showChart" : true,
-      "chartType" : "pie",
-      "dataSource" : "error_type"
-    }
+    "comment" : "模型文件中包含未授权的第三方插件引用，请替换为标准格式，确保无合规风险。",
+    "createdAt" : "2026-03-18 09:20:00"
   } ],
   "sheji-exportRecord" : [ {
     "id" : "exportrecord_1000",
-    "userId" : "user_1003",
-    "module" : "数据资产",
-    "fileName" : "数据资产目录_20260302.xlsx",
-    "fileSize" : 204800,
-    "status" : "完成",
-    "createdAt" : "2026-03-02 10:15:00"
+    "userId" : "张伟",
+    "module" : "概览报表",
+    "format" : "Excel",
+    "status" : "处理中",
+    "filePath" : "/exports/2026/02/概览报表_20260227.xlsx",
+    "createdAt" : "2026-02-27 09:15:00"
   }, {
     "id" : "exportrecord_1001",
-    "userId" : "user_1000",
-    "module" : "数据资产",
-    "fileName" : "数据资产月度报告_20260410.xlsx",
-    "fileSize" : 512000,
-    "status" : "生成中",
-    "createdAt" : "2026-04-10 14:30:00"
+    "userId" : "李娜",
+    "module" : "模型清单",
+    "format" : "PDF",
+    "status" : "完成",
+    "filePath" : "/exports/2026/03/模型清单_20260303.pdf",
+    "createdAt" : "2026-03-03 10:30:00"
   }, {
     "id" : "exportrecord_1002",
-    "userId" : "user_1007",
-    "module" : "数据资产",
-    "fileName" : "数据资产快照_20260520.xlsx",
-    "fileSize" : 1048576,
+    "userId" : "王磊",
+    "module" : "使用统计",
+    "format" : "CSV",
     "status" : "失败",
-    "createdAt" : "2026-05-20 09:00:00"
+    "filePath" : "/exports/2026/03/使用统计_20260307.csv",
+    "createdAt" : "2026-03-07 11:45:00"
   }, {
     "id" : "exportrecord_1003",
-    "userId" : "user_1004",
-    "module" : "数据开发",
-    "fileName" : "数据开发脚本导出_20260315.sql",
-    "fileSize" : 3145728,
-    "status" : "完成",
-    "createdAt" : "2026-03-15 11:45:00"
+    "userId" : "刘洋",
+    "module" : "概览报表",
+    "format" : "Excel",
+    "status" : "处理中",
+    "filePath" : "/exports/2026/03/概览报表_20260311.xlsx",
+    "createdAt" : "2026-03-11 14:00:00"
   }, {
     "id" : "exportrecord_1004",
-    "userId" : "user_1000",
-    "module" : "数据开发",
-    "fileName" : "数据开发任务配置_20260422.json",
-    "fileSize" : 2097152,
-    "status" : "生成中",
-    "createdAt" : "2026-04-22 16:20:00"
+    "userId" : "陈敏",
+    "module" : "模型清单",
+    "format" : "PDF",
+    "status" : "完成",
+    "filePath" : "/exports/2026/03/模型清单_20260315.pdf",
+    "createdAt" : "2026-03-15 15:20:00"
   }, {
     "id" : "exportrecord_1005",
-    "userId" : "user_1006",
-    "module" : "数据开发",
-    "fileName" : "数据开发日志_20260505.csv",
-    "fileSize" : 614400,
+    "userId" : "杨芳",
+    "module" : "使用统计",
+    "format" : "CSV",
     "status" : "失败",
-    "createdAt" : "2026-05-05 08:10:00"
+    "filePath" : "/exports/2026/03/使用统计_20260319.csv",
+    "createdAt" : "2026-03-19 08:50:00"
   }, {
     "id" : "exportrecord_1006",
-    "userId" : "user_1003",
-    "module" : "数据质量",
-    "fileName" : "数据质量检查结果_20260328.xlsx",
-    "fileSize" : 512000,
+    "userId" : "赵刚",
+    "module" : "概览报表",
+    "format" : "PDF",
     "status" : "完成",
-    "createdAt" : "2026-03-28 13:55:00"
+    "filePath" : "/exports/2026/03/概览报表_20260323.pdf",
+    "createdAt" : "2026-03-23 13:10:00"
   }, {
     "id" : "exportrecord_1007",
-    "userId" : "user_1001",
-    "module" : "数据质量",
-    "fileName" : "数据质量规则集_20260418.csv",
-    "fileSize" : 1024000,
-    "status" : "生成中",
-    "createdAt" : "2026-04-18 17:40:00"
+    "userId" : "黄婷",
+    "module" : "模型清单",
+    "format" : "CSV",
+    "status" : "处理中",
+    "filePath" : "/exports/2026/03/模型清单_20260327.csv",
+    "createdAt" : "2026-03-27 16:30:00"
   }, {
     "id" : "exportrecord_1008",
-    "userId" : "user_1003",
-    "module" : "数据质量",
-    "fileName" : "数据质量报告_20260512.pdf",
-    "fileSize" : 256000,
-    "status" : "失败",
-    "createdAt" : "2026-05-12 09:25:00"
+    "userId" : "周强",
+    "module" : "使用统计",
+    "format" : "Excel",
+    "status" : "完成",
+    "filePath" : "/exports/2026/04/使用统计_20260401.xlsx",
+    "createdAt" : "2026-04-01 10:00:00"
   }, {
     "id" : "exportrecord_1009",
-    "userId" : "user_1004",
-    "module" : "数据安全",
-    "fileName" : "数据安全审计日志_20260310.csv",
-    "fileSize" : 7340032,
-    "status" : "完成",
-    "createdAt" : "2026-03-10 15:10:00"
+    "userId" : "吴丽",
+    "module" : "概览报表",
+    "format" : "PDF",
+    "status" : "失败",
+    "filePath" : "/exports/2026/04/概览报表_20260405.pdf",
+    "createdAt" : "2026-04-05 14:45:00"
   }, {
     "id" : "exportrecord_1010",
-    "userId" : "user_1003",
-    "module" : "数据安全",
-    "fileName" : "数据安全策略导出_20260405.json",
-    "fileSize" : 4194304,
-    "status" : "生成中",
-    "createdAt" : "2026-04-05 11:00:00"
+    "userId" : "徐辉",
+    "module" : "模型清单",
+    "format" : "CSV",
+    "status" : "处理中",
+    "filePath" : "/exports/2026/04/模型清单_20260409.csv",
+    "createdAt" : "2026-04-09 09:30:00"
   }, {
     "id" : "exportrecord_1011",
-    "userId" : "user_1004",
-    "module" : "数据安全",
-    "fileName" : "数据安全事件报告_20260525.xlsx",
-    "fileSize" : 1536000,
-    "status" : "失败",
-    "createdAt" : "2026-05-25 16:30:00"
+    "userId" : "孙静",
+    "module" : "使用统计",
+    "format" : "Excel",
+    "status" : "完成",
+    "filePath" : "/exports/2026/04/使用统计_20260413.xlsx",
+    "createdAt" : "2026-04-13 11:00:00"
   }, {
     "id" : "exportrecord_1012",
-    "userId" : "user_1006",
-    "module" : "数据标准",
-    "fileName" : "数据标准字典_v3.0.xlsx",
-    "fileSize" : 20971520,
-    "status" : "完成",
-    "createdAt" : "2026-03-20 08:50:00"
+    "userId" : "马勇",
+    "module" : "概览报表",
+    "format" : "CSV",
+    "status" : "失败",
+    "filePath" : "/exports/2026/04/概览报表_20260417.csv",
+    "createdAt" : "2026-04-17 15:15:00"
   }, {
     "id" : "exportrecord_1013",
-    "userId" : "user_1003",
-    "module" : "数据标准",
-    "fileName" : "数据标准对照表_20260428.csv",
-    "fileSize" : 5242880,
-    "status" : "生成中",
-    "createdAt" : "2026-04-28 19:00:00"
+    "userId" : "朱倩",
+    "module" : "模型清单",
+    "format" : "Excel",
+    "status" : "处理中",
+    "filePath" : "/exports/2026/04/模型清单_20260421.xlsx",
+    "createdAt" : "2026-04-21 08:30:00"
   }, {
     "id" : "exportrecord_1014",
-    "userId" : "user_1003",
-    "module" : "数据标准",
-    "fileName" : "数据标准变更记录_20260515.xlsx",
-    "fileSize" : 819200,
-    "status" : "失败",
-    "createdAt" : "2026-05-15 12:10:00"
+    "userId" : "胡涛",
+    "module" : "使用统计",
+    "format" : "PDF",
+    "status" : "完成",
+    "filePath" : "/exports/2026/04/使用统计_20260425.pdf",
+    "createdAt" : "2026-04-25 12:40:00"
   }, {
     "id" : "exportrecord_1015",
-    "userId" : "user_1005",
-    "module" : "数据服务",
-    "fileName" : "数据服务API文档_20260305.pdf",
-    "fileSize" : 10485760,
-    "status" : "完成",
-    "createdAt" : "2026-03-05 14:25:00"
+    "userId" : "郭晶",
+    "module" : "概览报表",
+    "format" : "Excel",
+    "status" : "失败",
+    "filePath" : "/exports/2026/04/概览报表_20260429.xlsx",
+    "createdAt" : "2026-04-29 17:00:00"
   }, {
     "id" : "exportrecord_1016",
-    "userId" : "user_1002",
-    "module" : "数据服务",
-    "fileName" : "数据服务调用统计_20260415.xlsx",
-    "fileSize" : 307200,
-    "status" : "生成中",
-    "createdAt" : "2026-04-15 10:30:00"
+    "userId" : "林峰",
+    "module" : "模型清单",
+    "format" : "PDF",
+    "status" : "处理中",
+    "filePath" : "/exports/2026/05/模型清单_20260504.pdf",
+    "createdAt" : "2026-05-04 10:20:00"
   }, {
     "id" : "exportrecord_1017",
-    "userId" : "user_1001",
-    "module" : "数据服务",
-    "fileName" : "数据服务配置备份_20260501.json",
-    "fileSize" : 1587200,
-    "status" : "失败",
-    "createdAt" : "2026-05-01 17:00:00"
+    "userId" : "何雪",
+    "module" : "使用统计",
+    "format" : "CSV",
+    "status" : "完成",
+    "filePath" : "/exports/2026/05/使用统计_20260508.csv",
+    "createdAt" : "2026-05-08 14:50:00"
   }, {
     "id" : "exportrecord_1018",
-    "userId" : "user_1003",
-    "module" : "数据资产",
-    "fileName" : "数据资产目录导出_20260401.xlsx",
-    "fileSize" : 4523000,
+    "userId" : "U020",
+    "module" : "概览报表",
+    "format" : "Excel",
     "status" : "完成",
-    "createdAt" : "2026-04-01 09:15:00"
+    "filePath" : "/exports/overview/20260515_overview_report.xlsx",
+    "createdAt" : "2026-05-15 09:30:00"
   }, {
     "id" : "exportrecord_1019",
-    "userId" : "user_1003",
-    "module" : "数据质量",
-    "fileName" : "数据质量规则校验结果_20260518.csv",
-    "fileSize" : 1250,
+    "userId" : "U021",
+    "module" : "模型清单",
+    "format" : "PDF",
+    "status" : "处理中",
+    "filePath" : "/exports/model_list/20260528_model_list.pdf",
+    "createdAt" : "2026-05-28 14:15:00"
+  }, {
+    "id" : "exportrecord_1020",
+    "userId" : "U022",
+    "module" : "使用统计",
+    "format" : "CSV",
     "status" : "失败",
-    "createdAt" : "2026-05-18 16:42:30"
+    "filePath" : "/exports/stats/20260420_usage_stats.csv",
+    "createdAt" : "2026-04-20 11:00:00"
+  } ],
+  "sheji-usageSavedFilter" : [ {
+    "id" : "usagesavedfilter_1000",
+    "userId" : "user_001",
+    "name" : "按模型类型统计-建筑与结构",
+    "timeRange" : "最近30天",
+    "dimension" : "模型类型",
+    "config" : {
+      "filters" : {
+        "modelType" : [ "建筑", "结构" ]
+      },
+      "sort" : "下载次数降序",
+      "groupBy" : "模型类型"
+    },
+    "createdAt" : "2026-03-01 08:30:00"
+  }, {
+    "id" : "usagesavedfilter_1001",
+    "userId" : "user_002",
+    "name" : "高频下载模型筛选",
+    "timeRange" : "最近7天",
+    "dimension" : "下载次数",
+    "config" : {
+      "filters" : {
+        "downloads" : {
+          "min" : 50
+        }
+      },
+      "sort" : "下载次数降序"
+    },
+    "createdAt" : "2026-03-08 10:15:00"
+  }, {
+    "id" : "usagesavedfilter_1002",
+    "userId" : "user_003",
+    "name" : "上传者作品统计-李工",
+    "timeRange" : "本季度",
+    "dimension" : "上传者",
+    "config" : {
+      "filters" : {
+        "uploader" : "李工"
+      },
+      "sort" : "上传日期降序"
+    },
+    "createdAt" : "2026-03-15 14:00:00"
+  }, {
+    "id" : "usagesavedfilter_1003",
+    "userId" : "user_004",
+    "name" : "高评分模型查询",
+    "timeRange" : "最近90天",
+    "dimension" : "评分",
+    "config" : {
+      "filters" : {
+        "rating" : {
+          "min" : 4.5
+        }
+      },
+      "sort" : "评分降序"
+    },
+    "createdAt" : "2026-03-22 09:45:00"
+  }, {
+    "id" : "usagesavedfilter_1004",
+    "userId" : "user_005",
+    "name" : "最新上传模型概览",
+    "timeRange" : "最近30天",
+    "dimension" : "上传日期",
+    "config" : {
+      "filters" : {
+        "createdAt" : {
+          "start" : "2026-02-27",
+          "end" : "2026-05-28"
+        }
+      },
+      "sort" : "上传日期降序"
+    },
+    "createdAt" : "2026-03-29 16:30:00"
+  }, {
+    "id" : "usagesavedfilter_1005",
+    "userId" : "user_006",
+    "name" : "按标签筛选-结构工程",
+    "timeRange" : "最近30天",
+    "dimension" : "标签",
+    "config" : {
+      "filters" : {
+        "tag" : "结构工程"
+      },
+      "sort" : "下载次数降序"
+    },
+    "createdAt" : "2026-04-05 11:20:00"
+  }, {
+    "id" : "usagesavedfilter_1006",
+    "userId" : "user_007",
+    "name" : "文件名模糊搜索-土建",
+    "timeRange" : "自定义",
+    "dimension" : "文件名",
+    "config" : {
+      "filters" : {
+        "fileName" : "*土建*"
+      },
+      "sort" : "文件大小降序"
+    },
+    "createdAt" : "2026-04-12 07:50:00"
+  }, {
+    "id" : "usagesavedfilter_1007",
+    "userId" : "user_008",
+    "name" : "低使用率模型清单",
+    "timeRange" : "最近90天",
+    "dimension" : "下载次数",
+    "config" : {
+      "filters" : {
+        "downloads" : {
+          "max" : 10
+        }
+      },
+      "sort" : "上传日期升序"
+    },
+    "createdAt" : "2026-04-19 13:10:00"
+  }, {
+    "id" : "usagesavedfilter_1008",
+    "userId" : "user_009",
+    "name" : "按更新时间排序-所有模型",
+    "timeRange" : "最近30天",
+    "dimension" : "更新时间",
+    "config" : {
+      "filters" : { },
+      "sort" : "更新时间降序"
+    },
+    "createdAt" : "2026-04-26 15:55:00"
+  }, {
+    "id" : "usagesavedfilter_1009",
+    "userId" : "user_010",
+    "name" : "组合筛选-电气机械高下载",
+    "timeRange" : "自定义",
+    "dimension" : "模型类型",
+    "config" : {
+      "filters" : {
+        "modelType" : [ "电气", "机械" ],
+        "downloads" : {
+          "min" : 30
+        }
+      },
+      "sort" : "下载次数降序"
+    },
+    "createdAt" : "2026-05-03 18:40:00"
+  }, {
+    "id" : "usagesavedfilter_1010",
+    "userId" : "user_011",
+    "name" : "我的常用筛选-材质类",
+    "timeRange" : "最近7天",
+    "dimension" : "标签",
+    "config" : {
+      "filters" : {
+        "tag" : "材质"
+      },
+      "sort" : "评分降序",
+      "groupBy" : "标签"
+    },
+    "createdAt" : "2026-05-10 20:25:00"
+  } ],
+  "sheji-uploadRecord" : [ {
+    "id" : "uploadrecord_1000",
+    "modelId" : "model_1001",
+    "userId" : "U1001",
+    "fileName" : "现代办公椅_高模.fbx",
+    "fileSize" : 15000,
+    "format" : "FBX",
+    "status" : "完成",
+    "versionNumber" : "v1.0",
+    "createdAt" : "2026-02-27 08:15:30"
+  }, {
+    "id" : "uploadrecord_1001",
+    "modelId" : "model_1005",
+    "userId" : "U1002",
+    "fileName" : "北欧餐桌_组合.obj",
+    "fileSize" : 18000,
+    "format" : "OBJ",
+    "status" : "上传中",
+    "versionNumber" : "v1.1",
+    "createdAt" : "2026-03-04 10:30:45"
+  }, {
+    "id" : "uploadrecord_1002",
+    "modelId" : "model_1004",
+    "userId" : "U1003",
+    "fileName" : "水晶吊灯_细节.glb",
+    "fileSize" : 23000000,
+    "format" : "GLB",
+    "status" : "完成",
+    "versionNumber" : "v2.0",
+    "createdAt" : "2026-03-09 14:00:00"
+  }, {
+    "id" : "uploadrecord_1003",
+    "modelId" : "model_1007",
+    "userId" : "U1004",
+    "fileName" : "男性角色_低模.obj",
+    "fileSize" : 12000,
+    "format" : "OBJ",
+    "status" : "失败",
+    "versionNumber" : "v2.1",
+    "createdAt" : "2026-03-14 09:45:12"
+  }, {
+    "id" : "uploadrecord_1004",
+    "modelId" : "model_1004",
+    "userId" : "U1005",
+    "fileName" : "城市建筑群_精简.gltf",
+    "fileSize" : 180000000,
+    "format" : "GLTF",
+    "status" : "上传中",
+    "versionNumber" : "v3.0",
+    "createdAt" : "2026-03-19 11:20:33"
+  }, {
+    "id" : "uploadrecord_1005",
+    "modelId" : "model_1000",
+    "userId" : "U1006",
+    "fileName" : "齿轮箱_装配件.fbx",
+    "fileSize" : 1800000,
+    "format" : "FBX",
+    "status" : "失败",
+    "versionNumber" : "v3.1",
+    "createdAt" : "2026-03-24 15:30:50"
+  }, {
+    "id" : "uploadrecord_1006",
+    "modelId" : "model_1006",
+    "userId" : "U1001",
+    "fileName" : "跑车_外壳.stl",
+    "fileSize" : 6000,
+    "format" : "STL",
+    "status" : "失败",
+    "versionNumber" : "v4.0",
+    "createdAt" : "2026-03-29 13:12:18"
+  }, {
+    "id" : "uploadrecord_1007",
+    "modelId" : "model_1000",
+    "userId" : "U1002",
+    "fileName" : "橡树_树干.3ds",
+    "fileSize" : 1200000,
+    "format" : "3DS",
+    "status" : "上传中",
+    "versionNumber" : "v4.1",
+    "createdAt" : "2026-04-03 07:55:00"
+  }, {
+    "id" : "uploadrecord_1008",
+    "modelId" : "model_1000",
+    "userId" : "U1003",
+    "fileName" : "工业机器人_完整.fbx",
+    "fileSize" : 55000000,
+    "format" : "FBX",
+    "status" : "完成",
+    "versionNumber" : "v5.0",
+    "createdAt" : "2026-04-08 16:42:25"
+  }, {
+    "id" : "uploadrecord_1009",
+    "modelId" : "model_1007",
+    "userId" : "U1004",
+    "fileName" : "古典花瓶_雕刻.stl",
+    "fileSize" : 8000,
+    "format" : "STL",
+    "status" : "失败",
+    "versionNumber" : "v5.1",
+    "createdAt" : "2026-04-13 10:08:47"
+  }, {
+    "id" : "uploadrecord_1010",
+    "modelId" : "model_1004",
+    "userId" : "U1005",
+    "fileName" : "桥梁结构_分段.glb",
+    "fileSize" : 95000000,
+    "format" : "GLB",
+    "status" : "完成",
+    "versionNumber" : "v1.2",
+    "createdAt" : "2026-04-18 14:35:12"
+  }, {
+    "id" : "uploadrecord_1011",
+    "modelId" : "model_1002",
+    "userId" : "U1006",
+    "fileName" : "卡通房子_彩色.gltf",
+    "fileSize" : 1500000,
+    "format" : "GLTF",
+    "status" : "上传中",
+    "versionNumber" : "v2.2",
+    "createdAt" : "2026-04-23 09:27:39"
+  }, {
+    "id" : "uploadrecord_1012",
+    "modelId" : "model_1007",
+    "userId" : "U1001",
+    "fileName" : "心脏解剖_教学.stl",
+    "fileSize" : 21000000,
+    "format" : "STL",
+    "status" : "完成",
+    "versionNumber" : "v3.2",
+    "createdAt" : "2026-04-28 11:55:18"
+  }, {
+    "id" : "uploadrecord_1013",
+    "modelId" : "model_1002",
+    "userId" : "U1002",
+    "fileName" : "火箭_发射台.3ds",
+    "fileSize" : 950000,
+    "format" : "3DS",
+    "status" : "失败",
+    "versionNumber" : "v4.2",
+    "createdAt" : "2026-05-03 16:10:05"
+  }, {
+    "id" : "uploadrecord_1014",
+    "modelId" : "model_1002",
+    "userId" : "U1003",
+    "fileName" : "无人机_飞行器.obj",
+    "fileSize" : 7000,
+    "format" : "OBJ",
+    "status" : "上传中",
+    "versionNumber" : "v5.2",
+    "createdAt" : "2026-05-08 08:22:44"
+  }, {
+    "id" : "uploadrecord_1015",
+    "modelId" : "model_1002",
+    "userId" : "U1004",
+    "fileName" : "泰迪熊_毛绒.3ds",
+    "fileSize" : 600000,
+    "format" : "3DS",
+    "status" : "完成",
+    "versionNumber" : "v1.3",
+    "createdAt" : "2026-05-13 12:48:30"
+  }, {
+    "id" : "uploadrecord_1016",
+    "modelId" : "model_1007",
+    "userId" : "U1005",
+    "fileName" : "山地地形_贴图.glb",
+    "fileSize" : 75000000,
+    "format" : "GLB",
+    "status" : "失败",
+    "versionNumber" : "v2.3",
+    "createdAt" : "2026-05-18 17:33:21"
+  }, {
+    "id" : "uploadrecord_1017",
+    "modelId" : "model_1003",
+    "userId" : "U1006",
+    "fileName" : "沙漠景观_全貌.gltf",
+    "fileSize" : 540000,
+    "format" : "GLTF",
+    "status" : "上传中",
+    "versionNumber" : "v3.3",
+    "createdAt" : "2026-05-23 10:05:59"
+  }, {
+    "id" : "uploadrecord_1018",
+    "modelId" : "model_1003",
+    "userId" : "U011",
+    "fileName" : "地铁车厢外饰设计_2026.obj",
+    "fileSize" : 512000,
+    "format" : "OBJ",
+    "status" : "完成",
+    "versionNumber" : "v1.0",
+    "createdAt" : "2026-03-02 10:30:00"
+  }, {
+    "id" : "uploadrecord_1019",
+    "modelId" : "model_1000",
+    "userId" : "U012",
+    "fileName" : "风力发电机叶片优化_ver2.fbx",
+    "fileSize" : 5242880,
+    "format" : "FBX",
+    "status" : "完成",
+    "versionNumber" : "v2.0",
+    "createdAt" : "2026-03-10 14:15:00"
+  }, {
+    "id" : "uploadrecord_1020",
+    "modelId" : "model_1006",
+    "userId" : "U013",
+    "fileName" : "古代宫殿建筑群全景.glb",
+    "fileSize" : 20971520,
+    "format" : "GLB",
+    "status" : "上传中",
+    "versionNumber" : "v1.2-beta",
+    "createdAt" : "2026-03-18 09:00:00"
+  }, {
+    "id" : "uploadrecord_1021",
+    "modelId" : "model_1001",
+    "userId" : "U014",
+    "fileName" : "涡轮发动机剖面展示.stl",
+    "fileSize" : 1048576,
+    "format" : "STL",
+    "status" : "失败",
+    "versionNumber" : "v0.9",
+    "createdAt" : "2026-03-26 16:45:00"
+  }, {
+    "id" : "uploadrecord_1022",
+    "modelId" : "model_1002",
+    "userId" : "U015",
+    "fileName" : "现代办公室家具套装.blend",
+    "fileSize" : 52428800,
+    "format" : "BLEND",
+    "status" : "完成",
+    "versionNumber" : "v3.0",
+    "createdAt" : "2026-04-03 11:20:00"
+  }, {
+    "id" : "uploadrecord_1023",
+    "modelId" : "model_1007",
+    "userId" : "U016",
+    "fileName" : "城市交通枢纽模型.dae",
+    "fileSize" : 3145728,
+    "format" : "DAE",
+    "status" : "上传中",
+    "versionNumber" : "v1.1",
+    "createdAt" : "2026-04-11 08:30:00"
+  }, {
+    "id" : "uploadrecord_1024",
+    "modelId" : "model_1002",
+    "userId" : "U017",
+    "fileName" : "人体骨骼肌肉系统解剖.obj",
+    "fileSize" : 104857600,
+    "format" : "OBJ",
+    "status" : "完成",
+    "versionNumber" : "v2.1",
+    "createdAt" : "2026-04-19 15:00:00"
+  }, {
+    "id" : "uploadrecord_1025",
+    "modelId" : "model_1004",
+    "userId" : "U018",
+    "fileName" : "水下机器人原型_202604.gltf",
+    "fileSize" : 209715200,
+    "format" : "GLTF",
+    "status" : "失败",
+    "versionNumber" : "v1.0-alpha",
+    "createdAt" : "2026-04-27 13:10:00"
+  }, {
+    "id" : "uploadrecord_1026",
+    "modelId" : "model_1002",
+    "userId" : "U019",
+    "fileName" : "桥梁结构应力分析模型.step",
+    "fileSize" : 524288000,
+    "format" : "STEP",
+    "status" : "上传中",
+    "versionNumber" : "v4.2",
+    "createdAt" : "2026-05-05 10:00:00"
+  }, {
+    "id" : "uploadrecord_1027",
+    "modelId" : "model_1001",
+    "userId" : "U020",
+    "fileName" : "游戏角色低多边形模型.fbx",
+    "fileSize" : 1073741824,
+    "format" : "FBX",
+    "status" : "完成",
+    "versionNumber" : "v5.0",
+    "createdAt" : "2026-05-13 17:30:00"
+  }, {
+    "id" : "uploadrecord_1028",
+    "modelId" : "model_1004",
+    "userId" : "U021",
+    "fileName" : "地球大气层温度分布_3D.fbx",
+    "fileSize" : 10485760,
+    "format" : "FBX",
+    "status" : "上传中",
+    "versionNumber" : "v1.3",
+    "createdAt" : "2026-05-21 09:45:00"
+  }, {
+    "id" : "uploadrecord_1029",
+    "modelId" : "model_1002",
+    "userId" : "U022",
+    "fileName" : "核磁共振脑部扫描模型.stl",
+    "fileSize" : 20971520,
+    "format" : "STL",
+    "status" : "失败",
+    "versionNumber" : "v0.8",
+    "createdAt" : "2026-05-25 14:00:00"
   } ]
 }
 
 // 各 storageKey 对应的 store 内 stateName（与 stores 中的 ref 名严格一致）
 const STATE_NAME_MAP = {
-  "sheji-user" : "userList",
-  "sheji-dataAsset" : "dataAssetList",
-  "sheji-dataAssetField" : "dataAssetFieldList",
-  "sheji-dataAssetFavorite" : "favoriteList",
-  "sheji-qualityRule" : "qualityRuleList",
-  "sheji-detectionResult" : "detectionResultList",
-  "sheji-dataStandard" : "dataStandardList",
-  "sheji-integrationPlan" : "integrationPlanList",
-  "sheji-executionLog" : "executionLogList",
-  "sheji-apiDefinition" : "apiDefinitionList",
-  "sheji-grantApplication" : "grantApplicationList",
+  "sheji-model" : "modelList",
+  "sheji-modelVersion" : "versionList",
+  "sheji-modelCategory" : "categoryList",
+  "sheji-teamMember" : "memberList",
+  "sheji-shareRequest" : "shareRequestList",
   "sheji-approvalRecord" : "approvalRecordList",
-  "sheji-dashboardConfig" : "dashboardConfigList",
-  "sheji-exportRecord" : "exportRecordList"
+  "sheji-exportRecord" : "exportRecordList",
+  "sheji-usageSavedFilter" : "savedFilterList",
+  "sheji-uploadRecord" : "uploadRecordList"
 }
 
 export function seedIfEmpty() {
   for (const [key, value] of Object.entries(SEED)) {
-    if (!localStorage.getItem(key)) {
-      const stateName = STATE_NAME_MAP[key]
-      if (!stateName) continue
-      // pinia-plugin-persistedstate 默认整个 state 序列化为对象
+    const stateName = STATE_NAME_MAP[key]
+    if (!stateName) continue
+
+    const raw = localStorage.getItem(key)
+    if (!raw) {
+      // 首次写入
       localStorage.setItem(key, JSON.stringify({ [stateName]: value }))
+      continue
+    }
+
+    // 检测分类数据是否缺少根节点（所有 parentId 都非空），自动修复
+    if (key === 'sheji-modelCategory') {
+      try {
+        const parsed = JSON.parse(raw)
+        const list = parsed[stateName] || []
+        const hasRoot = list.some(c => !c.parentId)
+        if (!hasRoot && list.length > 0) {
+          localStorage.setItem(key, JSON.stringify({ [stateName]: value }))
+        }
+      } catch {
+        localStorage.setItem(key, JSON.stringify({ [stateName]: value }))
+      }
     }
   }
 }

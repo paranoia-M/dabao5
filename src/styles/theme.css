@@ -1,46 +1,46 @@
 :root {
-  --app-primary: #EA580C;
-  --app-accent: #2563EB;
+  --app-primary: #0F766E;
+  --app-accent: #475569;
   --app-success: #10B981;
   --app-warning: #F59E0B;
   --app-danger: #EF4444;
-  --app-radius: 2px;
+  --app-radius: 4px;
   --app-spacing: 16px;
-  --app-font: 'HarmonyOS Sans SC', 'Inter', system-ui, sans-serif;
+  --app-font: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
   --app-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   --app-motion: 240ms;
-  --app-bg: #F1F5F9;
-  --app-sidebar-bg: #F1F5F9;
-  --app-sidebar-text: #1F2937;
+  --app-bg: #F9FAFB;
+  --app-sidebar-bg: #1E293B;
+  --app-sidebar-text: #E5E7EB;
   --app-header-bg: #FFFFFF;
-  --el-color-primary: #EA580C;
+  --el-color-primary: #0F766E;
   --el-color-success: #10B981;
   --el-color-warning: #F59E0B;
   --el-color-danger: #EF4444;
-  --el-border-radius-base: 2px;
+  --el-border-radius-base: 4px;
 }
 
-.page-home {
+.page-dashboard_overview {
   --page-primary: #2563EB;
 }
-.page-asset_catalog {
+.page-model_library {
+  --page-primary: #0F766E;
+}
+.page-model_detail {
   --page-primary: #0D9488;
 }
-.page-asset_profile {
-  --page-primary: #4B5563;
+.page-share_approval {
+  --page-primary: #EA580C;
 }
-.page-quality_monitor {
-  --page-primary: #1E3A5F;
-}
-.page-standard_config {
-  --page-primary: #52525B;
-}
-.page-integration_schedule {
+.page-team_management {
   --page-primary: #D97706;
 }
-.page-api_register {
-  --page-primary: #0284C7;
+.page-my_assets {
+  --page-primary: #DC2626;
 }
-.page-grant_approval {
-  --page-primary: #EA580C;
+.page-usage_statistics {
+  --page-primary: #475569;
+}
+.page-model_category {
+  --page-primary: #52525B;
 }

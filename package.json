@@ -1,5 +1,5 @@
 {
-  "name" : "食品质量安全检测分析平台",
+  "name" : "企业智能数据管理综合服务平台",
   "version" : "0.1.0",
   "private" : true,
   "type" : "module",
@@ -20,6 +20,14 @@
     "echarts" : "^5.5.1",
     "vue-echarts" : "^7.0.3",
     "axios" : "^1.7.9"
+  ,
+    "@infectoone/vue-ganttastic": "^2.3.2"
+  ,
+    "ol": "^10.4.0"
+  ,
+    "three": "^0.175.0"
+  ,
+    "@vue-flow/core": "^1.42.5"
   },
   "devDependencies" : {
     "@vitejs/plugin-vue" : "^5.2.1",

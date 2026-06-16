@@ -1,106 +1,101 @@
-.home-container {
+.broadcast-container {
   padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
   
-  .dashboard-row {
-    margin-bottom: 20px;
-  }
-  
-  .mb-20 {
-    margin-bottom: 20px;
-  }
-  
-  .stat-card {
-    .stat-content {
-      display: flex;
-      align-items: center;
-      
-      .stat-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 20px;
-        
-        .svg-icon {
-          font-size: 28px;
-          color: #fff;
-        }
-        
-        &.bg-primary {
-          background-color: #409EFF;
-        }
-        
-        &.bg-success {
-          background-color: #67C23A;
-        }
-        
-        &.bg-warning {
-          background-color: #E6A23C;
-        }
-        
-        &.bg-danger {
-          background-color: #F56C6C;
-        }
-      }
-      
-      .stat-info {
-        flex: 1;
-        
-        h3 {
-          margin: 0 0 5px 0;
-          font-size: 16px;
-          color: #666;
-        }
-        
-        .stat-value {
-          margin: 0;
-          font-size: 24px;
-          font-weight: bold;
-          color: #333;
-        }
-        
-        .stat-desc {
-          margin: 5px 0 0 0;
-          font-size: 12px;
-          color: #999;
-        }
-      }
-    }
-  }
-  
-  .chart-card {
+  .broadcast-card {
     height: 100%;
+    display: flex;
+    flex-direction: column;
     
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
       
-      h3 {
-        margin: 0;
-        font-size: 16px;
+      .header-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .add-btn {
+        .btn-icon {
+          margin-right: 5px;
+        }
       }
     }
+  }
+  
+  .filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
     
-    .chart-container {
-      height: calc(100% - 40px);
+    .search-input {
+      width: 300px;
+    }
+    
+    .status-select {
+      width: 150px;
+    }
+    
+    .date-picker {
+      width: 250px;
     }
   }
   
-  .search-form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .event-form {
+  .data-visualization {
     margin-bottom: 20px;
-    padding: 20px;
-    background-color: #f5f7fa;
-    border-radius: 4px;
+    
+    .stat-card {
+      margin-bottom: 0;
+      height: 100%;
+      
+      .stat-content {
+        display: flex;
+        align-items: center;
+        
+        .stat-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 15px;
+          font-size: 24px;
+          color: white;
+          
+          &.total-icon {
+            background-color: #409EFF;
+          }
+          
+          &.published-icon {
+            background-color: #67C23A;
+          }
+          
+          &.unpublished-icon {
+            background-color: #909399;
+          }
+        }
+        
+        .stat-info {
+          .stat-title {
+            font-size: 14px;
+            color: #909399;
+            margin-bottom: 5px;
+          }
+          
+          .stat-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #303133;
+          }
+        }
+      }
+    }
   }
   
   .pagination-container {
@@ -109,15 +104,27 @@
     justify-content: flex-end;
   }
   
-  .event-analysis, .event-solution {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f5f7fa;
-    border-radius: 4px;
+  .edit-btn {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #67c23a;
     
-    h4 {
-      margin-top: 0;
-      margin-bottom: 10px;
+    &:hover {
+      background-color: #e1f3d8;
+      border-color: #c2e7b0;
+    }
+  }
+  
+  .delete-btn {
+    &:hover {
+      background-color: #fde2e2;
+      border-color: #fbc4c4;
+    }
+  }
+  
+  .broadcast-dialog {
+    .el-form-item {
+      margin-bottom: 22px;
     }
   }
 }

@@ -1,0 +1,187 @@
+
+.device-management-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: calc(100vh - 40px);
+
+  .header-area {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .system-title {
+      color: #409eff;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+      background: linear-gradient(to right, #409eff, #67c23a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .operation-panel {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .search-box {
+        .search-input {
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+          .search-btn {
+            background-color: #409eff;
+            color: white;
+            border-radius: 0 4px 4px 0;
+          }
+        }
+      }
+
+      .add-btn {
+        background-color: #67c23a;
+        border-color: #67c23a;
+        color: white;
+        border-radius: 4px;
+        padding: 0 20px;
+        height: 40px;
+
+        .btn-text {
+          font-weight: 500;
+        }
+
+        &:hover {
+          background-color: #5daf34;
+          border-color: #5daf34;
+        }
+      }
+    }
+  }
+
+  .content-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    .device-table {
+      margin-bottom: 20px;
+
+      .type-tag {
+        font-weight: 500;
+      }
+
+      .status-tag {
+        font-weight: 500;
+      }
+
+      .edit-btn {
+        background-color: #e6a23c;
+        border-color: #e6a23c;
+        color: white;
+
+        &:hover {
+          background-color: #d5912a;
+          border-color: #d5912a;
+        }
+      }
+
+      .delete-btn {
+        &:hover {
+          background-color: #f56c6c;
+          border-color: #f56c6c;
+        }
+      }
+    }
+
+    .pagination-area {
+      display: flex;
+      justify-content: flex-end;
+
+      .custom-pagination {
+        .el-pager li {
+          border-radius: 4px;
+          margin: 0 2px;
+
+          &.active {
+            background-color: #409eff;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .device-dialog {
+    .device-form {
+      .form-input, .form-select {
+        width: 100%;
+      }
+
+      .status-radio {
+        .el-radio {
+          margin-right: 15px;
+        }
+      }
+    }
+
+    .dialog-footer {
+      .cancel-btn {
+        &:hover {
+          color: #409eff;
+          border-color: #c6e2ff;
+          background-color: #ecf5ff;
+        }
+      }
+
+      .confirm-btn {
+        background-color: #409eff;
+        border-color: #409eff;
+
+        &:hover {
+          background-color: #66b1ff;
+          border-color: #66b1ff;
+        }
+      }
+    }
+  }
+
+  .detail-dialog {
+    .device-detail {
+      .detail-item {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+
+        .detail-label {
+          width: 120px;
+          font-weight: 500;
+          color: #606266;
+        }
+
+        .detail-value {
+          flex: 1;
+          color: #303133;
+        }
+
+        .detail-tag {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .dialog-footer {
+      .close-btn {
+        background-color: #409eff;
+        border-color: #409eff;
+
+        &:hover {
+          background-color: #66b1ff;
+          border-color: #66b1ff;
+        }
+      }
+    }
+  }
+}

@@ -1,45 +1,49 @@
-
 <template>
   <div class="layout-container">
     <el-container>
-      <el-aside width="220px" class="security-aside">
-        <div class="logo">计算机网络安全维护集成管理软件</div>
+      <el-aside width="220px" class="system-aside">
+        <div class="logo">
+          <span class="logo-text">智慧广播管理系统</span>
+          <span class="logo-subtext">Smart Broadcast System</span>
+        </div>
         <el-menu
           :default-active="activeMenu"
-          background-color="#001529"
-          text-color="#fff"
-          active-text-color="#ffd04b"
+          background-color="#304156"
+          text-color="#bfcbd9"
+          active-text-color="#409EFF"
           router
-          @select="handleMenuSelect"
-          class="security-menu"
+          class="system-menu"
         >
-          <el-menu-item index="Home" route="/">
-            <span class="menu-item-text">首页</span>
+          <el-menu-item index="/" class="menu-item">
+            <span class="menu-item-content">首页</span>
           </el-menu-item>
-          <el-menu-item index="SecurityMonitor" route="/security-monitor">
-            <span class="menu-item-text">安全态势监控</span>
+          <el-menu-item index="/broadcast" class="menu-item">
+            <span class="menu-item-content">广播管理</span>
           </el-menu-item>
-          <el-menu-item index="LogManagement" route="/log-management">
-            <span class="menu-item-text">安全日志审计</span>
+          <el-menu-item index="/schedule" class="menu-item">
+            <span class="menu-item-content">排程管理</span>
           </el-menu-item>
-          <el-menu-item index="AlarmManagement" route="/alarm-management">
-            <span class="menu-item-text">威胁告警中心</span>
+          <el-menu-item index="/device" class="menu-item">
+            <span class="menu-item-content">设备管理</span>
           </el-menu-item>
-          <el-menu-item index="SystemConfig" route="/system-config">
-            <span class="menu-item-text">系统安全配置</span>
+          <el-menu-item index="/statistics" class="menu-item">
+            <span class="menu-item-content">统计分析</span>
           </el-menu-item>
-          <el-menu-item index="UserManagement" route="/user-management">
-            <span class="menu-item-text">权限管理系统</span>
+          <el-menu-item index="/settings" class="menu-item">
+            <span class="menu-item-content">系统设置</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header class="security-header">
+        <el-header class="system-header">
           <div class="header-right">
-            <el-button type="primary" plain class="logout-btn" @click="handleLogout">安全退出</el-button>
+            <div class="user-info" @click="handleLogout">
+              <span class="user-name">管理员</span>
+              <el-avatar size="small" class="user-avatar">Admin</el-avatar>
+            </div>
           </div>
         </el-header>
-        <el-main class="security-main">
+        <el-main class="system-main">
           <RouterView />
         </el-main>
       </el-container>
@@ -55,15 +59,10 @@ const route = useRoute()
 const router = useRouter()
 
 const activeMenu = computed(() => {
-  return route.name
+  return route.path
 })
 
-const handleMenuSelect = (index) => {
-  console.log(`[安全日志] 菜单切换至: ${index}`)
-}
-
 const handleLogout = async () => {
-  console.log('[安全日志] 用户执行登出操作')
   localStorage.clear()
   await router.push('/login')
 }
@@ -74,4 +73,3 @@ const handleLogout = async () => {
 @use './Layout.scss';
 
 </style>
-    

@@ -1,0 +1,135 @@
+
+.settings-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  
+  .settings-card {
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+    
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .system-title {
+        color: #409eff;
+        margin-bottom: 5px;
+        font-size: 20px;
+      }
+      
+      .sub-title {
+        color: #909399;
+        font-size: 14px;
+      }
+    }
+  }
+  
+  .settings-tabs {
+    margin-top: 10px;
+    
+    :deep(.el-tabs__header) {
+      margin-bottom: 20px;
+    }
+    
+    :deep(.el-tabs__item) {
+      font-size: 16px;
+      padding: 0 20px;
+    }
+  }
+  
+  .settings-form {
+    padding: 0 20px;
+    
+    .frequency-container {
+      display: flex;
+      align-items: center;
+      
+      .unit {
+        margin-left: 10px;
+        color: #606266;
+      }
+    }
+    
+    .volume-value {
+      margin-left: 15px;
+      color: #606266;
+      font-size: 14px;
+    }
+  }
+  
+  .schedule-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    
+    .add-btn {
+      background-color: #409eff;
+      border-color: #409eff;
+    }
+    
+    .search-input {
+      .search-icon {
+        color: #c0c4cc;
+        margin-right: 5px;
+      }
+    }
+  }
+  
+  .schedule-table {
+    :deep(.el-table__header) {
+      th {
+        background-color: #f5f7fa;
+      }
+    }
+    
+    .edit-btn {
+      background-color: #67c23a;
+      border-color: #67c23a;
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: #f56c6c;
+      border-color: #f56c6c;
+      color: white;
+    }
+  }
+  
+  .device-table {
+    :deep(.el-table__header) {
+      th {
+        background-color: #f5f7fa;
+      }
+    }
+    
+    .restart-btn {
+      background-color: #e6a23c;
+      border-color: #e6a23c;
+      color: white;
+    }
+    
+    .update-btn {
+      background-color: #409eff;
+      border-color: #409eff;
+      color: white;
+    }
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .schedule-dialog {
+    :deep(.el-dialog__header) {
+      border-bottom: 1px solid #ebeef5;
+    }
+    
+    :deep(.el-dialog__footer) {
+      border-top: 1px solid #ebeef5;
+    }
+  }
+}

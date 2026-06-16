@@ -18,34 +18,29 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: 'dashboard',
-            name: 'Dashboard',
-            component: () => import('@/views/Dashboard.vue')
+            path: 'broadcast',
+            name: 'Broadcast',
+            component: () => import('@/views/Broadcast.vue')
           },
           {
-            path: 'security-monitor',
-            name: 'SecurityMonitor',
-            component: () => import('@/views/SecurityMonitor.vue')
+            path: 'schedule',
+            name: 'Schedule',
+            component: () => import('@/views/Schedule.vue')
           },
           {
-            path: 'log-management',
-            name: 'LogManagement',
-            component: () => import('@/views/LogManagement.vue')
+            path: 'device',
+            name: 'Device',
+            component: () => import('@/views/Device.vue')
           },
           {
-            path: 'alarm-management',
-            name: 'AlarmManagement',
-            component: () => import('@/views/AlarmManagement.vue')
+            path: 'statistics',
+            name: 'Statistics',
+            component: () => import('@/views/Statistics.vue')
           },
           {
-            path: 'system-config',
-            name: 'SystemConfig',
-            component: () => import('@/views/SystemConfig.vue')
-          },
-          {
-            path: 'user-management',
-            name: 'UserManagement',
-            component: () => import('@/views/UserManagement.vue')
+            path: 'settings',
+            name: 'Settings',
+            component: () => import('@/views/Settings.vue')
           }
         ]
   }

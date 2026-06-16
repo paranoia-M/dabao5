@@ -1,113 +1,81 @@
 
 <template>
   <div class="login-container">
-    <div class="login-left">
-      <div class="bubbles-container">
-        <div class="bubble bubble-1"></div>
-        <div class="bubble bubble-2"></div>
-        <div class="bubble bubble-3"></div>
-        <div class="security-animation">
-          <div class="shield"></div>
-          <div class="lock"></div>
-          <div class="network"></div>
+    <div class="login-wrapper">
+      <div class="login-left">
+        <div class="broadcast-icon">
+          <svg viewBox="0 0 24 24" width="80" height="80">
+            <path fill="#409EFF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          </svg>
+        </div>
+        <h1>智慧广播管理系统</h1>
+        <p class="system-description">智能化广播设备管理 · 精准内容投放 · 实时监控分析</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">📡</div>
+            <span>设备远程控制</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📅</div>
+            <span>定时任务管理</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <span>播放数据分析</span>
+          </div>
         </div>
       </div>
-      <h1 class="system-title">计算机网络安全维护集成管理软件</h1>
-      <p class="system-desc">全面监控 · 智能分析 · 快速响应</p>
-      <div class="feature-list">
-        <div class="feature-item">
-          <div class="feature-icon">🔒</div>
-          <div class="feature-text">实时威胁检测</div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🛡️</div>
-          <div class="feature-text">漏洞防护</div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">📊</div>
-          <div class="feature-text">安全态势分析</div>
-        </div>
+      <div class="login-right">
+        <el-card class="login-card" shadow="hover">
+          <h2 class="login-title">用户登录</h2>
+          <el-form :model="loginForm" label-width="80px" class="login-form">
+            <el-form-item label="账号" prop="username">
+              <el-input 
+                v-model="loginForm.username" 
+                placeholder="请输入账号" 
+                clearable
+                @keyup.enter="handleLogin"
+              />
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input 
+                v-model="loginForm.password" 
+                type="password" 
+                placeholder="请输入密码" 
+                show-password
+                @keyup.enter="handleLogin"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button 
+                type="primary" 
+                @click="handleLogin" 
+                class="login-btn"
+                :loading="loading"
+              >
+                登录
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
       </div>
     </div>
-
-    <div class="login-right">
-      <el-card class="login-box" shadow="always">
-        <h2 class="login-title">用户登录</h2>
-        <el-form :model="loginForm" class="login-form">
-          <el-form-item>
-            <el-input 
-              v-model="loginForm.username" 
-              placeholder="请输入账号" 
-              class="custom-input"
-            >
-              <template #prefix>
-                <span class="input-prefix">👤</span>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input 
-              v-model="loginForm.password" 
-              type="password" 
-              placeholder="请输入密码" 
-              class="custom-input"
-              show-password
-            >
-              <template #prefix>
-                <span class="input-prefix">🔑</span>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button 
-              type="primary" 
-              @click="handleLogin" 
-              class="login-btn"
-              :loading="loading"
-            >
-              登录
-            </el-button>
-          </el-form-item>
-        </el-form>
-        <div class="login-footer">
-          <p>账号: admin 密码: admin123</p>
-          <el-button type="text" @click="showSecurityTip">安全登录提示</el-button>
-        </div>
-      </el-card>
-    </div>
-
-    <el-dialog v-model="dialogVisible" title="安全提示" width="30%">
-      <div class="security-tip">
-        <p>1. 请确保使用专用网络登录系统</p>
-        <p>2. 定期更换密码并启用双因素认证</p>
-        <p>3. 不要在公共设备上保存登录信息</p>
-        <p>4. 发现异常登录请立即联系管理员</p>
-      </div>
-      <template #footer>
-        <el-button type="primary" @click="dialogVisible = false">确定</el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 
 const router = useRouter()
 const loading = ref(false)
-const dialogVisible = ref(false)
 
 // 登录相关
 const loginForm = reactive({
   username: '',
   password: ''
 });
-
-const showSecurityTip = () => {
-  dialogVisible.value = true;
-}
 
 const handleLogin = () => {
   if (!loginForm.username || !loginForm.password) {
@@ -121,24 +89,10 @@ const handleLogin = () => {
   setTimeout(() => {
     if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
       ElMessage.success('登录成功');
-      // 模拟获取用户权限
-      const userInfo = {
-        name: '管理员',
-        role: 'admin',
-        lastLogin: new Date().toLocaleString(),
-        securityLevel: '高级'
-      };
       localStorage.setItem("token", "token_admin");
-      localStorage.setItem("userInfo", JSON.stringify(userInfo));
-      
-      // 模拟安全审计日志
-      console.log(`[安全审计] 用户 ${loginForm.username} 于 ${new Date().toLocaleString()} 登录系统`);
-      
       router.push("/");
     } else {
       ElMessage.error('账号或密码错误');
-      // 模拟失败日志
-      console.log(`[安全警告] 用户 ${loginForm.username} 尝试登录失败`);
     }
     loading.value = false;
   }, 1000);

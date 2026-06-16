@@ -1,62 +1,84 @@
-
 .layout-container {
   height: 100vh;
   overflow: hidden;
 
-  .security-aside {
-    background-color: #001529;
+  .system-aside {
+    background-color: #304156;
     height: 100vh;
     transition: width 0.3s;
-    overflow: hidden;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
 
     .logo {
       height: 60px;
-      line-height: 60px;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       color: #fff;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: #002140;
-      border-bottom: 1px solid #001529;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      .logo-text {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .logo-subtext {
+        font-size: 12px;
+        margin-top: 4px;
+      }
     }
 
-    .security-menu {
+    .system-menu {
       border-right: none;
-      height: calc(100vh - 60px);
-      overflow-y: auto;
 
-      .el-menu-item {
+      .menu-item {
         &:hover {
-          background-color: #1890ff !important;
+          background-color: #263445 !important;
         }
+
         &.is-active {
-          background-color: #1890ff !important;
-          color: #ffd04b !important;
+          background-color: #409EFF !important;
+          color: #fff !important;
+        }
+
+        .menu-item-content {
+          font-size: 14px;
         }
       }
     }
   }
 
-  .security-header {
+  .system-header {
     height: 60px;
-    line-height: 60px;
-    background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 0 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
     .header-right {
-      .logout-btn {
-        margin-left: 10px;
+      .user-info {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .user-name {
+          margin-right: 10px;
+          font-size: 14px;
+        }
+
+        .user-avatar {
+          background-color: #409EFF;
+          color: #fff;
+        }
       }
     }
   }
 
-  .security-main {
-    background-color: #f0f2f5;
+  .system-main {
     padding: 20px;
+    background-color: #f0f2f5;
     height: calc(100vh - 60px);
     overflow: auto;
   }

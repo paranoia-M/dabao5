@@ -1,47 +1,49 @@
+
 <template>
-  <div class="app-layout">
+  <div class="layout-container">
     <el-container>
-      <el-aside width="280px" class="app-sidebar">
-        <div class="brand">
-          <div class="brand-icon"></div>
-          <span class="brand-title">3D资产库</span>
-        </div>
+      <el-aside width="220px" class="security-aside">
+        <div class="logo">计算机网络安全维护集成管理软件</div>
         <el-menu
-          :default-active="route.path"
-          :router="false"
-          class="app-menu"
-          background-color="#ffffff"
-          text-color="#333"
-          active-text-color="#0F766E"
+          :default-active="activeMenu"
+          background-color="#001529"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          router
           @select="handleMenuSelect"
+          class="security-menu"
         >
-          <template v-for="group in MENU" :key="group.moduleName">
-            <el-sub-menu :index="group.moduleName">
-              <template #title>
-                <span class="menu-group-title">{{ group.moduleName }}</span>
-              </template>
-              <el-menu-item
-                v-for="item in group.items"
-                :key="item.path"
-                :index="item.path"
-              >
-                {{ item.name }}
-              </el-menu-item>
-            </el-sub-menu>
-          </template>
+          <el-menu-item index="Home" route="/">
+            <span class="menu-item-text">首页</span>
+          </el-menu-item>
+          <el-menu-item index="Dashboard" route="/dashboard">
+            <span class="menu-item-text">实时仪表盘</span>
+          </el-menu-item>
+          <el-menu-item index="SecurityMonitor" route="/security-monitor">
+            <span class="menu-item-text">安全态势监控</span>
+          </el-menu-item>
+          <el-menu-item index="LogManagement" route="/log-management">
+            <span class="menu-item-text">安全日志审计</span>
+          </el-menu-item>
+          <el-menu-item index="AlarmManagement" route="/alarm-management">
+            <span class="menu-item-text">威胁告警中心</span>
+          </el-menu-item>
+          <el-menu-item index="SystemConfig" route="/system-config">
+            <span class="menu-item-text">系统安全配置</span>
+          </el-menu-item>
+          <el-menu-item index="UserManagement" route="/user-management">
+            <span class="menu-item-text">权限管理系统</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header class="app-header">
-          <div class="header-left">
-            <span class="header-title">三维模型资产库管理与共享平台</span>
-          </div>
+        <el-header class="security-header">
           <div class="header-right">
-            <el-button type="text" @click="handleLogout">退出登录</el-button>
+            <el-button type="primary" plain class="logout-btn" @click="handleLogout">安全退出</el-button>
           </div>
         </el-header>
-        <el-main class="app-main">
-          <router-view />
+        <el-main class="security-main">
+          <RouterView />
         </el-main>
       </el-container>
     </el-container>
@@ -49,42 +51,30 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
 
-const MENU = [
-  { moduleName: '首页概览', items: [
-    { name: '数据概览仪表盘', path: '/dashboard' },
-  ]},
-  { moduleName: '模型管理', items: [
-    { name: '模型库', path: '/model-library' },
-    { name: '模型详情', path: '/model-view' },
-  ]},
-  { moduleName: '共享协作', items: [
-    { name: '共享审批', path: '/share-approval' },
-    { name: '团队管理', path: '/team-members' },
-  ]},
-  { moduleName: '个人工作台', items: [
-    { name: '我的资产', path: '/my-assets' },
-    { name: '使用统计', path: '/usage-statistics' },
-  ]},
-  { moduleName: '系统配置', items: [
-    { name: '模型分类', path: '/model-category' },
-  ]},
-]
+const activeMenu = computed(() => {
+  return route.name
+})
 
-function handleMenuSelect(index) {
-  router.push(index)
+const handleMenuSelect = (index) => {
+  console.log(`[安全日志] 菜单切换至: ${index}`)
 }
 
-function handleLogout() {
-  router.push('/login')
+const handleLogout = async () => {
+  console.log('[安全日志] 用户执行登出操作')
+  localStorage.clear()
+  await router.push('/login')
 }
 </script>
 
-<style scoped lang="scss">
-@use './Layout.scss' as *;
+<style lang="scss" scoped>
+
+@use './Layout.scss';
+
 </style>
+    

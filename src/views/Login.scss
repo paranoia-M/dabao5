@@ -1,230 +1,242 @@
-// Variables
-$primary: #0F766E;
-$primary-light: #14a99e;
-$primary-dark: #0a5c55;
-$bg-left: linear-gradient(135deg, #0b2e2a 0%, #0a5c55 40%, #0F766E 100%);
-$glass-bg: rgba(255, 255, 255, 0.75);
-$glass-border: rgba(255, 255, 255, 0.3);
-$text-primary: #1a202c;
-$text-secondary: #4a5568;
-
-// Page layout
-.page-login {
+.login-container {
   display: flex;
-  width: 100vw;
   height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
   overflow: hidden;
-  background: $bg-left;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-}
-
-// Left panel
-.login-left {
-  flex: 0 0 55%;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 60px;
-  overflow: hidden;
 
-  .brand {
-    text-align: center;
+  .login-left {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     z-index: 1;
-  }
 
-  .brand-title {
-    font-size: 42px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
-  }
-
-  .brand-subtitle {
-    font-size: 20px;
-    color: rgba(255,255,255,0.85);
-    letter-spacing: 4px;
-    font-weight: 300;
-  }
-
-  // Decorative grid
-  .decorative-grid {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(circle at 30% 50%, black 30%, transparent 70%);
-  }
-
-  // Decorative cube (CSS 3D)
-  .decorative-cube {
-    position: absolute;
-    bottom: 15%;
-    right: 10%;
-    width: 120px;
-    height: 120px;
-    transform-style: preserve-3d;
-    animation: rotateCube 12s infinite linear;
-
-    &::before,
-    &::after {
-      content: '';
+    .bubbles-container {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.2);
-    }
-    &::before {
-      transform: rotateY(45deg) rotateX(30deg);
-    }
-    &::after {
-      transform: rotateY(-45deg) rotateX(-30deg);
-    }
-  }
+      overflow: hidden;
+      z-index: -1;
 
-  // Decorative rings
-  .decorative-rings {
-    position: absolute;
-    top: 12%;
-    left: 8%;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.1);
-    animation: pulseRing 4s ease-in-out infinite;
+      .bubble {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        filter: blur(5px);
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 20px; left: 20px; right: 20px; bottom: 20px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.08);
-    }
-  }
-}
+        &.bubble-1 {
+          width: 200px;
+          height: 200px;
+          top: 20%;
+          left: 10%;
+          animation: float 8s infinite ease-in-out;
+        }
 
-// Right panel
-.login-right {
-  flex: 0 0 45%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f0f4f8;
-  position: relative;
+        &.bubble-2 {
+          width: 150px;
+          height: 150px;
+          top: 60%;
+          left: 25%;
+          animation: float 10s infinite ease-in-out;
+        }
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: radial-gradient(circle at 20% 80%, rgba(15, 118, 110, 0.03) 0%, transparent 60%),
-                radial-gradient(circle at 80% 20%, rgba(15, 118, 110, 0.02) 0%, transparent 50%);
-    pointer-events: none;
-  }
-}
-
-// Login card
-.login-card {
-  width: 420px;
-  padding: 48px 40px;
-  background: $glass-bg;
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
-  border: 1px solid $glass-border;
-  position: relative;
-  z-index: 1;
-
-  .card-header {
-    text-align: center;
-    margin-bottom: 32px;
-
-    .card-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: $text-primary;
-      margin-bottom: 8px;
-    }
-
-    .card-subtitle {
-      font-size: 16px;
-      color: $text-secondary;
-    }
-  }
-
-  .login-form {
-    .el-form-item {
-      margin-bottom: 20px;
-    }
-
-    .el-input__wrapper {
-      background: rgba(255,255,255,0.8);
-      box-shadow: none;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      transition: border-color 0.3s, box-shadow 0.3s;
-
-      &:hover {
-        border-color: $primary-light;
+        &.bubble-3 {
+          width: 100px;
+          height: 100px;
+          top: 40%;
+          left: 70%;
+          animation: float 12s infinite ease-in-out;
+        }
       }
 
-      &.is-focus {
-        border-color: $primary;
-        box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.15);
+      .security-animation {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .shield, .lock, .network {
+          position: absolute;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
+        }
+
+        .shield {
+          width: 120px;
+          height: 150px;
+          top: 50px;
+          left: 90px;
+          clip-path: polygon(50% 0%, 100% 30%, 100% 70%, 50% 100%, 0% 70%, 0% 30%);
+        }
+
+        .lock {
+          width: 80px;
+          height: 100px;
+          top: 100px;
+          left: 110px;
+          clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0% 60%);
+        }
+
+        .network {
+          width: 200px;
+          height: 200px;
+          top: 50px;
+          left: 50px;
+          clip-path: circle(50% at 50% 50%);
+        }
       }
     }
 
-    .el-checkbox {
-      color: $text-secondary;
+    .system-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .login-btn {
+    .system-desc {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .feature-list {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+
+      .feature-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+          font-size: 1rem;
+          color: #555;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .login-right {
+    width: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
+
+    .login-box {
       width: 100%;
-      height: 48px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 10px;
-      background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+      padding: 2rem;
+      border-radius: 12px;
       border: none;
-      color: #fff;
-      transition: transform 0.2s, box-shadow 0.2s;
 
-      &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+      .login-title {
+        font-size: 1.5rem;
+        color: #333;
+        text-align: center;
+        margin-bottom: 2rem;
       }
 
-      &:active {
-        transform: translateY(0);
+      .login-form {
+        .custom-input {
+          margin-bottom: 1.5rem;
+
+          :deep(.el-input__wrapper) {
+            padding: 0 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+
+            &:hover {
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+          }
+
+          .input-prefix {
+            margin-right: 8px;
+            font-size: 16px;
+          }
+        }
+
+        .login-btn {
+          width: 100%;
+          height: 45px;
+          border-radius: 8px;
+          font-size: 1rem;
+          margin-top: 1rem;
+          background: linear-gradient(90deg, #409eff, #66b1ff);
+          border: none;
+          transition: all 0.3s;
+
+          &:hover {
+            background: linear-gradient(90deg, #66b1ff, #409eff);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+          }
+        }
+      }
+
+      .login-footer {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #999;
+
+        p {
+          margin-bottom: 0.5rem;
+        }
+
+        .el-button {
+          color: #409eff;
+          font-size: 0.9rem;
+        }
       }
     }
   }
 
-  .default-hint {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: $text-secondary;
-    opacity: 0.8;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 16px;
+  .security-tip {
+    p {
+      margin: 0.8rem 0;
+      color: #555;
+      line-height: 1.6;
+    }
   }
 }
 
-// Animations
-@keyframes rotateCube {
-  0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
-  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-}
-
-@keyframes pulseRing {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.05); opacity: 1; }
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }

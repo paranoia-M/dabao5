@@ -1,416 +1,571 @@
-
 <template>
-  <div class="broadcast-container">
-    <el-card class="broadcast-card" shadow="hover">
-      <template #header>
-        <div class="card-header">
-          <span class="header-title">智慧广播管理系统</span>
-          <el-button type="primary" class="add-btn" @click="handleAddBroadcast">
-            <span class="btn-icon">+</span> 新增广播
-          </el-button>
+  <div class="traffic-dashboard">
+    <div class="dashboard-container">
+      <!-- 数据概览卡片 -->
+      <div class="stats-grid">
+        <el-card class="stat-card" v-for="stat in stats" :key="stat.title" shadow="hover">
+          <div class="stat-content">
+            <div class="stat-badge" :style="{ backgroundColor: stat.color }"></div>
+            <div class="stat-info">
+              <h3>{{ stat.title }}</h3>
+              <p class="value">{{ stat.value }}</p>
+              <p class="trend" :class="{ up: stat.trend === 'up', down: stat.trend === 'down' }">
+                <span class="trend-icon">{{ stat.trend === 'up' ? '↑' : '↓' }}</span>
+                {{ stat.change }}
+              </p>
+            </div>
+          </div>
+        </el-card>
+      </div>
+
+      <!-- 主要内容区域 -->
+      <div class="main-content">
+        <!-- 交通地图和图表区域 -->
+        <div class="visualization-section">
+          <el-card shadow="hover" class="map-container">
+            <template #header>
+              <div class="card-header">
+                <span>实时交通路况</span>
+                <div class="header-actions">
+                  <el-select v-model="mapType" size="small" style="width: 120px">
+                    <el-option label="路况地图" value="traffic" />
+                    <el-option label="热力图" value="heat" />
+                    <el-option label="卫星图" value="satellite" />
+                  </el-select>
+                  <el-button type="primary" size="small" @click="refreshMap">刷新数据</el-button>
+                </div>
+              </div>
+            </template>
+            <div class="map-placeholder">
+              <div class="map-svg">
+                <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10,50 L50,20 L90,80 L130,30 L170,70 L190,50" stroke="#409EFF" stroke-width="2" fill="none" />
+                  <circle cx="10" cy="50" r="3" fill="#F56C6C" />
+                  <circle cx="50" cy="20" r="3" fill="#67C23A" />
+                  <circle cx="90" cy="80" r="3" fill="#E6A23C" />
+                  <circle cx="130" cy="30" r="3" fill="#409EFF" />
+                  <circle cx="170" cy="70" r="3" fill="#909399" />
+                  <circle cx="190" cy="50" r="3" fill="#67C23A" />
+                </svg>
+              </div>
+              <p>交通路况地图展示区域</p>
+            </div>
+            <div class="map-legend">
+              <div class="legend-item" v-for="item in legendItems" :key="item.label">
+                <span class="legend-color" :style="{ backgroundColor: item.color }"></span>
+                <span>{{ item.label }}</span>
+              </div>
+            </div>
+          </el-card>
+
+          <el-card shadow="hover" class="chart-container">
+            <template #header>
+              <div class="card-header">
+                <span>交通流量趋势</span>
+                <el-select v-model="timeRange" size="small" style="width: 120px">
+                  <el-option label="实时" value="realtime" />
+                  <el-option label="24小时" value="24h" />
+                  <el-option label="7天" value="7d" />
+                </el-select>
+              </div>
+            </template>
+            <div class="chart-placeholder">
+              <div class="chart-svg">
+                <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10,80 L30,60 L50,70 L70,40 L90,65 L110,30 L130,50 L150,20 L170,40 L190,10" 
+                        stroke="#409EFF" stroke-width="2" fill="none" />
+                  <path d="M10,60 L30,40 L50,50 L70,20 L90,45 L110,10 L130,30 L150,5 L170,20 L190,5" 
+                        stroke="#67C23A" stroke-width="2" fill="none" stroke-dasharray="5,2" />
+                </svg>
+              </div>
+              <p>交通流量趋势图表区域</p>
+            </div>
+          </el-card>
         </div>
-      </template>
 
-      <div class="filter-container">
-        <el-input 
-          v-model="searchQuery" 
-          placeholder="搜索广播标题或内容" 
-          class="search-input" 
-          clearable
-          @clear="handleSearchClear"
-          @keyup.enter="handleSearch"
-        >
-          <template #append>
-            <el-button @click="handleSearch">搜索</el-button>
-          </template>
-        </el-input>
-
-        <el-select 
-          v-model="filterStatus" 
-          placeholder="广播状态" 
-          class="status-select" 
-          clearable
-        >
-          <el-option label="全部状态" value="" />
-          <el-option label="已发布" value="published" />
-          <el-option label="未发布" value="unpublished" />
-        </el-select>
-
-        <el-date-picker
-          v-model="dateRange"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          class="date-picker"
-          value-format="YYYY-MM-DD"
-        />
-      </div>
-
-      <div class="data-visualization">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon total-icon">
-                  <el-icon><Collection /></el-icon>
-                </div>
-                <div class="stat-info">
-                  <div class="stat-title">总广播数</div>
-                  <div class="stat-value">{{ totalBroadcasts }}</div>
+        <!-- 交通事件表格 -->
+        <div class="data-table-section">
+          <el-card shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <span>交通事件公告</span>
+                <div class="table-actions">
+                  <el-input
+                    v-model="searchQuery"
+                    placeholder="搜索事件"
+                    clearable
+                    style="width: 200px"
+                    @clear="handleSearchClear"
+                    @keyup.enter="handleSearch"
+                  >
+                    <template #prefix>
+                      <el-icon><search /></el-icon>
+                    </template>
+                  </el-input>
+                  <el-button type="primary" size="small" @click="showAddDialog">
+                    <el-icon><plus /></el-icon>
+                    新增事件
+                  </el-button>
                 </div>
               </div>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon published-icon">
-                  <el-icon><SuccessFilled /></el-icon>
-                </div>
-                <div class="stat-info">
-                  <div class="stat-title">已发布</div>
-                  <div class="stat-value">{{ publishedCount }}</div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card shadow="hover" class="stat-card">
-              <div class="stat-content">
-                <div class="stat-icon unpublished-icon">
-                  <el-icon><Clock /></el-icon>
-                </div>
-                <div class="stat-info">
-                  <div class="stat-title">未发布</div>
-                  <div class="stat-value">{{ unpublishedCount }}</div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </div>
-
-      <el-table 
-        :data="filteredBroadcasts" 
-        style="width: 100%" 
-        v-loading="loading"
-        border
-        stripe
-        highlight-current-row
-      >
-        <el-table-column prop="id" label="广播ID" width="100" align="center" />
-        <el-table-column prop="title" label="广播标题" width="200" />
-        <el-table-column prop="content" label="广播内容" min-width="300" />
-        <el-table-column prop="status" label="状态" width="120" align="center">
-          <template #default="{ row }">
-            <el-tag :type="row.status === 'published' ? 'success' : 'info'" effect="light">
-              {{ row.status === 'published' ? '已发布' : '未发布' }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" align="center" />
-        <el-table-column label="操作" width="200" fixed="right" align="center">
-          <template #default="{ row }">
-            <el-button size="small" class="edit-btn" @click="handleEdit(row)">编辑</el-button>
-            <el-button 
-              size="small" 
-              type="danger" 
-              class="delete-btn" 
-              @click="handleDelete(row)"
+            </template>
+            
+            <el-table 
+              :data="paginatedEvents" 
+              style="width: 100%" 
+              height="300" 
+              stripe
+              @sort-change="handleSortChange"
             >
-              删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div class="pagination-container">
-        <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="[10, 20, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+              <el-table-column prop="time" label="时间" width="180" sortable="custom" />
+              <el-table-column prop="location" label="位置" width="180" />
+              <el-table-column prop="type" label="事件类型" width="120">
+                <template #default="{ row }">
+                  <el-tag :type="getEventTagType(row.type)" size="small">{{ row.type }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="description" label="事件描述" />
+              <el-table-column prop="status" label="状态" width="100">
+                <template #default="{ row }">
+                  <el-tag :type="row.status === '已处理' ? 'success' : 'warning'" size="small">
+                    {{ row.status }}
+                  </el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="150" fixed="right">
+                <template #default="{ row }">
+                  <el-button size="small" @click="handleDetail(row)">详情</el-button>
+                  <el-button size="small" type="danger" @click="handleDelete(row)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            
+            <div class="pagination-container">
+              <el-pagination
+                v-model:current-page="currentPage"
+                v-model:page-size="pageSize"
+                :page-sizes="[5, 10, 20]"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalEvents"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+              />
+            </div>
+          </el-card>
+        </div>
       </div>
-    </el-card>
+    </div>
 
-    <!-- 广播编辑对话框 -->
-    <el-dialog 
-      v-model="dialogVisible" 
-      :title="dialogTitle" 
-      width="600px"
-      :before-close="handleClose"
-      class="broadcast-dialog"
-    >
-      <el-form :model="formData" label-width="100px" :rules="formRules" ref="formRef">
-        <el-form-item label="广播标题" prop="title">
-          <el-input v-model="formData.title" placeholder="请输入广播标题" />
-        </el-form-item>
-        <el-form-item label="广播内容" prop="content">
-          <el-input 
-            v-model="formData.content" 
-            type="textarea" 
-            :rows="4" 
-            placeholder="请输入广播内容"
-            show-word-limit
-            maxlength="500"
-          />
-        </el-form-item>
-        <el-form-item label="广播状态" prop="status">
-          <el-radio-group v-model="formData.status">
-            <el-radio label="published" border>立即发布</el-radio>
-            <el-radio label="unpublished" border>暂不发布</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="定时发布" v-if="formData.status === 'published'">
-          <el-switch v-model="formData.scheduled" active-text="启用定时" />
+    <!-- 事件详情对话框 -->
+    <el-dialog v-model="detailVisible" :title="currentEvent ? currentEvent.description : ''" width="50%">
+      <div v-if="currentEvent" class="event-detail">
+        <div class="detail-item">
+          <label>发生时间：</label>
+          <span>{{ currentEvent.time }}</span>
+        </div>
+        <div class="detail-item">
+          <label>具体位置：</label>
+          <span>{{ currentEvent.location }}</span>
+        </div>
+        <div class="detail-item">
+          <label>事件类型：</label>
+          <el-tag :type="getEventTagType(currentEvent.type)">{{ currentEvent.type }}</el-tag>
+        </div>
+        <div class="detail-item">
+          <label>事件状态：</label>
+          <el-tag :type="currentEvent.status === '已处理' ? 'success' : 'warning'">
+            {{ currentEvent.status }}
+          </el-tag>
+        </div>
+        <div class="detail-item full-width">
+          <label>详细描述：</label>
+          <p>{{ currentEvent.details }}</p>
+        </div>
+        <div class="detail-item full-width" v-if="currentEvent.image">
+          <label>现场图片：</label>
+          <div class="image-placeholder">
+            <div class="image-icon">📷</div>
+            <p>现场图片预览</p>
+          </div>
+        </div>
+      </div>
+      <template #footer>
+        <el-button @click="detailVisible = false">关闭</el-button>
+        <el-button type="primary" @click="handleProcessEvent" v-if="currentEvent && currentEvent.status === '未处理'">
+          标记为已处理
+        </el-button>
+      </template>
+    </el-dialog>
+
+    <!-- 新增事件对话框 -->
+    <el-dialog v-model="addDialogVisible" title="新增交通事件" width="50%">
+      <el-form :model="newEvent" label-width="100px" :rules="eventRules" ref="eventForm">
+        <el-form-item label="事件时间" prop="time">
           <el-date-picker
-            v-model="formData.scheduleTime"
+            v-model="newEvent.time"
             type="datetime"
-            placeholder="选择发布时间"
-            :disabled="!formData.scheduled"
-            style="margin-left: 10px;"
+            placeholder="选择事件时间"
+            style="width: 100%"
           />
+        </el-form-item>
+        <el-form-item label="事件位置" prop="location">
+          <el-input v-model="newEvent.location" placeholder="请输入事件位置" />
+        </el-form-item>
+        <el-form-item label="事件类型" prop="type">
+          <el-select v-model="newEvent.type" placeholder="请选择事件类型" style="width: 100%">
+            <el-option label="交通事故" value="交通事故" />
+            <el-option label="道路施工" value="道路施工" />
+            <el-option label="大客流" value="大客流" />
+            <el-option label="交通管制" value="交通管制" />
+            <el-option label="拥堵" value="拥堵" />
+            <el-option label="设备故障" value="设备故障" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="事件描述" prop="description">
+          <el-input v-model="newEvent.description" type="textarea" :rows="2" placeholder="请输入事件描述" />
+        </el-form-item>
+        <el-form-item label="详细描述" prop="details">
+          <el-input v-model="newEvent.details" type="textarea" :rows="3" placeholder="请输入详细描述" />
+        </el-form-item>
+        <el-form-item label="上传图片">
+          <el-upload
+            action="#"
+            list-type="picture-card"
+            :auto-upload="false"
+            :limit="1"
+            :on-change="handleImageChange"
+          >
+            <el-icon><plus /></el-icon>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleSubmit">确认</el-button>
-        </span>
+        <el-button @click="addDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleAddEvent">确认</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import { Collection, SuccessFilled, Clock } from '@element-plus/icons-vue';
-
-// 表格数据
-const broadcasts = ref([]);
-const loading = ref(true);
-
-// 分页
-const currentPage = ref(1);
-const pageSize = ref(10);
-const total = ref(0);
-
-// 搜索和筛选
-const searchQuery = ref('');
-const filterStatus = ref('');
-const dateRange = ref([]);
-
-// 对话框
-const dialogVisible = ref(false);
-const dialogTitle = ref('新增广播');
-const formRef = ref(null);
-const formData = ref({
-  id: '',
-  title: '',
-  content: '',
-  status: 'published',
-  scheduled: false,
-  scheduleTime: ''
-});
-
-// 表单验证规则
-const formRules = {
-  title: [
-    { required: true, message: '请输入广播标题', trigger: 'blur' },
-    { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
-  ],
-  content: [
-    { required: true, message: '请输入广播内容', trigger: 'blur' },
-    { min: 10, max: 500, message: '长度在 10 到 500 个字符', trigger: 'blur' }
-  ]
-};
+import { ref, computed, onMounted } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { Search, Plus } from '@element-plus/icons-vue'
 
 // 统计数据
-const totalBroadcasts = computed(() => broadcasts.value.length);
-const publishedCount = computed(() => broadcasts.value.filter(item => item.status === 'published').length);
-const unpublishedCount = computed(() => broadcasts.value.filter(item => item.status === 'unpublished').length);
+const stats = ref([
+  { title: '实时车流量', value: '24,532', change: '5.2%', trend: 'up', color: '#409EFF' },
+  { title: '拥堵路段', value: '18', change: '2.1%', trend: 'down', color: '#E6A23C' },
+  { title: '交通事故', value: '7', change: '1.3%', trend: 'up', color: '#F56C6C' },
+  { title: '设备在线', value: '98%', change: '0.5%', trend: 'up', color: '#67C23A' }
+])
 
-// 模拟数据
-const mockData = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  title: `校园广播${i + 1}：${['重要通知', '活动预告', '紧急通知', '日常播报'][i % 4]}`,
-  content: `这是第${i + 1}条智慧校园广播内容。${['请全体师生注意', '本周五将举行', '紧急通知：', '今日天气'][i % 4]}${['学校将于下周进行消防演习', '校园艺术节开幕式', '图书馆临时闭馆维修', '多云转晴，气温20-25℃'][i % 4]}。`,
-  status: Math.random() > 0.3 ? 'published' : 'unpublished',
-  createTime: `2023-05-${String(15 - Math.floor(i / 10)).padStart(2, '0')} ${String(10 + i % 8).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}:00`
-}));
+// 地图相关
+const mapType = ref('traffic')
+const timeRange = ref('realtime')
 
-// 计算属性 - 过滤后的数据
-const filteredBroadcasts = computed(() => {
-  let result = [...broadcasts.value];
+// 地图图例
+const legendItems = ref([
+  { label: '畅通', color: '#67C23A' },
+  { label: '缓行', color: '#E6A23C' },
+  { label: '拥堵', color: '#F56C6C' },
+  { label: '事故', color: '#909399' },
+  { label: '施工', color: '#409EFF' }
+])
+
+// 交通事件数据
+const events = ref([
+  {
+    id: 1,
+    time: '2023-05-15 08:30',
+    location: '中山路与解放路交叉口',
+    type: '交通事故',
+    description: '两车追尾事故',
+    details: '一辆黑色轿车与一辆白色SUV在中山路与解放路交叉口发生追尾事故，无人员伤亡，造成该路段东向西方向拥堵。',
+    status: '已处理',
+    image: true
+  },
+  {
+    id: 2,
+    time: '2023-05-15 09:15',
+    location: '环城东路高架',
+    type: '道路施工',
+    description: '高架路面维修',
+    details: '环城东路高架南向北方向正在进行路面维修，占用最右侧车道，预计施工将持续至下午5点。',
+    status: '未处理',
+    image: false
+  },
+  {
+    id: 3,
+    time: '2023-05-15 10:00',
+    location: '人民广场地铁站',
+    type: '大客流',
+    description: '早高峰大客流',
+    details: '人民广场地铁站早高峰客流较大，站内采取限流措施，建议乘客错峰出行或选择其他交通方式。',
+    status: '已处理',
+    image: true
+  },
+  {
+    id: 4,
+    time: '2023-05-15 11:20',
+    location: '长江大桥',
+    type: '交通管制',
+    description: '重大活动交通管制',
+    details: '因重大活动需要，长江大桥双向将实施临时交通管制，管制时间为12:00-14:00，请车辆绕行。',
+    status: '未处理',
+    image: false
+  },
+  {
+    id: 5,
+    time: '2023-05-15 12:45',
+    location: '南京西路商圈',
+    type: '拥堵',
+    description: '商圈周边道路拥堵',
+    details: '南京西路商圈周边道路因节假日车流量大，目前拥堵严重，建议前往该区域的车辆选择公共交通。',
+    status: '未处理',
+    image: true
+  },
+  {
+    id: 6,
+    time: '2023-05-15 14:30',
+    location: '机场高速',
+    type: '交通事故',
+    description: '多车连环相撞',
+    details: '机场高速北向南方向发生多车连环相撞事故，造成该方向交通中断，救援人员已赶赴现场。',
+    status: '已处理',
+    image: true
+  },
+  {
+    id: 7,
+    time: '2023-05-15 15:10',
+    location: '地铁3号线',
+    type: '设备故障',
+    description: '地铁信号故障',
+    details: '地铁3号线因信号设备故障，部分列车运行延误，技术人员正在抢修，预计30分钟后恢复正常。',
+    status: '已处理',
+    image: false
+  }
+])
+
+// 新增事件表单
+const newEvent = ref({
+  time: '',
+  location: '',
+  type: '',
+  description: '',
+  details: '',
+  status: '未处理',
+  image: false
+})
+
+// 表单验证规则
+const eventRules = {
+  time: [{ required: true, message: '请选择事件时间', trigger: 'blur' }],
+  location: [{ required: true, message: '请输入事件位置', trigger: 'blur' }],
+  type: [{ required: true, message: '请选择事件类型', trigger: 'change' }],
+  description: [{ required: true, message: '请输入事件描述', trigger: 'blur' }],
+  details: [{ required: true, message: '请输入详细描述', trigger: 'blur' }]
+}
+
+// 搜索和分页
+const searchQuery = ref('')
+const currentPage = ref(1)
+const pageSize = ref(5)
+const totalEvents = computed(() => filteredEvents.value.length)
+
+// 排序
+const sortParams = ref({ prop: '', order: '' })
+
+// 过滤事件
+const filteredEvents = computed(() => {
+  let result = events.value
   
   // 搜索过滤
   if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    result = result.filter(item => 
-      item.title.toLowerCase().includes(query) || 
-      item.content.toLowerCase().includes(query)
-    );
+    const query = searchQuery.value.toLowerCase()
+    result = result.filter(
+      event =>
+        event.location.toLowerCase().includes(query) ||
+        event.type.toLowerCase().includes(query) ||
+        event.description.toLowerCase().includes(query)
+    )
   }
   
-  // 状态过滤
-  if (filterStatus.value) {
-    result = result.filter(item => item.status === filterStatus.value);
+  // 排序
+  if (sortParams.value.prop) {
+    const { prop, order } = sortParams.value
+    result = [...result].sort((a, b) => {
+      if (order === 'ascending') {
+        return a[prop] > b[prop] ? 1 : -1
+      } else {
+        return a[prop] < b[prop] ? 1 : -1
+      }
+    })
   }
   
-  // 日期过滤
-  if (dateRange.value && dateRange.value.length === 2) {
-    const [start, end] = dateRange.value;
-    result = result.filter(item => {
-      const itemDate = new Date(item.createTime);
-      return itemDate >= new Date(start) && itemDate <= new Date(end);
-    });
-  }
-  
-  // 分页
-  total.value = result.length;
-  const start = (currentPage.value - 1) * pageSize.value;
-  const end = start + pageSize.value;
-  
-  return result.slice(start, end);
-});
+  return result
+})
 
-// 生命周期钩子
-onMounted(() => {
-  fetchBroadcastData();
-});
+// 分页数据
+const paginatedEvents = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  return filteredEvents.value.slice(start, end)
+})
 
-// 获取广播数据
-const fetchBroadcastData = () => {
-  loading.value = true;
-  // 模拟API请求
-  setTimeout(() => {
-    broadcasts.value = mockData;
-    total.value = mockData.length;
-    loading.value = false;
-  }, 800);
-};
+// 对话框控制
+const detailVisible = ref(false)
+const addDialogVisible = ref(false)
+const currentEvent = ref(null)
+const eventForm = ref(null)
 
 // 方法
+const refreshMap = () => {
+  // 模拟地图数据刷新
+  stats.value.forEach(stat => {
+    const change = Math.random() * 5
+    stat.change = change.toFixed(1) + '%'
+    stat.trend = Math.random() > 0.5 ? 'up' : 'down'
+    
+    if (stat.title === '实时车流量') {
+      const baseValue = Math.floor(Math.random() * 20000) + 20000
+      stat.value = baseValue.toLocaleString()
+    } else if (stat.title === '拥堵路段') {
+      const baseValue = Math.floor(Math.random() * 10) + 10
+      stat.value = baseValue
+    } else if (stat.title === '交通事故') {
+      const baseValue = Math.floor(Math.random() * 5) + 3
+      stat.value = baseValue
+    }
+  })
+  
+  ElMessage.success('地图数据已刷新')
+}
+
 const handleSearch = () => {
-  currentPage.value = 1;
-};
+  currentPage.value = 1
+}
 
 const handleSearchClear = () => {
-  searchQuery.value = '';
-  currentPage.value = 1;
-};
+  currentPage.value = 1
+}
 
 const handleSizeChange = (val) => {
-  pageSize.value = val;
-};
+  pageSize.value = val
+}
 
 const handleCurrentChange = (val) => {
-  currentPage.value = val;
-};
+  currentPage.value = val
+}
 
-const handleAddBroadcast = () => {
-  dialogTitle.value = '新增广播';
-  formData.value = {
-    id: '',
-    title: '',
-    content: '',
-    status: 'published',
-    scheduled: false,
-    scheduleTime: ''
-  };
-  dialogVisible.value = true;
-};
+const handleSortChange = ({ prop, order }) => {
+  sortParams.value = { prop, order }
+}
 
-const handleEdit = (row) => {
-  dialogTitle.value = '编辑广播';
-  formData.value = { 
-    ...row,
-    scheduled: false,
-    scheduleTime: ''
-  };
-  dialogVisible.value = true;
-};
+const handleDetail = (event) => {
+  currentEvent.value = event
+  detailVisible.value = true
+}
 
-const handleDelete = (row) => {
-  ElMessageBox.confirm(
-    `确定要删除广播 "${row.title}" 吗?`,
-    '删除确认',
-    {
-      confirmButtonText: '确定删除',
-      cancelButtonText: '取消',
-      type: 'warning',
+const handleProcessEvent = () => {
+  if (currentEvent.value) {
+    const index = events.value.findIndex(e => e.id === currentEvent.value.id)
+    if (index !== -1) {
+      events.value[index].status = '已处理'
+      currentEvent.value.status = '已处理'
+      ElMessage.success('事件状态已更新')
     }
-  ).then(() => {
-    // 模拟删除操作
-    broadcasts.value = broadcasts.value.filter(item => item.id !== row.id);
-    total.value = broadcasts.value.length;
-    ElMessage.success({
-      message: '广播删除成功',
-      type: 'success',
-      showClose: true
-    });
-  }).catch(() => {
-    ElMessage.info({
-      message: '已取消删除',
-      showClose: true
-    });
-  });
-};
-
-const handleClose = (done) => {
-  if (formRef.value) {
-    formRef.value.resetFields();
   }
-  done();
-};
+}
 
-const handleSubmit = () => {
-  formRef.value.validate((valid) => {
-    if (!valid) return;
-    
-    if (dialogTitle.value === '新增广播') {
-      // 模拟新增
-      const newId = broadcasts.value.length > 0 
-        ? Math.max(...broadcasts.value.map(item => item.id)) + 1 
-        : 1;
-      const newBroadcast = {
-        ...formData.value,
-        id: newId,
-        createTime: new Date().toLocaleString()
-      };
-      broadcasts.value.unshift(newBroadcast);
-      total.value = broadcasts.value.length;
-      ElMessage.success({
-        message: '广播新增成功',
-        type: 'success',
-        showClose: true
-      });
-    } else {
-      // 模拟编辑
-      const index = broadcasts.value.findIndex(item => item.id === formData.value.id);
-      if (index !== -1) {
-        broadcasts.value[index] = { 
-          ...formData.value,
-          createTime: broadcasts.value[index].createTime
-        };
-        ElMessage.success({
-          message: '广播更新成功',
-          type: 'success',
-          showClose: true
-        });
-      }
+const handleDelete = (event) => {
+  ElMessageBox.confirm('确定要删除此事件吗?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    const index = events.value.findIndex(e => e.id === event.id)
+    if (index !== -1) {
+      events.value.splice(index, 1)
+      ElMessage.success('删除成功')
     }
-    
-    dialogVisible.value = false;
-  });
-};
+  }).catch(() => {})
+}
+
+const showAddDialog = () => {
+  // 重置表单
+  newEvent.value = {
+    time: '',
+    location: '',
+    type: '',
+    description: '',
+    details: '',
+    status: '未处理',
+    image: false
+  }
+  addDialogVisible.value = true
+}
+
+const handleImageChange = (file) => {
+  newEvent.value.image = true
+}
+
+const handleAddEvent = () => {
+  eventForm.value.validate((valid) => {
+    if (valid) {
+      // 生成新ID
+      const newId = Math.max(...events.value.map(e => e.id)) + 1
+      
+      // 格式化时间
+      const formattedTime = new Date(newEvent.value.time).toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).replace(/\//g, '-')
+      
+      // 添加新事件
+      events.value.unshift({
+        id: newId,
+        time: formattedTime,
+        location: newEvent.value.location,
+        type: newEvent.value.type,
+        description: newEvent.value.description,
+        details: newEvent.value.details,
+        status: newEvent.value.status,
+        image: newEvent.value.image
+      })
+      
+      ElMessage.success('事件添加成功')
+      addDialogVisible.value = false
+      
+      // 重置到第一页
+      currentPage.value = 1
+    }
+  })
+}
+
+const getEventTagType = (type) => {
+  switch (type) {
+    case '交通事故': return 'danger'
+    case '道路施工': return 'warning'
+    case '大客流': return 'info'
+    case '交通管制': return ''
+    case '拥堵': return 'warning'
+    case '设备故障': return 'danger'
+    default: return 'info'
+  }
+}
+
+onMounted(() => {
+  // 模拟数据加载
+  setTimeout(() => {
+    ElMessage.success('数据加载完成')
+  }, 800)
+})
 </script>
 
 <style lang="scss" scoped>

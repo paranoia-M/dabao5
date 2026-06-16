@@ -18,19 +18,14 @@ const routes = [
             component: () => import('@/views/Home.vue')
           },
           {
-            path: 'broadcast',
-            name: 'Broadcast',
-            component: () => import('@/views/Broadcast.vue')
+            path: 'traffic-info',
+            name: 'TrafficInfo',
+            component: () => import('@/views/TrafficInfo.vue')
           },
           {
-            path: 'schedule',
-            name: 'Schedule',
-            component: () => import('@/views/Schedule.vue')
-          },
-          {
-            path: 'device',
-            name: 'Device',
-            component: () => import('@/views/Device.vue')
+            path: 'warning-info',
+            name: 'WarningInfo',
+            component: () => import('@/views/WarningInfo.vue')
           },
           {
             path: 'statistics',
@@ -38,9 +33,9 @@ const routes = [
             component: () => import('@/views/Statistics.vue')
           },
           {
-            path: 'settings',
-            name: 'Settings',
-            component: () => import('@/views/Settings.vue')
+            path: 'system-settings',
+            name: 'SystemSettings',
+            component: () => import('@/views/SystemSettings.vue')
           }
         ]
   }

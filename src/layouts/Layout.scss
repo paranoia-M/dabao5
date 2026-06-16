@@ -1,85 +1,79 @@
+
 .layout-container {
   height: 100vh;
-  overflow: hidden;
-
-  .system-aside {
-    background-color: #304156;
-    height: 100vh;
+  display: flex;
+  
+  .el-container {
+    height: 100%;
+  }
+  
+  .custom-aside {
+    background-color: #545c64;
+    color: #fff;
+    height: 100%;
     transition: width 0.3s;
-    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-
+    
     .logo {
       height: 60px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      color: #fff;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-      .logo-text {
-        font-size: 18px;
-        font-weight: bold;
+      justify-content: center;
+      border-bottom: 1px solid #434a50;
+      
+      .logo-icon {
+        font-size: 24px;
+        margin-right: 10px;
       }
-
-      .logo-subtext {
-        font-size: 12px;
-        margin-top: 4px;
+      
+      .logo-text {
+        font-size: 16px;
+        font-weight: bold;
+        white-space: nowrap;
       }
     }
-
-    .system-menu {
+    
+    .custom-menu {
       border-right: none;
-
+      
       .menu-item {
+        height: 56px;
+        line-height: 56px;
+        
+        .menu-icon {
+          margin-right: 8px;
+        }
+        
         &:hover {
-          background-color: #263445 !important;
+          background-color: #434a50 !important;
         }
-
-        &.is-active {
-          background-color: #409EFF !important;
-          color: #fff !important;
-        }
-
-        .menu-item-content {
-          font-size: 14px;
-        }
+      }
+      
+      .el-menu-item.is-active {
+        background-color: #434a50 !important;
+        color: #ffd04b !important;
       }
     }
   }
-
-  .system-header {
-    height: 60px;
+  
+  .custom-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 0 20px;
-    background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-
+    
     .header-right {
-      .user-info {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-
-        .user-name {
-          margin-right: 10px;
-          font-size: 14px;
-        }
-
-        .user-avatar {
-          background-color: #409EFF;
-          color: #fff;
+      .logout-btn {
+        .logout-icon {
+          margin-right: 5px;
         }
       }
     }
   }
-
-  .system-main {
+  
+  .custom-main {
+    background-color: #f5f7fa;
     padding: 20px;
-    background-color: #f0f2f5;
-    height: calc(100vh - 60px);
-    overflow: auto;
   }
 }

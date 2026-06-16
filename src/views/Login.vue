@@ -1,65 +1,62 @@
 
 <template>
   <div class="login-container">
+    <div class="login-bubbles">
+      <div class="bubble bubble-1"></div>
+      <div class="bubble bubble-2"></div>
+      <div class="bubble bubble-3"></div>
+      <div class="bubble bubble-4"></div>
+      <div class="bubble bubble-5"></div>
+    </div>
     <div class="login-wrapper">
-      <div class="login-left">
-        <div class="broadcast-icon">
-          <svg viewBox="0 0 24 24" width="80" height="80">
-            <path fill="#409EFF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-          </svg>
-        </div>
-        <h1>智慧广播管理系统</h1>
-        <p class="system-description">智能化广播设备管理 · 精准内容投放 · 实时监控分析</p>
-        <div class="feature-list">
-          <div class="feature-item">
-            <div class="feature-icon">📡</div>
-            <span>设备远程控制</span>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">📅</div>
-            <span>定时任务管理</span>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">📊</div>
-            <span>播放数据分析</span>
-          </div>
-        </div>
-      </div>
-      <div class="login-right">
-        <el-card class="login-card" shadow="hover">
-          <h2 class="login-title">用户登录</h2>
-          <el-form :model="loginForm" label-width="80px" class="login-form">
-            <el-form-item label="账号" prop="username">
-              <el-input 
-                v-model="loginForm.username" 
-                placeholder="请输入账号" 
-                clearable
-                @keyup.enter="handleLogin"
-              />
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input 
-                v-model="loginForm.password" 
-                type="password" 
-                placeholder="请输入密码" 
-                show-password
-                @keyup.enter="handleLogin"
-              />
-            </el-form-item>
-            <el-form-item>
-              <el-button 
-                type="primary" 
-                @click="handleLogin" 
-                class="login-btn"
-                :loading="loading"
-              >
-                登录
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
+      <h1 class="login-title">智慧交通信息发布管理系统</h1>
+      <div class="login-subtitle">智能调度 · 实时监控 · 数据分析</div>
+      <el-card class="login-card" shadow="hover">
+        <el-form :model="loginForm" label-width="80px" class="login-form">
+          <el-form-item label="账号" prop="username">
+            <el-input v-model="loginForm.username" placeholder="请输入账号" clearable>
+              <template #prefix>
+                <span class="custom-icon">👤</span>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password>
+              <template #prefix>
+                <span class="custom-icon">🔒</span>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleLogin" class="login-btn" round>登录</el-button>
+            <el-button @click="showSystemInfo" class="info-btn" round>系统介绍</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+      <div class="login-footer">
+        <span>©2023 智慧交通信息平台 版本 v2.1.0</span>
       </div>
     </div>
+    
+    <el-dialog v-model="dialogVisible" title="系统介绍" width="50%" center>
+      <div class="system-info">
+        <h3>智慧交通信息发布管理系统</h3>
+        <p>本系统是面向现代城市交通管理的智能化平台，主要功能包括：</p>
+        <ul>
+          <li>实时交通数据采集与分析</li>
+          <li>智能信号灯控制系统</li>
+          <li>交通事件快速发布</li>
+          <li>多终端信息同步展示</li>
+          <li>历史数据统计与报表</li>
+        </ul>
+        <p>通过本系统，管理人员可以高效地进行交通调度和应急响应。</p>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false" type="primary">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -69,13 +66,14 @@ import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 
 const router = useRouter()
-const loading = ref(false)
+const dialogVisible = ref(false);
 
 // 登录相关
 const loginForm = reactive({
   username: '',
   password: ''
 });
+const isAuthenticated = ref(false);
 
 const handleLogin = () => {
   if (!loginForm.username || !loginForm.password) {
@@ -83,19 +81,21 @@ const handleLogin = () => {
     return;
   }
   
-  loading.value = true;
-  
   // 模拟登录请求
   setTimeout(() => {
     if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
+      isAuthenticated.value = true;
       ElMessage.success('登录成功');
       localStorage.setItem("token", "token_admin");
       router.push("/");
     } else {
       ElMessage.error('账号或密码错误');
     }
-    loading.value = false;
   }, 1000);
+};
+
+const showSystemInfo = () => {
+  dialogVisible.value = true;
 };
 </script>
 

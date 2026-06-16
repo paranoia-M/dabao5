@@ -1,0 +1,233 @@
+.system-settings-container {
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+
+  .settings-card {
+    height: 100%;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+
+      .system-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .module-title {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+      }
+    }
+
+    .settings-tabs {
+      height: calc(100% - 60px);
+
+      :deep(.el-tabs__content) {
+        height: calc(100% - 55px);
+        overflow-y: auto;
+      }
+
+      .settings-form {
+        padding: 20px 40px;
+
+        .form-item {
+          margin-bottom: 24px;
+
+          .form-tip {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+          }
+
+          .input-with-tip {
+            width: 350px;
+          }
+
+          .upload-container {
+            display: flex;
+            flex-direction: column;
+
+            .upload-placeholder {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              height: 100%;
+
+              .upload-icon {
+                font-size: 24px;
+                margin-bottom: 5px;
+              }
+
+              .upload-text {
+                font-size: 12px;
+                color: #666;
+              }
+            }
+          }
+
+          .color-picker-container {
+            display: flex;
+            align-items: center;
+
+            .color-value {
+              margin-left: 10px;
+              font-size: 14px;
+              color: #666;
+            }
+          }
+
+          .checkbox-group {
+            display: flex;
+            gap: 20px;
+          }
+
+          .time-picker {
+            width: 120px;
+          }
+        }
+
+        .save-btn {
+          width: 120px;
+        }
+      }
+
+      .data-management {
+        padding: 20px;
+
+        .data-actions {
+          display: flex;
+          gap: 10px;
+
+          .action-btn {
+            width: 100px;
+          }
+        }
+
+        .data-table {
+          margin-top: 20px;
+
+          .preview-btn {
+            color: #409EFF;
+          }
+        }
+      }
+    }
+  }
+
+  .import-dialog, .clear-dialog, .preview-dialog {
+    .dialog-content {
+      padding: 0 20px;
+
+      .import-steps {
+        margin-bottom: 20px;
+      }
+
+      .step-content {
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .data-upload {
+          .upload-content {
+            padding: 20px;
+            text-align: center;
+
+            .upload-icon {
+              font-size: 40px;
+              margin-bottom: 10px;
+            }
+
+            .el-upload__text {
+              margin-bottom: 10px;
+            }
+
+            .el-upload__tip {
+              color: #999;
+              font-size: 12px;
+            }
+          }
+        }
+
+        .validate-result, .validate-detail, .import-summary {
+          text-align: center;
+
+          p {
+            margin: 5px 0;
+            color: #666;
+          }
+        }
+      }
+    }
+
+    .dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+
+      .dialog-btn {
+        width: 100px;
+
+        &.primary-btn {
+          background-color: #409EFF;
+          border-color: #409EFF;
+        }
+
+        &.danger-btn {
+          background-color: #F56C6C;
+          border-color: #F56C6C;
+        }
+      }
+    }
+  }
+
+  .clear-dialog {
+    .clear-content {
+      .clear-alert {
+        margin-bottom: 20px;
+      }
+
+      .clear-confirm {
+        margin-top: 20px;
+
+        .confirm-checkbox {
+          color: #666;
+        }
+      }
+    }
+  }
+
+  .preview-dialog {
+    .preview-content {
+      .preview-meta {
+        display: flex;
+        margin-bottom: 20px;
+
+        .meta-item {
+          margin-right: 30px;
+
+          .meta-label {
+            color: #666;
+          }
+
+          .meta-value {
+            font-weight: bold;
+          }
+        }
+      }
+
+      .preview-sample {
+        h4 {
+          margin-bottom: 10px;
+          color: #333;
+        }
+      }
+    }
+  }
+}

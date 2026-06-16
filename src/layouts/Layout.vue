@@ -1,50 +1,53 @@
+
 <template>
   <div class="layout-container">
     <el-container>
-      <el-aside width="220px" class="system-aside">
+      <el-aside width="220px" class="custom-aside">
         <div class="logo">
-          <span class="logo-text">智慧广播管理系统</span>
-          <span class="logo-subtext">Smart Broadcast System</span>
+          <span class="logo-icon">🚦</span>
+          <span class="logo-text">智慧交通信息发布管理系统</span>
         </div>
         <el-menu
           :default-active="activeMenu"
-          background-color="#304156"
-          text-color="#bfcbd9"
-          active-text-color="#409EFF"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
           router
-          class="system-menu"
+          class="custom-menu"
         >
-          <el-menu-item index="/" class="menu-item">
-            <span class="menu-item-content">首页</span>
+          <el-menu-item index="Home" route="/" class="menu-item">
+            <span class="menu-icon">🏠</span>
+            <span>首页</span>
           </el-menu-item>
-          <el-menu-item index="/broadcast" class="menu-item">
-            <span class="menu-item-content">广播管理</span>
+          <el-menu-item index="TrafficInfo" route="/traffic-info" class="menu-item">
+            <span class="menu-icon">🚗</span>
+            <span>交通信息</span>
           </el-menu-item>
-          <el-menu-item index="/schedule" class="menu-item">
-            <span class="menu-item-content">排程管理</span>
+          <el-menu-item index="WarningInfo" route="/warning-info" class="menu-item">
+            <span class="menu-icon">⚠️</span>
+            <span>预警信息</span>
           </el-menu-item>
-          <el-menu-item index="/device" class="menu-item">
-            <span class="menu-item-content">设备管理</span>
+          <el-menu-item index="Statistics" route="/statistics" class="menu-item">
+            <span class="menu-icon">📊</span>
+            <span>统计分析</span>
           </el-menu-item>
-          <el-menu-item index="/statistics" class="menu-item">
-            <span class="menu-item-content">统计分析</span>
-          </el-menu-item>
-          <el-menu-item index="/settings" class="menu-item">
-            <span class="menu-item-content">系统设置</span>
+          <el-menu-item index="SystemSettings" route="/system-settings" class="menu-item">
+            <span class="menu-icon">⚙️</span>
+            <span>系统设置</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header class="system-header">
+        <el-header class="custom-header">
           <div class="header-right">
-            <div class="user-info" @click="handleLogout">
-              <span class="user-name">管理员</span>
-              <el-avatar size="small" class="user-avatar">Admin</el-avatar>
-            </div>
+            <el-button type="primary" plain class="logout-btn" @click="handleLogout">
+              <span class="logout-icon">🚪</span>
+              <span>退出登录</span>
+            </el-button>
           </div>
         </el-header>
-        <el-main class="system-main">
-          <RouterView />
+        <el-main class="custom-main">
+          <router-view />
         </el-main>
       </el-container>
     </el-container>
@@ -59,7 +62,7 @@ const route = useRoute()
 const router = useRouter()
 
 const activeMenu = computed(() => {
-  return route.path
+  return route.name
 })
 
 const handleLogout = async () => {
@@ -73,3 +76,4 @@ const handleLogout = async () => {
 @use './Layout.scss';
 
 </style>
+    

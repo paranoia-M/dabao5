@@ -16,9 +16,6 @@
           <el-menu-item index="Home" route="/">
             <span class="menu-item-text">首页</span>
           </el-menu-item>
-          <el-menu-item index="Dashboard" route="/dashboard">
-            <span class="menu-item-text">实时仪表盘</span>
-          </el-menu-item>
           <el-menu-item index="SecurityMonitor" route="/security-monitor">
             <span class="menu-item-text">安全态势监控</span>
           </el-menu-item>

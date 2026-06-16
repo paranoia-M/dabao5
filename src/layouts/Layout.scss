@@ -1,79 +1,104 @@
+/* Layout.scss */
 
-.layout-container {
-  height: 100vh;
+.app-layout {
   display: flex;
-  
-  .el-container {
-    height: 100%;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #0f0f1a;
+  color: #e5e7eb;
+}
+
+.layout-header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 24px;
+  background-color: #1a1a2e;
+  border-bottom: 1px solid #2a2a3e;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e5e7eb;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  margin-right: 32px;
+}
+
+.layout-menu {
+  flex: 1;
+  background: transparent;
+  border-bottom: none !important;
+
+  .el-menu-item,
+  .el-sub-menu__title {
+    color: #a0a0b0 !important;
+    border-bottom: 2px solid transparent !important;
+    transition: color 0.2s, border-color 0.2s;
   }
-  
-  .custom-aside {
-    background-color: #545c64;
-    color: #fff;
-    height: 100%;
-    transition: width 0.3s;
-    
-    .logo {
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid #434a50;
-      
-      .logo-icon {
-        font-size: 24px;
-        margin-right: 10px;
-      }
-      
-      .logo-text {
-        font-size: 16px;
-        font-weight: bold;
-        white-space: nowrap;
-      }
-    }
-    
-    .custom-menu {
-      border-right: none;
-      
-      .menu-item {
-        height: 56px;
-        line-height: 56px;
-        
-        .menu-icon {
-          margin-right: 8px;
-        }
-        
-        &:hover {
-          background-color: #434a50 !important;
-        }
-      }
-      
-      .el-menu-item.is-active {
-        background-color: #434a50 !important;
-        color: #ffd04b !important;
-      }
-    }
+
+  .el-menu-item.is-active,
+  .el-sub-menu.is-active .el-sub-menu__title {
+    color: #0F766E !important;
+    border-bottom-color: #0F766E !important;
+    font-weight: 600;
   }
-  
-  .custom-header {
-    background-color: #fff;
-    border-bottom: 1px solid #e6e6e6;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 20px;
-    
-    .header-right {
-      .logout-btn {
-        .logout-icon {
-          margin-right: 5px;
-        }
-      }
+
+  .el-menu-item:hover,
+  .el-sub-menu__title:hover {
+    color: #e5e7eb !important;
+    background-color: rgba(255,255,255,0.05) !important;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .el-button {
+    color: #a0a0b0;
+    font-size: 14px;
+
+    &:hover {
+      color: #e5e7eb;
     }
   }
-  
-  .custom-main {
-    background-color: #f5f7fa;
-    padding: 20px;
+}
+
+.layout-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  background-color: #0f0f1a;
+}
+
+/* 弹出菜单样式（挂载在 body 下） */
+:global(.layout-menu-popper) {
+  background-color: #1a1a2e !important;
+  border: 1px solid #2a2a3e !important;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+
+  .el-menu-item {
+    color: #a0a0b0 !important;
+    background-color: transparent !important;
+
+    &:hover {
+      color: #e5e7eb !important;
+      background-color: rgba(255,255,255,0.05) !important;
+    }
+
+    &.is-active {
+      color: #0F766E !important;
+      font-weight: 600;
+      background-color: rgba(15,118,110,0.12) !important;
+    }
+  }
+
+  .el-menu--popup {
+    background-color: transparent;
   }
 }

@@ -1,29 +1,25 @@
-import {createApp} from 'vue'
-import './style.css'
-import 'element-plus/dist/index.css'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPersistedstate from 'pinia-plugin-persistedstate'
 import ElementPlus from 'element-plus'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import router from './index.js'
+import * as ElIcons from '@element-plus/icons-vue'
+import 'element-plus/dist/index.css'
+import './styles/theme.css'
+
 import App from './App.vue'
+import router from './router'
+import { seedIfEmpty } from './mock/seed.js'
+
+const pinia = createPinia()
+pinia.use(piniaPersistedstate)
+
+seedIfEmpty()
 
 const app = createApp(App)
-
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+for (const [name, comp] of Object.entries(ElIcons)) {
+  app.component(name, comp)
 }
-
-// router.beforeEach((to, from, next) => {
-//     const token = localStorage.getItem('token')
-//
-//     if (!token && to.path !== '/login') {
-//         next('/login')
-//     } else {
-//         next()
-//     }
-// })
-
-app.use(ElementPlus)
-
+app.use(pinia)
 app.use(router)
-
+app.use(ElementPlus)
 app.mount('#app')

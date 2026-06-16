@@ -1,0 +1,46 @@
+:root {
+  --app-primary: #0F766E;
+  --app-accent: #1E3A5F;
+  --app-success: #10B981;
+  --app-warning: #F59E0B;
+  --app-danger: #EF4444;
+  --app-radius: 6px;
+  --app-spacing: 16px;
+  --app-font: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --app-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --app-motion: 240ms;
+  --app-bg: #FAFAFA;
+  --app-sidebar-bg: #111827;
+  --app-sidebar-text: #E5E7EB;
+  --app-header-bg: #FFFFFF;
+  --el-color-primary: #0F766E;
+  --el-color-success: #10B981;
+  --el-color-warning: #F59E0B;
+  --el-color-danger: #EF4444;
+  --el-border-radius-base: 6px;
+}
+
+.page-command-overview {
+  --page-primary: #2563EB;
+}
+.page-video-surveillance {
+  --page-primary: #1E3A5F;
+}
+.page-patrol-schedule {
+  --page-primary: #D97706;
+}
+.page-patrol-record {
+  --page-primary: #4B5563;
+}
+.page-inmate-archive {
+  --page-primary: #3D4F5C;
+}
+.page-inmate-movement {
+  --page-primary: #0284C7;
+}
+.page-device-monitor {
+  --page-primary: #1A4B6E;
+}
+.page-device-maintenance {
+  --page-primary: #DC2626;
+}

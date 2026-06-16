@@ -1,79 +1,75 @@
-
 <template>
-  <div class="layout-container">
-    <el-container>
-      <el-aside width="220px" class="custom-aside">
-        <div class="logo">
-          <span class="logo-icon">🚦</span>
-          <span class="logo-text">智慧交通信息发布管理系统</span>
-        </div>
-        <el-menu
-          :default-active="activeMenu"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-          router
-          class="custom-menu"
-        >
-          <el-menu-item index="Home" route="/" class="menu-item">
-            <span class="menu-icon">🏠</span>
-            <span>首页</span>
-          </el-menu-item>
-          <el-menu-item index="TrafficInfo" route="/traffic-info" class="menu-item">
-            <span class="menu-icon">🚗</span>
-            <span>交通信息</span>
-          </el-menu-item>
-          <el-menu-item index="WarningInfo" route="/warning-info" class="menu-item">
-            <span class="menu-icon">⚠️</span>
-            <span>预警信息</span>
-          </el-menu-item>
-          <el-menu-item index="Statistics" route="/statistics" class="menu-item">
-            <span class="menu-icon">📊</span>
-            <span>统计分析</span>
-          </el-menu-item>
-          <el-menu-item index="SystemSettings" route="/system-settings" class="menu-item">
-            <span class="menu-icon">⚙️</span>
-            <span>系统设置</span>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
-      <el-container>
-        <el-header class="custom-header">
-          <div class="header-right">
-            <el-button type="primary" plain class="logout-btn" @click="handleLogout">
-              <span class="logout-icon">🚪</span>
-              <span>退出登录</span>
-            </el-button>
-          </div>
-        </el-header>
-        <el-main class="custom-main">
-          <router-view />
-        </el-main>
-      </el-container>
-    </el-container>
+  <div class="app-layout">
+    <header class="layout-header">
+      <div class="brand-title">智慧监所指挥调度平台</div>
+      <el-menu
+        mode="horizontal"
+        :default-active="route.path"
+        @select="handleMenuSelect"
+        class="layout-menu"
+      >
+        <template v-for="module in MENU" :key="module.moduleName">
+          <el-sub-menu :index="module.moduleName" popper-class="layout-menu-popper">
+            <template #title>
+              <span>{{ module.moduleName }}</span>
+            </template>
+            <el-menu-item
+              v-for="item in module.items"
+              :key="item.path"
+              :index="item.path"
+            >
+              {{ item.name }}
+            </el-menu-item>
+          </el-sub-menu>
+        </template>
+      </el-menu>
+      <div class="header-actions">
+        <el-button text @click="handleLogout">退出登录</el-button>
+      </div>
+    </header>
+    <main class="layout-main">
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
-const route = useRoute()
 const router = useRouter()
+const route = useRoute()
 
-const activeMenu = computed(() => {
-  return route.name
-})
+const MENU = [
+  { moduleName: '指挥总览', items: [
+    { name: '指挥调度大屏', path: '/command-overview' },
+  ]},
+  { moduleName: '视频监控与报警', items: [
+    { name: '实时视频监控', path: '/video-surveillance' },
+  ]},
+  { moduleName: '巡查管理', items: [
+    { name: '巡查任务排程', path: '/patrol-schedule' },
+    // { name: '巡查记录查询', path: '/patrol-record' },
+  ]},
+  { moduleName: '在押人员管理', items: [
+    { name: '在押人员档案', path: '/inmate-archive' },
+    { name: '人员出入登记', path: '/inmate-movement' },
+  ]},
+  { moduleName: '设备设施管理', items: [
+    { name: '设备运行监控', path: '/device-monitor' },
+    { name: '设备维护记录', path: '/device-maintenance' },
+  ]},
+]
 
-const handleLogout = async () => {
-  localStorage.clear()
-  await router.push('/login')
+function handleMenuSelect(index) {
+  router.push(index)
+}
+
+function handleLogout() {
+  router.push('/login')
 }
 </script>
 
-<style lang="scss" scoped>
-
-@use './Layout.scss';
-
+<style scoped lang="scss">
+@use './Layout.scss' as *;
 </style>
-    

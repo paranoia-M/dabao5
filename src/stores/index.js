@@ -1,0 +1,11 @@
+// 集中导出所有 store，方便页面统一引用
+export { useInmateStore } from './inmate'
+export { useInmateMovementStore } from './inmateMovement'
+export { usePatrolTaskStore } from './patrolTask'
+export { usePatrolRecordStore } from './patrolRecord'
+export { useDeviceStore } from './device'
+export { useMaintenanceRecordStore } from './maintenanceRecord'
+export { useAlertEventStore } from './alertEvent'
+export { useUploadRecordStore } from './uploadRecord'
+export { usePatrolApprovalStore } from './patrolApproval'
+export { useMaintenanceApprovalStore } from './maintenanceApproval'
